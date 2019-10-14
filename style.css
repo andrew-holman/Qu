@@ -1,0 +1,82 @@
+body{
+	background: #8B0000;
+	text-align: center;
+	margin: 25px auto;
+	padding: 10px;
+}
+#main{
+	width: 1000px;
+	height: 1000px;
+	background: #ffab19;
+	margin: 25px auto;
+	border: solid 2px #ff3819;
+	padding: 10px;
+}
+h1{
+	text-align: center;
+	font-family: "Times New Roman";
+	font: 24pt;
+	color: #8B0000;
+}
+hr{
+	color: #ff3819;
+}
+p{
+	font-family: "arial";
+	font-size: 12pt;
+	text-align: center;
+	text-indent: 48px;
+	color: #2f2d2d;
+}
+#counter{
+		color: #8B0000;
+		line-height: 30px;
+}
+input{
+	text-align: center;
+	color: #A52A2A;
+}
+p1{
+	font-family: "arial";
+	font-size: 12pt;
+	text-align: left;
+	text-indent: 48px;
+	color: #2f2d2d;
+}
+p2{
+	font-family: "Calibri";
+	font-size: 24pt;
+	text-align: left;
+	text-indent: 500px;
+	color: #2f2d2d;
+}
+#myLove{
+		position: relative;
+		width: 25%;
+		height: 25%;
+		right: 32px;
+}
+#myLove1{
+		position: relative;
+		width: 25%;
+		height: 50%;
+		right: 288px;
+		bottom: 6px;
+}
+#myLove2{
+		position: relative;
+		width: 35%;
+		height: 50%;
+		left: 272px;
+		bottom: 512px;
+}
+#myLove7{
+		position: relative;
+		width: 25%;
+		height: 25%;
+		right: 288px;
+		bottom: 256px;
+}
+
+}
+
