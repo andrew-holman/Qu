@@ -1,5 +1,4 @@
 body{
-	background: #8B0000;
 	text-align: center;
 	margin: 25px auto;
 	padding: 10px;
@@ -7,16 +6,15 @@ body{
 #main{
 	width: 1000px;
 	height: 1000px;
-	background: #ffab19;
+	background: linear-gradient(to bottom right, #0099ff 0%, #33ccff 100%);
 	margin: 25px auto;
-	border: solid 2px #ff3819;
 	padding: 10px;
 }
 h1{
 	text-align: center;
 	font-family: "Times New Roman";
-	font: 24pt;
-	color: #8B0000;
+	font: 70pt;
+	color: #FFFFFF;
 }
 hr{
 	color: #ff3819;
@@ -77,6 +75,3 @@ p2{
 		right: 288px;
 		bottom: 256px;
 }
-
-}
-
