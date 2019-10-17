@@ -11,40 +11,37 @@ body{
 	padding: 10px;
 }
 h1{
-	text-align: center;
-	font-family: "Times New Roman";
-	font: 70pt;
+	position: relative;
+	top: -100px;
+	left: center;
+	font-family: "Lucida Console";
+	font-size: 80pt;
 	color: #FFFFFF;
 }
-hr{
-	color: #ff3819;
+.login{
+	background-color: rgb(154, 155, 154); /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -242px;
+  left: 535px;
 }
-p{
-	font-family: "arial";
-	font-size: 12pt;
-	text-align: center;
-	text-indent: 48px;
-	color: #2f2d2d;
-}
-#counter{
-		color: #8B0000;
-		line-height: 30px;
-}
-input{
-	text-align: center;
-	color: #A52A2A;
-}
-p1{
-	font-family: "arial";
-	font-size: 12pt;
-	text-align: left;
-	text-indent: 48px;
-	color: #2f2d2d;
-}
-p2{
-	font-family: "Calibri";
-	font-size: 24pt;
-	text-align: left;
-	text-indent: 500px;
-	color: #2f2d2d;
+
+.signUp{
+	background-color: rgb(154, 155, 154); /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -242px;
+  left: 575px;
 }
