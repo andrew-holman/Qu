@@ -1,0 +1,55 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="style.css" type="text/css" rel="stylesheet" />
+    <script src="signUpPage.js"></script>
+    <script src = "navigation.js"></script>
+    <script>
+        function transform(){
+          var x = document.getElementById("password")
+          x.type = "password"
+        }
+    </script>
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <div id = "main">
+    <h1 id = "showName">Sign Up</h1>
+    <input onClick = "main()" class = "mainButton" type="button" id="mainButton" name="mainButton" value="Main Page"/>
+    <input onClick = "login()" class = "login" type="button" id="login" name="login" value="Login"/>
+    <p id="FirstName" class = "firstNamePos">
+      <label for="firstName" class = "userPassColor">First Name</label>
+      <input id="firstName" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('create').click()" />
+    </p>
+    <p id="LastName" class = "lastNamePos">
+        <label for="lastName" class = "userPassColor">Last Name</label>
+        <input id="lastName" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('create').click()" />
+    </p>
+    <p id="Email" class = "emailPos">
+      <label for="email" class = "userPassColor">Email</label>
+      <input id="email" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('create').click()"/>
+    </p>
+    <p id="Password" class = "passwordPos">
+        <label for = "password" class = "userPassColor">Password</label>
+        <input id="password" type="password" onkeydown = "if (event.keyCode == 13) document.getElementById('create').click()"/>
+    </p>
+    <p id="ConfirmPassword" class = "confirmPasswordPos">
+      <label for = "confirmpassword" class = "userPassColor">Confirm Your Password</label>
+      <input id="confirmpassword" type="password" onkeydown = "if (event.keyCode == 13) document.getElementById('create').click()"/>
+  </p>
+  <p id = "Type" class = "selectTypePos">
+    <label for = "selectType" class = "userPassColor">Are You a Student or an Instructor?</label>
+    <label class = "container"> Student
+      <input type = "radio" name = "userType" value = "Student">
+      <span class = "checkmark"></span>
+    </label>
+    <label class = "container"> Instructor
+        <input type = "radio" name = "userType" value = "Instructor">
+        <span class = "checkmark"></span>
+      </label>
+  </p>
+  <input onClick = "createUser()" class = "create" type = "button" id = "create" name = "create" value = "Sign Up"/>
+  </body>
+</html>
