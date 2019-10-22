@@ -46,6 +46,8 @@ h1{
   left: 575px;
 }
 
+
+
 .mainButton{
 	background-color: rgb(154, 155, 154);
   border: none;
@@ -71,7 +73,7 @@ h1{
   font-size: 19px;
   position: relative;
   top: 160px;
-  left: center;
+  left: 15px;
 }
 
 .userPassColor{
@@ -80,20 +82,33 @@ h1{
 	color: #FFFFFF;
 }
 
-#username {
+#lastName {
   border-radius: 25px;
   padding: 20px; 
   width: 400px;
   height: 20px;  
 }
 
-.namePos{
+.firstNamePos{
   position: relative;
 	top: -220px;
 	left: 278px;
 }
 
-.usernamePos{
+#email {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+.emailPos{
+  position: relative;
+	top: -80px;
+	left: 278px;
+}
+
+.lastNamePos{
   position: relative;
 	top: -150px;
 	left: 278px;
@@ -101,23 +116,42 @@ h1{
 
 .passwordPos{
   position: relative;
-	top: -80px;
+	top: -10px;
+	left: 278px;
+}
+
+.passwordLoginPos{
+  position: relative;
+	top: -120px;
+	left: 278px;
+}
+
+.loginEmailPos{
+  position: relative;
+	top: -220px;
 	left: 278px;
 }
 
 .confirmPasswordPos{
   position: relative;
-	top: -10px;
+	top: 60px;
 	left: 278px;
 }
 
 .selectTypePos{
   position: relative;
-	top: 60px;
+	top: 130px;
 	left: center;
 }
 
 #password {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#email {
   border-radius: 25px;
   padding: 20px; 
   width: 400px;
@@ -132,7 +166,7 @@ h1{
 }
 
 
-#name {
+#firstName {
   border-radius: 25px;
   padding: 20px; 
   width: 400px;
@@ -141,8 +175,22 @@ h1{
 
 .signUpLink{
   position: relative;
-	top: -10px;
-	left: center;
+	top: 20px;
+	left: -54px;
+}
+
+.signIn{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -35px;
+  left: 75px;
 }
 
 h2{
