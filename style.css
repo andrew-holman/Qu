@@ -1,52 +1,259 @@
-body {
-  background: #8b0000;
+body{
+	background: linear-gradient(to bottom right, #0099ff 0%, #33ccff 100%);
+	text-align: center;
+	margin: 25px auto;
+	padding: 10px;
+}
+#main{
+	width: 1000px;
+	height: 1000px;
+	margin: 25px auto;
+	padding: 10px;
+}
+h1{
+	position: relative;
+	top: -100px;
+	left: center;
+	font-family: "Lucida Console";
+	font-size: 80pt;
+	color: #FFFFFF;
+}
+.login{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
   text-align: center;
-  margin: 25px auto;
-  padding: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -242px;
+  left: 560px;
 }
-#main {
-  width: 1000px;
-  height: 1000px;
-  background: #ffab19;
-  margin: 25px auto;
-  border: solid 2px #ff3819;
-  padding: 10px;
-}
-h1 {
+
+.signUp{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
   text-align: center;
-  font-family: "Times New Roman";
-  font: 24pt;
-  color: #8b0000;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -242px;
+  left: 575px;
 }
-hr {
-  color: #ff3819;
-}
-p {
-  font-family: "arial";
-  font-size: 12pt;
+
+
+
+.mainButton{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
   text-align: center;
-  text-indent: 48px;
-  color: #2f2d2d;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -242px;
+  left: 535px;
 }
-#counter {
-  color: #8b0000;
-  line-height: 30px;
-}
-input {
+
+.create{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
   text-align: center;
-  color: #a52a2a;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: 160px;
+  left: 15px;
 }
-p1 {
-  font-family: "arial";
-  font-size: 12pt;
-  text-align: left;
-  text-indent: 48px;
-  color: #2f2d2d;
+
+.userPassColor{
+	font-family: "Times New Roman";
+	font-size: 25pt;
+	color: #FFFFFF;
 }
-p2 {
-  font-family: "Calibri";
-  font-size: 24pt;
-  text-align: left;
-  text-indent: 500px;
-  color: #2f2d2d;
+
+#lastName {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+.firstNamePos{
+  position: relative;
+	top: -220px;
+	left: 278px;
+}
+
+#email {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+.emailPos{
+  position: relative;
+	top: -80px;
+	left: 278px;
+}
+
+.lastNamePos{
+  position: relative;
+	top: -150px;
+	left: 278px;
+}
+
+.passwordPos{
+  position: relative;
+	top: -10px;
+	left: 278px;
+}
+
+.passwordLoginPos{
+  position: relative;
+	top: -120px;
+	left: 278px;
+}
+
+.loginEmailPos{
+  position: relative;
+	top: -220px;
+	left: 278px;
+}
+
+.confirmPasswordPos{
+  position: relative;
+	top: 60px;
+	left: 278px;
+}
+
+.selectTypePos{
+  position: relative;
+	top: 130px;
+	left: center;
+}
+
+#password {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#email {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#confirmpassword {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+
+#firstName {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+.signUpLink{
+  position: relative;
+	top: 20px;
+	left: -54px;
+}
+
+.signIn{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -35px;
+  left: 75px;
+}
+
+h2{
+	position: relative;
+	top: 60px;
+	left: center;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 20pt;
+  top: 20px;
+  left: 278 px;
+  color: #FFFFFF;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 278px;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
 }
