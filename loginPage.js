@@ -1,4 +1,30 @@
+function displayFields(guest){
+    if(guest){
+        document.getElementById("loginUser").style.visibility = "hidden"
+        document.getElementById("email").style.visibility = "hidden"
+        document.getElementById("password").style.visibility = "hidden"
+        document.getElementById("Email").style.visibility = "hidden"
+        document.getElementById("Password").style.visibility = "hidden"
+
+
+}
+    else{
+
+
+        document.getElementById("loginUser").style.visibility = "visible"
+        document.getElementById("email").style.visibility = "visible"
+        document.getElementById("password").style.visibility = "visible"
+        document.getElementById("Email").style.visibility = "visible"
+        document.getElementById("Password").style.visibility = "visible"
+    }
+}
+
+function signInGuest(){
+
+}
+
 function signInUser(){
+    
     var email = document.getElementById('email').value
     var emailTag = validateEmail(email)
     var emailCheck = emailTag == ""
@@ -17,6 +43,15 @@ function signInUser(){
         window.alert("Successful")
     }
     else window.alert(alertMessage)
+
+    var xmlhttp = new XMLHttpRequest()
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var myObj = JSON.parse(this.responseText);
+        }
+      };
+    xmlhttp.open("GET", "")
+    xmlhttp.send()
 }
 
 function validateEmail(givenEmail) {
@@ -39,4 +74,3 @@ function validatePassword(password){
     if(!(password.match(alpha) && password.match(numer) && password.match(special))) return "Password must contain alphabetic, numeric, and a special character"
     return ""
 }
-

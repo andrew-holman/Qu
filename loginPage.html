@@ -11,17 +11,22 @@
   <body>
     <div id = "main">
     <h1 id = "showName">Login</h1>
-    <input onClick = "main()" class = "mainButton" type="button" id="mainButton" name="mainButton" value="Main Page"/>
+    <input  onClick = "main()" class = "mainButton" type="button" id="mainButton" name="mainButton" value="Main Page"/>
     <input onClick = "signUp()" class = "signUp" type="button" id="signUp" name="signUp" value="Sign Up"/>
+    <p id="Guest" class = "guestPos">
+        <label for="email" class = "userPassColor">Would you like to continue as a guest?</label>
+    </p>
     <p id="Email" class = "loginEmailPos">
-        <label for="email" class = "userPassColor">Email</label>
-        <input id="email" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('signIn').click()"/>
-    </p>
-    <p id="Password" class = "passwordLoginPos">
-        <label for = "password" class = "userPassColor">Password</label>
-        <input id="password" type="password" onkeydown = "if (event.keyCode == 13) document.getElementById('signIn').click()"/>
-    </p>
-    <input onClick = "signInUser()" class = "signIn" type = "button" id = "signIn" name = "signIn" value = "Login"/>
-    <a href = "C:/Qu/signUpPage.html" class = "signUpLink">Don't have an account?</a>
+      <label for="email" class = "userPassColor">Email</label>
+      <input id="email" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('loginUser').click()"/>
+  </p>
+  <p id="Password" class = "passwordLoginPos">
+      <label for = "password" class = "userPassColor">Password</label>
+      <input id="password" type="password" onkeydown = "if (event.keyCode == 13) document.getElementById('loginUser').click()"/>
+  </p>
+
+    <input onClick = "displayFields(true); signInGuest()" class = "guestLogin" type = "button" id = "guestLogin" name = "guestLogin" value = "Yes"/>
+    <input onClick = "displayFields(false)" class = "signIn" type = "button" id = "signIn" name = "signIn=" value = "No"/>
+    <input onClick = "signInUser()" class = "loginUser" type = "button" id = "loginUser" name = "loginUser" value = "Login"/>
   </body>
 </html>
