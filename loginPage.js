@@ -1,5 +1,36 @@
 
+function displayFields(guest){
+    if(guest){
+        document.getElementById("loginUser").style.visibility = "hidden"
+        document.getElementById("email").style.visibility = "hidden"
+        document.getElementById("password").style.visibility = "hidden"
+        document.getElementById("Email").style.visibility = "hidden"
+        document.getElementById("Password").style.visibility = "hidden"
+
+
+}
+    else{
+
+
+        document.getElementById("loginUser").style.visibility = "visible"
+        document.getElementById("email").style.visibility = "visible"
+        document.getElementById("password").style.visibility = "visible"
+        document.getElementById("Email").style.visibility = "visible"
+        document.getElementById("Password").style.visibility = "visible"
+    }
+}
+
+function signInGuest(){
+    var x =$.getJSON("/all", function(data){
+        if (data != null) {
+            for(key in data){
+                console.log(key +"\n")
+            }
+          }
+    })
+}
 function signInUser(){
+
     var email = document.getElementById('email').value
     var emailTag = validateEmail(email);
     var emailCheck = emailTag === ""
@@ -38,6 +69,14 @@ function signInUser(){
     }
     else window.alert(alertMessage)
 
+    // var xmlhttp = new XMLHttpRequest()
+    // xmlhttp.onreadystatechange = function() {
+    //     if (this.readyState == 4 && this.status == 200) {
+    //       var myObj = JSON.parse(this.responseText);
+    //     }
+    //   };
+    // xmlhttp.open("GET", "")
+    // xmlhttp.send()
 }
 
 function validateEmail(givenEmail) {

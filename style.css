@@ -46,7 +46,62 @@ h1{
   left: 575px;
 }
 
+.passwordLoginPos{
+  position: relative;
+	top: -50px;
+  left: 278px;
+  visibility: hidden;
+}
 
+.loginEmailPos{
+  position: relative;
+	top: -100px;
+  left: 278px;
+  visibility: hidden;
+}
+
+.loginUser{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: 30px;
+  left: -100px;
+  visibility: hidden;
+}
+
+.signIn{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -320px;
+  left: 100px;
+}
+
+.guestLogin{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -320px;
+  left: center;
+}
 
 .mainButton{
 	background-color: rgb(154, 155, 154);
@@ -114,21 +169,15 @@ h1{
 	left: 278px;
 }
 
+.guestPos{
+  position: relative;
+	top: -200px;
+	left: center;
+}
+
 .passwordPos{
   position: relative;
 	top: -10px;
-	left: 278px;
-}
-
-.passwordLoginPos{
-  position: relative;
-	top: -120px;
-	left: 278px;
-}
-
-.loginEmailPos{
-  position: relative;
-	top: -220px;
 	left: 278px;
 }
 
@@ -171,26 +220,6 @@ h1{
   padding: 20px; 
   width: 400px;
   height: 20px;  
-}
-
-.signUpLink{
-  position: relative;
-	top: 20px;
-	left: -54px;
-}
-
-.signIn{
-	background-color: rgb(154, 155, 154);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  position: relative;
-  top: -35px;
-  left: 75px;
 }
 
 h2{
