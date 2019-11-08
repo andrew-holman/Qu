@@ -52,22 +52,22 @@ function signInUser(){
     //         }
     //     }
     // }).then(r => console.log("Finished")).fail(r => console.log("FAILED")).then(r => console.log("Fail completed")) ;
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        url: "http://localhost:8080/demo/all",
-        success: function (data, status) {
-            console.log("FOUND");
-        },
-    }).then(r => console.log("Finished")).fail(r => console.log("Fail"));
+    // $.ajax({
+    //     type: "GET",
+    //     contentType: "application/json",
+    //     dataType: "json",
+    //     url: "http://localhost:8080/demo/all",
+    //     success: function (data, status) {
+    //         console.log("FOUND");
+    //     },
+    // }).then(r => console.log("Finished")).fail(r => console.log("Fail"));
 
-      if(alertMessage === ""){
-        document.getElementById('password').value = ""
-        document.getElementById('email').value = ""
-        window.alert("Successful")
-    }
-    else window.alert(alertMessage)
+    //   if(alertMessage === ""){
+    //     document.getElementById('password').value = ""
+    //     document.getElementById('email').value = ""
+    //     window.alert("Successful")
+    // }
+    // else window.alert(alertMessage)
 
     // var xmlhttp = new XMLHttpRequest()
     // xmlhttp.onreadystatechange = function() {
