@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="style.css" type="text/css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="loginPage.js"></script>
     <script src = "navigation.js"></script>
     <title>Login</title>
@@ -25,7 +26,7 @@
       <input id="password" type="password" onkeydown = "if (event.keyCode == 13) document.getElementById('loginUser').click()"/>
   </p>
 
-    <input onClick = "displayFields(true); signInGuest()" class = "guestLogin" type = "button" id = "guestLogin" name = "guestLogin" value = "Yes"/>
+    <input onClick = "displayFields(true)" class = "guestLogin" type = "button" id = "guestLogin" name = "guestLogin" value = "Yes"/>
     <input onClick = "displayFields(false)" class = "signIn" type = "button" id = "signIn" name = "signIn=" value = "No"/>
     <input onClick = "signInUser()" class = "loginUser" type = "button" id = "loginUser" name = "loginUser" value = "Login"/>
   </body>

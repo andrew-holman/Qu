@@ -41,13 +41,14 @@ function createUser(){
     }
     else window.alert(alertMessage)
 
-    var xmlhttp = new XMLHttpRequest()
-    xmlhttp.open("POST", "")
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+    // var xmlhttp = new XMLHttpRequest()
+    // xmlhttp.open("POST", "")
+    // xmlhttp.onreadystatechange = function() {
+    //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             
-        }
-    xmlhttp.send("")
+    //     }
+    // }
+    // xmlhttp.send("")
 }
 
 function validateName(name){

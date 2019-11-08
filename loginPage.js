@@ -20,7 +20,7 @@ function displayFields(guest){
 }
 
 function signInGuest(){
-    $.getJSON("/all", function(data){
+    var x =$.getJSON("/all", function(data){
         if (data != null) {
             for(key in data){
                 console.log(key +"\n")     
@@ -42,7 +42,6 @@ function signInUser(){
     var alertMessage = ""
     alertMessage += emailCheck ? "" : emailTag +"\n"
     alertMessage += passwordCheck ? "" : passwordTag
-    alertMessage += viewUsers();
 
     if(alertMessage == ""){
         document.getElementById('password').value = ""
@@ -51,14 +50,14 @@ function signInUser(){
     }
     else window.alert(alertMessage)
 
-    var xmlhttp = new XMLHttpRequest()
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          var myObj = JSON.parse(this.responseText);
-        }
-      };
-    xmlhttp.open("GET", "")
-    xmlhttp.send()
+    // var xmlhttp = new XMLHttpRequest()
+    // xmlhttp.onreadystatechange = function() {
+    //     if (this.readyState == 4 && this.status == 200) {
+    //       var myObj = JSON.parse(this.responseText);
+    //     }
+    //   };
+    // xmlhttp.open("GET", "")
+    // xmlhttp.send()
 }
 
 function validateEmail(givenEmail) {
