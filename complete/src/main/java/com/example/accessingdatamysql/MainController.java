@@ -3,6 +3,7 @@ package com.example.accessingdatamysql;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
@@ -12,9 +13,7 @@ public class MainController {
     private UserRepository userRepository;
 
     @PostMapping(path="/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String displayName
-            , @RequestParam String userPassword
-    ) {
+    public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String displayName, @RequestParam String userPassword) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
@@ -25,8 +24,73 @@ public class MainController {
         userRepository.save(n);
         return "Saved";
     }
+    @RequestMapping(path="/user/get/id", method=RequestMethod.POST, produces = "application/json") // Map ONLY POST Requests
+    public @ResponseBody User getUserById(@RequestParam String id) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
 
-    @GetMapping(path="/all")
+        Integer idInt = Integer.parseInt(id);
+        return userRepository.findById(idInt).get();
+    }
+    @RequestMapping(path="/user/get/userName", method=RequestMethod.POST, produces = "application/json") // Map ONLY POST Requests
+    public @ResponseBody User getUserByUserName(@RequestParam String userName) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        return userRepository.findByUserName(userName).get(0);
+    }
+    @RequestMapping(path="/user/delete/id", method=RequestMethod.POST, produces = "application/json") // Map ONLY POST Requests
+    public @ResponseBody String deleteUserById(@RequestParam String id) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Integer idInt = Integer.parseInt(id);
+        try{
+            userRepository.deleteById(idInt);
+        } catch(Exception err){
+            return "No such user in database";
+        }
+        return "User deleted";
+    }
+    @RequestMapping(path="/user/delete/userName", method=RequestMethod.POST, produces = "application/json") // Map ONLY POST Requests
+    public @ResponseBody String deleteUserByUserName(@RequestParam String userName) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        User user = userRepository.findByUserName(userName).get(0);
+        Integer idInt = user.getUserId();;
+        try{
+            userRepository.deleteById(idInt);
+        } catch(Exception err){
+            return "No such user in database";
+        }
+        return "User deleted";
+    }
+
+    @RequestMapping(path="/user/login", method=RequestMethod.POST, produces = "application/json") // Map ONLY POST Requests
+    public @ResponseBody User userLogin(@RequestParam String userName, @RequestParam String userPassword) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        User user;
+        try{
+            user = userRepository.findByUserName(userName).get(0);
+        } catch(Exception err){
+            User rtrnUser = new User();
+            Integer errId = new Integer(-1);
+            rtrnUser.setUserId(errId);
+            rtrnUser.setDisplayName("Username not in database");
+            return rtrnUser;
+        }
+        if(!user.getUserPassword().equals(userPassword)){
+            User rtrnUser = new User();
+            Integer errId = new Integer(-1);
+            rtrnUser.setUserId(errId);
+            rtrnUser.setDisplayName("Passwords don't match");
+            return rtrnUser;
+        }
+        return user;
+    }
+
+    //@ResponseHeaders(Access-Control-Allow-Origin=true)
+    @RequestMapping(path="/all", method=RequestMethod.GET, produces = "application/json")
     public @ResponseBody Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
