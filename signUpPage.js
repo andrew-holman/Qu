@@ -49,6 +49,11 @@ function createUser(){
     //     }
     // }
     // xmlhttp.send("")
+
+    /*var user = $.getJSON("/demo/add" + email + "/" + firstName + " " + lastName + "/" + password, function(data){})
+            Returns "saved" if it was successful
+            Will implement a check to see if user name was unique
+    */
 }
 
 function validateName(name){
