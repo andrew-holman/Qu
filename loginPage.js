@@ -20,7 +20,13 @@ function displayFields(guest){
 }
 
 function signInGuest(){
-
+    $.getJSON("/all", function(data){
+        if (data != null) {
+            for(key in data){
+                console.log(key +"\n")     
+            }
+          }
+    })
 }
 
 function signInUser(){
@@ -37,7 +43,6 @@ function signInUser(){
     alertMessage += emailCheck ? "" : emailTag +"\n"
     alertMessage += passwordCheck ? "" : passwordTag
     alertMessage += viewUsers();
-    console.log(sampleUsers);
 
     if(alertMessage == ""){
         document.getElementById('password').value = ""
