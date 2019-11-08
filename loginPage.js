@@ -1,21 +1,37 @@
-import {viewUsers} from "./ServerConnection/viewUsers";
 
 function signInUser(){
     var email = document.getElementById('email').value
     var emailTag = validateEmail(email);
-    var emailCheck = emailTag == ""
+    var emailCheck = emailTag === ""
 
     var password = document.getElementById('password').value
     var passwordTag = validatePassword(password)
-    var passwordCheck = passwordTag == ""
+    var passwordCheck = passwordTag === ""
 
     var alertMessage = ""
     alertMessage += emailCheck ? "" : emailTag +"\n"
     alertMessage += passwordCheck ? "" : passwordTag
-    alertMessage += viewUsers();
-    console.log(sampleUsers);
 
-    if(alertMessage == ""){
+    // $.getJSON("127.0.0.1:8080/demo/all", function (data) {
+    //     console.log("HERE")
+    //     console.log(data);
+    //     if (data != null) {
+    //         for (let key in data) {
+    //             console.log(data);
+    //         }
+    //     }
+    // }).then(r => console.log("Finished")).fail(r => console.log("FAILED")).then(r => console.log("Fail completed")) ;
+    // $.ajax({
+    //     type: "GET",
+    //     contentType: "application/json",
+    //     dataType: "json",
+    //     url: "http://localhost:8080/demo/all",
+    //     success: function (data, status) {
+    //         console.log("FOUND");
+    //     },
+    // }).then(r => console.log("Finished")).fail(r => console.log("Fail"));
+
+      if(alertMessage === ""){
         document.getElementById('password').value = ""
         document.getElementById('email').value = ""
         window.alert("Successful")
