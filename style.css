@@ -86,7 +86,12 @@ h1{
   border-radius: 25px;
   padding: 20px; 
   width: 400px;
+  
   height: 20px;  
+}
+
+input:focus {
+  outline:none;
 }
 
 .firstNamePos{
