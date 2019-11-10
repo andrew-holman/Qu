@@ -52,15 +52,26 @@ function signInUser(){
     //         }
     //     }
     // }).then(r => console.log("Finished")).fail(r => console.log("FAILED")).then(r => console.log("Fail completed")) ;
+
+    function MyCallback(data) {
+        alert("Hello World");
+    }
+
     $.ajax({
         type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        url: "http://localhost:8080/demo/all",
+        dataType: "jsonp",
+        url: "http://localhost:8080/demo/all?callback=MyCallback",
+        crossDomain: true,
+        jsonp: "callback",
         success: function (data, status) {
             console.log("FOUND");
         },
-    }).then(r => console.log("Finished")).fail(r => console.log("Fail"));
+        error: function (xhr,status,error) {
+            console.log(status);
+            console.log(error);
+            console.log(xhr);
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 
       if(alertMessage === ""){
         document.getElementById('password').value = ""
