@@ -1,0 +1,288 @@
+body{
+	background: linear-gradient(to bottom right, #0099ff 0%, #33ccff 100%);
+	text-align: center;
+	margin: 25px auto;
+	padding: 10px;
+}
+#main{
+	width: 1000px;
+	height: 1000px;
+	margin: 25px auto;
+	padding: 10px;
+}
+h1{
+	position: relative;
+	top: -100px;
+	left: center;
+	font-family: "Lucida Console";
+	font-size: 80pt;
+	color: #FFFFFF;
+}
+.login{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -242px;
+  left: 560px;
+}
+
+.signUp{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -242px;
+  left: 575px;
+}
+
+.passwordLoginPos{
+  position: relative;
+	top: -50px;
+  left: 278px;
+  visibility: hidden;
+}
+
+.loginEmailPos{
+  position: relative;
+	top: -100px;
+  left: 278px;
+  visibility: hidden;
+}
+
+.loginUser{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: 30px;
+  left: -100px;
+  visibility: hidden;
+}
+
+.signIn{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -320px;
+  left: 100px;
+}
+
+.guestLogin{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -320px;
+  left: center;
+}
+
+.mainButton{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -242px;
+  left: 535px;
+}
+
+.create{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: 160px;
+  left: 15px;
+}
+
+.userPassColor{
+	font-family: "Times New Roman";
+	font-size: 25pt;
+	color: #FFFFFF;
+}
+
+#lastName {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+.firstNamePos{
+  position: relative;
+	top: -220px;
+	left: 278px;
+}
+
+#email {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+.emailPos{
+  position: relative;
+	top: -80px;
+	left: 278px;
+}
+
+.lastNamePos{
+  position: relative;
+	top: -150px;
+	left: 278px;
+}
+
+.guestPos{
+  position: relative;
+	top: -200px;
+	left: center;
+}
+
+.passwordPos{
+  position: relative;
+	top: -10px;
+	left: 278px;
+}
+
+.confirmPasswordPos{
+  position: relative;
+	top: 60px;
+	left: 278px;
+}
+
+.selectTypePos{
+  position: relative;
+	top: 130px;
+	left: center;
+}
+
+#password {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#email {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#confirmpassword {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+
+#firstName {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+h2{
+	position: relative;
+	top: 60px;
+	left: center;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 20pt;
+  top: 20px;
+  left: 278 px;
+  color: #FFFFFF;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 278px;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}

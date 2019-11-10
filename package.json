@@ -1,0 +1,8 @@
+{
+  "name": "Qu",
+  "version": "1.0.0",
+  "Access-Control-Allow-Origin": true,
+  "dependencies": {
+    "mysql": "^2.17.1"
+  }
+}
