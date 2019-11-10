@@ -31,15 +31,15 @@ function createUser(){
     alertMessage += passConfCheck ? "" : passConfTag + "\n"
     alertMessage += typeSelectedCheck ? "" : typeSelected
 
-    if(alertMessage == ""){
-        document.getElementById('firstName').value = ""
-        document.getElementById('lastName').value = ""
-        document.getElementById('email').value = ""
-        document.getElementById('password').value = ""
-        document.getElementById('confirmpassword').value = ""
-        window.alert("Successful")
-    }
-    else window.alert(alertMessage)
+    // if(alertMessage == ""){
+    //     document.getElementById('firstName').value = ""
+    //     document.getElementById('lastName').value = ""
+    //     document.getElementById('email').value = ""
+    //     document.getElementById('password').value = ""
+    //     document.getElementById('confirmpassword').value = ""
+    //     window.alert("Successful")
+    // }
+    // else window.alert(alertMessage)
 
     // var xmlhttp = new XMLHttpRequest()
     // xmlhttp.open("POST", "")
@@ -49,6 +49,11 @@ function createUser(){
     //     }
     // }
     // xmlhttp.send("")
+
+    /*var user = $.getJSON("/demo/add" + email + "/" + firstName + " " + lastName + "/" + password, function(data){})
+            Returns "saved" if it was successful
+            Will implement a check to see if user name was unique
+    */
 }
 
 function validateName(name){

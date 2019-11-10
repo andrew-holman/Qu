@@ -73,21 +73,35 @@ function signInUser(){
         },
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 
-      if(alertMessage === ""){
-        document.getElementById('password').value = ""
-        document.getElementById('email').value = ""
-        window.alert("Successful")
-    }
-    else window.alert(alertMessage)
+    //   if(alertMessage === ""){
+    //     document.getElementById('password').value = ""
+    //     document.getElementById('email').value = ""
+    //     window.alert("Successful")
+    // }
+    // else window.alert(alertMessage)
 
     // var xmlhttp = new XMLHttpRequest()
     // xmlhttp.onreadystatechange = function() {
     //     if (this.readyState == 4 && this.status == 200) {
     //       var myObj = JSON.parse(this.responseText);
+
     //     }
     //   };
     // xmlhttp.open("GET", "")
     // xmlhttp.send()
+
+   /*var x =$.getJSON("/user/login" + email + "/" + password, function(data){})
+        Using this function, we will receive
+        a JSON object from the server and the
+        object will contain a parameter called userID.
+        userID will be a number and if that
+        number is -1, then the front end will
+        know that there was an error logging
+        in. The front end can then display that
+        error by displaying the displayName from
+        the JSON object since that is where it will
+        be contained.
+   */
 }
 
 function validateEmail(givenEmail) {
