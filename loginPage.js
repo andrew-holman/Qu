@@ -43,28 +43,21 @@ function signInUser(){
     alertMessage += emailCheck ? "" : emailTag +"\n"
     alertMessage += passwordCheck ? "" : passwordTag
 
-    // $.getJSON("127.0.0.1:8080/demo/all", function (data) {
-    //     console.log("HERE")
-    //     console.log(data);
-    //     if (data != null) {
-    //         for (let key in data) {
-    //             console.log(data);
-    //         }
-    //     }
-    // }).then(r => console.log("Finished")).fail(r => console.log("FAILED")).then(r => console.log("Fail completed")) ;
-
-    function MyCallback(data) {
-        alert("Hello World");
-    }
-
+    console.log(password);
     $.ajax({
-        type: "GET",
-        dataType: "jsonp",
-        url: "http://localhost:8080/demo/all?callback=MyCallback",
+        type: "POST",
+        data: {userName: email, userPassword: password},
+        dataType: "json",
+        url: "http://localhost:8080/demo/user/login",
         crossDomain: true,
-        jsonp: "callback",
         success: function (data, status) {
-            console.log("FOUND");
+            console.log("Data " + JSON.stringify(data));
+            if(data.userId === -1){
+                alert("Incorrect Login Information");
+            }
+            else{
+                main();
+            }
         },
         error: function (xhr,status,error) {
             console.log(status);
@@ -72,23 +65,6 @@ function signInUser(){
             console.log(xhr);
         },
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-
-    //   if(alertMessage === ""){
-    //     document.getElementById('password').value = ""
-    //     document.getElementById('email').value = ""
-    //     window.alert("Successful")
-    // }
-    // else window.alert(alertMessage)
-
-    // var xmlhttp = new XMLHttpRequest()
-    // xmlhttp.onreadystatechange = function() {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //       var myObj = JSON.parse(this.responseText);
-
-    //     }
-    //   };
-    // xmlhttp.open("GET", "")
-    // xmlhttp.send()
 
    /*var x =$.getJSON("/user/login" + email + "/" + password, function(data){})
         Using this function, we will receive
