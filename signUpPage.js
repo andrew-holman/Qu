@@ -31,24 +31,28 @@ function createUser(){
     alertMessage += passConfCheck ? "" : passConfTag + "\n"
     alertMessage += typeSelectedCheck ? "" : typeSelected
 
-    if(alertMessage == ""){
-        document.getElementById('firstName').value = ""
-        document.getElementById('lastName').value = ""
-        document.getElementById('email').value = ""
-        document.getElementById('password').value = ""
-        document.getElementById('confirmpassword').value = ""
-        window.alert("Successful")
-    }
-    else window.alert(alertMessage)
 
-    // var xmlhttp = new XMLHttpRequest()
-    // xmlhttp.open("POST", "")
-    // xmlhttp.onreadystatechange = function() {
-    //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            
-    //     }
-    // }
-    // xmlhttp.send("")
+    $.ajax({
+        type: "POST",
+        data: {userName: email, userDisplayName: firstName, userPassword: password},
+        dataType: "text",
+        url: "http://localhost:8080/demo/user/add",
+        crossDomain: true,
+        success: function (data, status) {
+            console.log("Data " + JSON.stringify(data));
+            if(data === "Success"){
+                main();
+            }
+            else{
+                alert("Failed to sign up");
+            }
+        },
+        error: function (xhr,status,error) {
+            console.log(status);
+            console.log(error);
+            console.log(xhr);
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 
     /*var user = $.getJSON("/demo/add" + email + "/" + firstName + " " + lastName + "/" + password, function(data){})
             Returns "saved" if it was successful

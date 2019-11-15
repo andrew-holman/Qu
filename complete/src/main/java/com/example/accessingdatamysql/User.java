@@ -13,6 +13,7 @@ public class User {
 
     private String displayName;
     private String userPassword;
+    private Integer classId;
 
     public Integer getUserId(){
         return userId;
@@ -37,6 +38,12 @@ public class User {
     }
     public void setUserPassword(String userPassword){
         this.userPassword = userPassword;
+    }
+    public Integer getClassId(){
+        return classId;
+    }
+    public void setClassId(Integer classId){
+        this.classId = classId;
     }
 
 

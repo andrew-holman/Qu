@@ -43,41 +43,28 @@ function signInUser(){
     alertMessage += emailCheck ? "" : emailTag +"\n"
     alertMessage += passwordCheck ? "" : passwordTag
 
-    // $.getJSON("127.0.0.1:8080/demo/all", function (data) {
-    //     console.log("HERE")
-    //     console.log(data);
-    //     if (data != null) {
-    //         for (let key in data) {
-    //             console.log(data);
-    //         }
-    //     }
-    // }).then(r => console.log("Finished")).fail(r => console.log("FAILED")).then(r => console.log("Fail completed")) ;
-    // $.ajax({
-    //     type: "GET",
-    //     contentType: "application/json",
-    //     dataType: "json",
-    //     url: "http://localhost:8080/demo/all",
-    //     success: function (data, status) {
-    //         console.log("FOUND");
-    //     },
-    // }).then(r => console.log("Finished")).fail(r => console.log("Fail"));
-
-      if(alertMessage === ""){
-        document.getElementById('password').value = ""
-        document.getElementById('email').value = ""
-        window.alert("Successful")
-    }
-    else window.alert(alertMessage)
-
-    // var xmlhttp = new XMLHttpRequest()
-    // xmlhttp.onreadystatechange = function() {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //       var myObj = JSON.parse(this.responseText);
-          
-    //     }
-    //   };
-    // xmlhttp.open("GET", "")
-    // xmlhttp.send()
+    console.log(password);
+    $.ajax({
+        type: "POST",
+        data: {userName: email, userPassword: password},
+        dataType: "json",
+        url: "http://localhost:8080/demo/user/login",
+        crossDomain: true,
+        success: function (data, status) {
+            console.log("Data " + JSON.stringify(data));
+            if(data.userId === -1){
+                alert("Incorrect Login Information");
+            }
+            else{
+                main();
+            }
+        },
+        error: function (xhr,status,error) {
+            console.log(status);
+            console.log(error);
+            console.log(xhr);
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 
    /*var x =$.getJSON("/user/login" + email + "/" + password, function(data){})
         Using this function, we will receive
@@ -85,7 +72,7 @@ function signInUser(){
         object will contain a parameter called userID.
         userID will be a number and if that
         number is -1, then the front end will
-        know that there was an error logging 
+        know that there was an error logging
         in. The front end can then display that
         error by displaying the displayName from
         the JSON object since that is where it will
