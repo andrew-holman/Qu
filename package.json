@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "Access-Control-Allow-Origin": true,
   "dependencies": {
+    "jasmine": "^3.5.0",
     "mysql": "^2.17.1"
   }
 }

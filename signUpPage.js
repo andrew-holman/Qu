@@ -53,15 +53,10 @@ function createUser(){
             console.log(xhr);
         },
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-
-    /*var user = $.getJSON("/demo/add" + email + "/" + firstName + " " + lastName + "/" + password, function(data){})
-            Returns "saved" if it was successful
-            Will implement a check to see if user name was unique
-    */
 }
 
 function validateName(name){
-    if(name == "") return "name cannot be empty!"
+    if(name == "") return "Name cannot be empty!"
     var r = /^[A-Za-z_ ]+$/;
     if (!name.match(r)) return "Invalid Name! Reminder, it can only be alphabetic characters."
     return ""
