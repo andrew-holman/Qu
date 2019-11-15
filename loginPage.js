@@ -6,11 +6,13 @@ function displayFields(guest){
         document.getElementById("password").style.visibility = "hidden"
         document.getElementById("Email").style.visibility = "hidden"
         document.getElementById("Password").style.visibility = "hidden"
-
+        
         document.getElementById("guestName").style.visibility = "visible"
+        document.getElementById("GuestName").style.visibility = "visible"
 }
     else{
         document.getElementById("guestName").style.visibility = "hidden"
+        document.getElementById("GuestName").style.visibility = "hidden"
 
         document.getElementById("loginUser").style.visibility = "visible"
         document.getElementById("email").style.visibility = "visible"
