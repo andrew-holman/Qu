@@ -1,5 +1,5 @@
 body{
-	background: linear-gradient(to bottom right, #0099ff 0%, #33ccff 100%);
+	background: linear-gradient(to bottom right, #67879d 0%, #324349 100%);
 	text-align: center;
 	margin: 25px auto;
 	padding: 10px;
@@ -60,6 +60,13 @@ h1{
   visibility: hidden;
 }
 
+.guestNamePos{
+  position: relative;
+	top: -290px;
+  left: 278px;
+  visibility: hidden;
+}
+
 .loginUser{
 	background-color: rgb(154, 155, 154);
   border: none;
@@ -70,7 +77,7 @@ h1{
   display: inline-block;
   font-size: 19px;
   position: relative;
-  top: 30px;
+  top: -50px;
   left: -100px;
   visibility: hidden;
 }
@@ -85,7 +92,7 @@ h1{
   display: inline-block;
   font-size: 18px;
   position: relative;
-  top: -320px;
+  top: -400px;
   left: 100px;
 }
 
@@ -99,7 +106,7 @@ h1{
   display: inline-block;
   font-size: 18px;
   position: relative;
-  top: -320px;
+  top: -400px;
   left: center;
 }
 
@@ -151,6 +158,13 @@ h1{
 }
 
 #email {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#guestName {
   border-radius: 25px;
   padding: 20px; 
   width: 400px;

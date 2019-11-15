@@ -7,10 +7,10 @@ function displayFields(guest){
         document.getElementById("Email").style.visibility = "hidden"
         document.getElementById("Password").style.visibility = "hidden"
 
-
+        document.getElementById("guestName").style.visibility = "visible"
 }
     else{
-
+        document.getElementById("guestName").style.visibility = "hidden"
 
         document.getElementById("loginUser").style.visibility = "visible"
         document.getElementById("email").style.visibility = "visible"
@@ -62,12 +62,12 @@ function signInUser(){
     //     },
     // }).then(r => console.log("Finished")).fail(r => console.log("Fail"));
 
-    //   if(alertMessage === ""){
-    //     document.getElementById('password').value = ""
-    //     document.getElementById('email').value = ""
-    //     window.alert("Successful")
-    // }
-    // else window.alert(alertMessage)
+      if(alertMessage === ""){
+        document.getElementById('password').value = ""
+        document.getElementById('email').value = ""
+        window.alert("Successful")
+    }
+    else window.alert(alertMessage)
 
     // var xmlhttp = new XMLHttpRequest()
     // xmlhttp.onreadystatechange = function() {

@@ -23,12 +23,15 @@
     <p id="Email" class = "loginEmailPos">
       <label for="email" class = "userPassColor">Email</label>
       <input id="email" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('loginUser').click()"/>
-  </p>
-  <p id="Password" class = "passwordLoginPos">
+    </p>
+    <p id="Password" class = "passwordLoginPos">
       <label for = "password" class = "userPassColor">Password</label>
       <input id="password" type="password" onkeydown = "if (event.keyCode == 13) document.getElementById('loginUser').click()"/>
-  </p>
-
+    </p>
+    <p id="GuestName" class = "guestNamePos">
+      <label for="guestName" class = "userPassColor">Enter your First and Last Name</label>
+      <input id="guestName" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('signInGuest').click()"/>
+    </p>
     <input onClick = "displayFields(true)" class = "guestLogin" type = "button" id = "guestLogin" name = "guestLogin" value = "Yes"/>
     <input onClick = "displayFields(false)" class = "signIn" type = "button" id = "signIn" name = "signIn=" value = "No"/>
     <input onClick = "signInUser()" class = "loginUser" type = "button" id = "loginUser" name = "loginUser" value = "Login"/>
