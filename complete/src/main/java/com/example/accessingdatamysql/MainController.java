@@ -14,13 +14,13 @@ public class MainController {
 
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path="/user/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String userDisplayName, @RequestParam String userPassword) {
+    public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String displayName, @RequestParam String userPassword) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
         try{
             User n = new User();
-            n.setDisplayName(userDisplayName);
+            n.setDisplayName(displayName);
             n.setUserName(userName);
             n.setUserPassword(userPassword);
             n.setClassId(-1);
@@ -53,7 +53,7 @@ public class MainController {
             Integer errId = new Integer(-1);
             rtrnUser.setUserId(errId);
             rtrnUser.setClassId(errId);
-            rtrnUser.setDisplayName("Passwords don't match");
+            rtrnUser.setDisplayName("User doesn't exist");
             return rtrnUser;
         }
 
