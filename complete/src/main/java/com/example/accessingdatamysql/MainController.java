@@ -14,13 +14,13 @@ public class MainController {
 
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path="/user/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String userDisplayName, @RequestParam String userPassword) {
+    public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String displayName, @RequestParam String userPassword) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
         try{
             User n = new User();
-            n.setDisplayName(userDisplayName);
+            n.setDisplayName(displayName);
             n.setUserName(userName);
             n.setUserPassword(userPassword);
             n.setClassId(-1);
@@ -53,7 +53,7 @@ public class MainController {
             Integer errId = new Integer(-1);
             rtrnUser.setUserId(errId);
             rtrnUser.setClassId(errId);
-            rtrnUser.setDisplayName("Passwords don't match");
+            rtrnUser.setDisplayName("User doesn't exist");
             return rtrnUser;
         }
 
@@ -122,22 +122,62 @@ public class MainController {
         return userRepository.findAll();
     }
 
-//    @RequestMapping(path="/user/set/classId/{id}", method=RequestMethod.POST) // Map ONLY POST Requests
-//    public @ResponseBody String setClassIdByUserName(@PathVariable int id,
-//                                                     HttpServletRequest request,@ModelAttribute("user") User user) {
-//        // @ResponseBody means the returned String is the response, not a view name
-//        // @RequestParam means it is a parameter from the GET or POST request
-//        Integer classIdInt = new Integer(classId);
-//        User user;
-//        try{
-//            user = userRepository.findByUserName(userName).get(0);
-//        } catch(Exception err){
-//            return "No such user in database";
-//        }
-//        Session session = sessionFactory.getCurrentSession();
-//        User existingUser = (User) session.get(User.class, user.getUserId());
-//        existingUser.setClassId(new Integer(1));
-//        return "Id changed" + id + user.getUserName();
-//    }
+    @RequestMapping(path="/user/set/classId", method=RequestMethod.POST) // Map ONLY POST Requests
+    public @ResponseBody String setClassIdByUserName(@RequestParam String userName, @RequestParam int classId) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Integer classIdInt = new Integer(classId);
+        User user;
+        try{
+            user = userRepository.findByUserName(userName).get(0);
+        } catch(Exception err){
+            return "No such user in database";
+        }
+        user.setClassId(classIdInt);
+        userRepository.save(user);
+        return "Id changed";
+    }
+    @RequestMapping(path="/user/set/displayName", method=RequestMethod.POST) // Map ONLY POST Requests
+    public @ResponseBody String setDisplayNameByUserName(@RequestParam String userName, @RequestParam String displayName) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        User user;
+        try{
+            user = userRepository.findByUserName(userName).get(0);
+        } catch(Exception err){
+            return "No such user in database";
+        }
+        user.setDisplayName(displayName);
+        userRepository.save(user);
+        return "Display name changed";
+    }
+    @RequestMapping(path="/user/set/userPassword", method=RequestMethod.POST) // Map ONLY POST Requests
+    public @ResponseBody String setUserPasswordByUserName(@RequestParam String userName, @RequestParam String userPassword) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        User user;
+        try{
+            user = userRepository.findByUserName(userName).get(0);
+        } catch(Exception err){
+            return "No such user in database";
+        }
+        user.setUserPassword(userPassword);
+        userRepository.save(user);
+        return "Password changed";
+    }
+    @RequestMapping(path="/user/set/userName", method=RequestMethod.POST) // Map ONLY POST Requests
+    public @ResponseBody String setUserNameByUserName(@RequestParam String userName, @RequestParam String newUserName) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        User user;
+        try{
+            user = userRepository.findByUserName(userName).get(0);
+        } catch(Exception err){
+            return "No such user in database";
+        }
+        user.setUserName(newUserName);
+        userRepository.save(user);
+        return "Username changed";
+    }
 
 }
