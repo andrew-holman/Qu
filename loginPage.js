@@ -45,7 +45,7 @@ function signInUser(){
     alertMessage += emailCheck ? "" : emailTag +"\n"
     alertMessage += passwordCheck ? "" : passwordTag
 
-    console.log(password);
+    console.log("My password: " + password);
     $.ajax({
         type: "POST",
         data: {userName: email, userPassword: password},
@@ -54,7 +54,10 @@ function signInUser(){
         crossDomain: true,
         success: function (data, status) {
             console.log("Data " + JSON.stringify(data));
-            if(data.userId === -1){
+            if(data.userId === -2){
+                alert("You must verify this email");
+            }
+            else if(data.userId === -1){
                 alert("Incorrect Login Information");
             }
             else{

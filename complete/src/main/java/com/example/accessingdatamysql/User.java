@@ -3,7 +3,10 @@ package com.example.accessingdatamysql;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.*;
 import javax.persistence.Id;
+import java.util.*;
+
 @Entity
 public class User {
     @Id
@@ -14,6 +17,7 @@ public class User {
     private String displayName;
     private String userPassword;
     private Integer classId;
+    private boolean enabled;
 
     public Integer getUserId(){
         return userId;
@@ -45,6 +49,15 @@ public class User {
     public void setClassId(Integer classId){
         this.classId = classId;
     }
-
+    public boolean getEnabled(){
+        return enabled;
+    }
+    public void setEnabled(boolean enabled){
+        this.enabled = enabled;
+    }
+    public User(){
+        super();
+        this.enabled = false;
+    }
 
 }
