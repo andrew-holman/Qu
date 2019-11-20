@@ -4,6 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="style.css" type="text/css" rel="stylesheet" />
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
     <script src="./mainPage.js"></script>
     <script src = "navigation.js"></script>
     <title>Qu</title>
@@ -16,14 +20,15 @@
     </p>
     <input id = "createClass" class = "createClass" type = "button" onClick = "showOptions(false)" value = "Create"/>
     <input id = "join" class = "join" type = "button" onClick = "showOptions(true)" value = "Join"/>
+    <p id = "EnterEmail" class = "enterEmailPos">
+        <label for = "enterEmail" class = "userPassColor">Please Enter Your Email</label>
+        <input id = "enterEmail" type="text" onkeydown = "if (event.keyCode == 13){joinOrCreate()}" />
+    </p>
     <p id = "EnterCode" class = "enterCodePos">
       <label for = "enterCode" class = "userPassColor">Please Enter the Class Session's Code</label>
-      <input id = "enterCode" type="text" onkeydown = "if (event.keyCode == 13){
-          var code = document.getElementById('enterCode').value
-          joinClass(code)
-      }" />
+      <input id = "enterCode" type="text" onkeydown = "if (event.keyCode == 13){join()}" />
     </p>
-    <input onClick = "joinClass()" class = "joinClass" id = "joinClass" name = "joinClass" value = "Join"/>
-
+    <input onClick = "join()" class = "joinClass" type = "button" id = "joinClass" name = "joinClass" value = "Join"/>
+    
   </body>
 </html>

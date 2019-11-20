@@ -26,7 +26,21 @@ h1{
   height: 20px;  
 }
 
+#enterEmail {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
 .enterCodePos{
+	position: relative;
+	top: 30px;
+	left: 287px;
+	visibility: hidden;
+}
+
+.enterEmailPos{
 	position: relative;
 	top: -40px;
 	left: 287px;
@@ -78,7 +92,7 @@ h1{
   font-size: 18px;
   visibility: hidden;
   position: relative;
-  top: 55px;
+  top: 125px;
   left: 15px;
 }
 

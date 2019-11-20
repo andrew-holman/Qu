@@ -66,14 +66,15 @@ public class ClassController {
     public @ResponseBody Class addNewClass (@RequestParam String creatorUserName, @RequestParam String displayName) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
+		Class n = new Class();
         try{
-            Class n = new Class();
+            
             n.setDisplayName(displayName);
             n.setCreatorUserName(creatorUserName);
 			n.setClassID(createID());
             classRepository.save(n);
         } catch(Exception e){
-			n.setClassID(-1);
+			n.setDisplayName("Failed to create a class");
             return n;
         }
 
@@ -122,16 +123,4 @@ public class ClassController {
         return null;
     }
 	
-	public static int createID(){
-		int id = 0;
-		int count = 0;
-		Random ran = new Random();
-		while(count < 7){
-			id *= 10;
-			id += ran.nextInt(9) + 1;
-			
-			count++;
-		}
-		return id;
-	}
 }
