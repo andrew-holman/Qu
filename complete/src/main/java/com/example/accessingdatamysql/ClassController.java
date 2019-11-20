@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod.*;
 import java.util.*;
 
+
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/class") // This means URL's start with /demo (after Application path)
 public class ClassController {
@@ -62,19 +63,21 @@ public class ClassController {
 
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path="/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewClass (@RequestParam String creatorUserName, @RequestParam String displayName) {
+    public @ResponseBody Class addNewClass (@RequestParam String creatorUserName, @RequestParam String displayName) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         try{
             Class n = new Class();
             n.setDisplayName(displayName);
             n.setCreatorUserName(creatorUserName);
+			n.setClassID(createID());
             classRepository.save(n);
         } catch(Exception e){
-            return "Failure";
+			n.setClassID(-1);
+            return n;
         }
 
-        return "Success";
+        return n;
     }
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path="/query/add") // Map ONLY POST Requests
@@ -118,5 +121,17 @@ public class ClassController {
 
         return null;
     }
-
+	
+	public static int createID(){
+		int id = 0;
+		int count = 0;
+		Random ran = new Random();
+		while(count < 7){
+			id *= 10;
+			id += ran.nextInt(9) + 1;
+			
+			count++;
+		}
+		return id;
+	}
 }

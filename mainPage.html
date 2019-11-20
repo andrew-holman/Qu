@@ -18,8 +18,12 @@
     <input id = "join" class = "join" type = "button" onClick = "showOptions(true)" value = "Join"/>
     <p id = "EnterCode" class = "enterCodePos">
       <label for = "enterCode" class = "userPassColor">Please Enter the Class Session's Code</label>
-      <input id = "enterCode" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('loginUser').click()"/>
+      <input id = "enterCode" type="text" onkeydown = "if (event.keyCode == 13){
+          var code = document.getElementById('enterCode').value
+          joinClass(code)
+      }" />
     </p>
     <input onClick = "joinClass()" class = "joinClass" id = "joinClass" name = "joinClass" value = "Join"/>
+
   </body>
 </html>
