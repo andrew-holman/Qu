@@ -42,7 +42,6 @@ unset _warning_found
 unset _warning_prefix
 unset _warning_file
 unset _warning
-
 function acp(){
 	git add .
     git commit -a -m "$1"

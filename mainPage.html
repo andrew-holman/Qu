@@ -11,7 +11,15 @@
   <body>
     <div id = "main">
     <h1 id = "showName">Qu</h1>
-    <input onClick = "login()" class = "login" type="button" id="login" name="login" value="Login"/>
-    <input onClick = "signUp()" class = "signUp" type="button" id="signUp" name="signUp" value="Sign Up"/>
+    <p id = "CreateJoin" class = "createJoinPos">
+      <label for = "createJoin" class = "userPassColor">Would you like to join or create a class session?</label>
+    </p>
+    <input id = "createClass" class = "createClass" type = "button" onClick = "showOptions(false)" value = "Create"/>
+    <input id = "join" class = "join" type = "button" onClick = "showOptions(true)" value = "Join"/>
+    <p id = "EnterCode" class = "enterCodePos">
+      <label for = "enterCode" class = "userPassColor">Please Enter the Class Session's Code</label>
+      <input id = "enterCode" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('loginUser').click()"/>
+    </p>
+    <input onClick = "joinClass()" class = "joinClass" id = "joinClass" name = "joinClass" value = "Join"/>
   </body>
 </html>
