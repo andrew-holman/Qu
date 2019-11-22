@@ -18,6 +18,84 @@ h1{
 	font-size: 80pt;
 	color: #FFFFFF;
 }
+
+#enterCode {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#enterEmail {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+.enterCodePos{
+	position: relative;
+	top: 30px;
+	left: 287px;
+	visibility: hidden;
+}
+
+.enterEmailPos{
+	position: relative;
+	top: -40px;
+	left: 287px;
+	visibility: hidden;
+}
+
+.createJoinPos{
+	position: relative;
+	top: -50px;
+  left: center;
+}
+
+.createClass{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -40px;
+  left: -155px;
+}
+
+.join{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -40px;
+  left: 145px;
+}
+
+.joinClass{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  visibility: hidden;
+  position: relative;
+  top: 125px;
+  left: 15px;
+}
+
 .login{
 	background-color: rgb(154, 155, 154);
   border: none;
@@ -144,31 +222,10 @@ h1{
 	color: #FFFFFF;
 }
 
-#lastName {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-}
-
 .firstNamePos{
   position: relative;
 	top: -220px;
 	left: 278px;
-}
-
-#email {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-}
-
-#guestName {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
 }
 
 .emailPos{
@@ -205,6 +262,13 @@ h1{
   position: relative;
 	top: 130px;
 	left: center;
+}
+
+#lastName {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
 }
 
 #password {
