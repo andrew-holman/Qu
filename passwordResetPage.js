@@ -48,7 +48,7 @@ function sendEmail(){
     else alert(emailAlert)
 }
 
-function vPass(){
+function verifyPassword(){
     var email = document.getElementById("emailR").value
     var password = document.getElementById("passwordR").value
     var code = document.getElementById("passCode").value
