@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script> var __basePath = ''; </script>
+<style media="only screen">
+    html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
+    }
+    html {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0;
+        overflow: auto;
+    }
+    body {
+        padding: 1rem;
+        overflow: auto;
+    }
+</style>
+    <script src="https://unpkg.com/@ag-grid-community/all-modules@22.0.0/dist/ag-grid-community.min.js"></script></head>
+<body>
+
+<div style="margin-bottom: 5px;">
+        <button onclick="updateSort()" style="margin-left: 15px">Sort</button>
+        <button onclick="updateFilter()">Filter</button>
+        <button onclick="onAddRow()">Add</button>
+        <button onclick="onRemoveSelected()">Remove Selected</button>
+    </div>
+<div style="height: calc(100% - 25px);">
+    <div id="myGrid" style="height: 100%;" class="ag-theme-balham"></div>
+</div>
+    <script src="gridMain.js"></script>
+</body>
+</html>
