@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod.*;
+import java.util.*;
 
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
@@ -240,7 +241,6 @@ public class UserController {
     public @ResponseBody String verifyConfirmationCode(@RequestParam String userName, @RequestParam String code){
         try {
             User user = getUserByUserName(userName);
-            System.out.println("UserName: " + user.getUserId());
             VerificationToken token = tokenRepository.findByUserId(user.getUserId());
             System.out.println("Token on Repo: " + token.getToken());
             System.out.println("Given token: " + code);
@@ -281,7 +281,6 @@ public class UserController {
     public @ResponseBody String verifyPasswordResetCode(@RequestParam String userName, @RequestParam String newPassword, @RequestParam String code){
         try {
             User user = getUserByUserName(userName);
-            System.out.println("UserName: " + user.getUserId());
             VerificationToken token = tokenRepository.findByUserId(user.getUserId());
             System.out.println("Token on Repo: " + token.getToken());
             System.out.println("Given token: " + code);
