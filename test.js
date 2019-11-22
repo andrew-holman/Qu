@@ -24,18 +24,20 @@ describe("HTTP assertions", function () {
             "userName": "Cholman",
             "displayName": "Cndrew",
             "userPassword": "3rdPass@!#3",
-            "classId": null
+            "enabled": false,
+            "classId": 15
         });
         return chakram.wait();
     });
 });
-describe("General Functionality", function(){
+describe("General User Functionality", function(){
     it("should not contain the user", function() {
         var response = chakram.post("http://localhost:8080/demo/user/get/userName?userName=testUser");
         expect(response).to.have.status(200);
         expect(response).to.comprise.of.json( {
             "userId": -1,
             "userName": null,
+            "enabled": false,
             "displayName": "User doesn't exist",
             "userPassword": null,
             "classId": -1
@@ -62,6 +64,7 @@ describe("General Functionality", function(){
         expect(response).not.to.comprise.of.json( {
             "userId": -1,
             "userName": null,
+            "enabled": false,
             "displayName": "User doesn't exist",
             "userPassword": null,
             "classId": -1
@@ -91,6 +94,53 @@ describe("General Functionality", function(){
             "displayName": "User doesn't exist",
             "userPassword": null,
             "classId": -1
+        });
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+});
+describe("General Class Functionality", function() {
+    it("should add the class", function () {
+        var response = chakram.post("http://localhost:8080/class/add?creatorUserName=cholman&displayName=TestClass1");
+        expect(response).to.have.status(200);
+        expect(response).not.to.comprise.of.json({
+            "creatorUserName": null,
+            "enabled": false,
+            "displayName": "Failed to create class",
+            "classId": -1,
+            "firstQueryId": -1
+        });
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+    it("should get the class", function () {
+        var response = chakram.post("http://localhost:8080/class/get/creatorUserName?creatorUserName=cholman");
+        expect(response).to.have.status(200);
+        expect(response).not.to.comprise.of.json({
+            "creatorUserName": null,
+            "enabled": false,
+            "displayName": "Failed to create class",
+            "classId": -1,
+            "firstQueryId": -1
+        });
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+    it("should remove the class", function () {
+        var response = chakram.post("http://localhost:8080/class/delete/creatorUserName?creatorUserName=Cholman");
+        expect(response).to.have.status(200);
+        expect(response).to.comprise.of.json("Class deleted");
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+    it("should not contain the class", function () {
+        var response = chakram.post("http://localhost:8080/class/get/creatorUserName?creatorUserName=cholman&displayName=TestClass1");
+        expect(response).to.have.status(200);
+        expect(response).to.comprise.of.json({
+            "creatorUserName": "",
+            "displayName": "Class doesn't exist",
+            "classId": -1,
+            "firstQueryId": null
         });
         expect(response).not.to.be.encoded.with.gzip;
         return chakram.wait();
