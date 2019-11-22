@@ -1,3 +1,5 @@
+var emailValue;
+
 function createUser(){
     var firstName = document.getElementById("firstName").value
     var firstNameTag = validateName(firstName)
@@ -40,12 +42,20 @@ function createUser(){
             crossDomain: true,
             success: function (data, status) {
                 console.log("Data " + JSON.stringify(data));
-                if(data === "Success"){
-                    alert("Email conformation has been sent! Once confirmed, please login to continue to join/add class sessions.")
-                    sendEmail(email)
-                    clearEntries()
-                }
-                else{
+                emailValue = email;
+                if (data === "Success") {
+                   sendConfirmationEmail(email);
+                    document.getElementById("ConfirmCode").style.visibility = "visible";
+                    document.getElementById("confirmButton").style.visibility = "visible";
+                    document.getElementById("FirstName").style.visiblity = "hidden";
+                    document.getElementById("LastName").style.visiblity = "hidden";
+                    document.getElementById("Email").style.visiblity = "hidden";
+                    document.getElementById("Password").style.visiblity = "hidden";
+                    document.getElementById("ConfirmPassword").style.visiblity = "hidden";
+                    document.getElementById("Type").style.visiblity = "hidden";
+
+                    clearEntries();
+                } else {
                     alert("Failed to sign up");
                 }
             },
@@ -59,7 +69,7 @@ function createUser(){
     else alert(alertMessage)
 }
 
-function sendEmail(email){
+function sendConfirmationEmail(email){
     $.ajax({
         type: "POST",
         data: {userName: email},
@@ -78,6 +88,18 @@ function sendEmail(email){
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 }
 
+function verifyCode(email, code, successCallback, errorCallback){
+    $.ajax({
+        type: "POST",
+        data: {userName: email, code: code},
+        dataType: "text",
+        async: true,
+        url: "http://localhost:8080/demo/user/checkConfirmation",
+        crossDomain: true,
+        success: successCallback,
+        error: errorCallback,
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+}
 function validateName(name){
     if(name == "") return "Name cannot be empty!"
     var r = /^[A-Za-z_ ]+$/;
@@ -126,4 +148,26 @@ function clearEntries(){
     document.getElementById("confirmpassword").value = ""
     document.getElementById("studentCheck").checked = false
     document.getElementById("instructorCheck").checked = false
+}
+function verifyButton(){
+    let email = emailValue;
+    let enteredCode = document.getElementById("confirm").value;
+    verifyCode(email, enteredCode,
+        function (data, status) {
+            console.log("Data " + JSON.stringify(data));
+            if(data === "Success"){
+                main();
+            }
+            else if(data === "Failure"){
+                if(confirm("That code did not match the one we sent you, would you use to resend the code")){
+                    sendEmail(email);
+                }
+            }
+            else alert(data)
+        },
+        function (xhr,status,error) {
+            console.log(status);
+            console.log(error);
+            console.log(xhr);
+        });
 }
