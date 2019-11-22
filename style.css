@@ -19,11 +19,55 @@ h1{
 	color: #FFFFFF;
 }
 
+.emailSend{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  visibility: hidden;
+  top: -230px;
+  left: -130px;
+}
+
+.rTrue{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -410px;
+  left: -40px;
+}
+
+.rFalse{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -410px;
+  left: 150px;
+}
+
 #emailR {
   border-radius: 25px;
   padding: 20px; 
   width: 400px;
   height: 20px;  
+  visibility: hidden;
 }
 
 #confirm {
@@ -37,7 +81,8 @@ h1{
   border-radius: 25px;
   padding: 20px; 
   width: 400px;
-  height: 20px;  
+  height: 20px;
+  visibility: hidden;  
 }
 
 #passwordR {
@@ -45,6 +90,7 @@ h1{
   padding: 20px; 
   width: 400px;
   height: 20px;  
+  visibility: hidden;
 }
 
 #enterCode {
@@ -107,19 +153,19 @@ h1{
 
 .REmailPos{
 	position: relative;
-	top: -200px;
+	top: -130px;
 	left: 305px;
 }
 
 .passwordRPos{
   position: relative;
-	top: -130px;
+	top: -60px;
   left: 305px;
 }
 
 .passCodePos{
   position: relative;
-	top: -60px;
+	top: 10px;
   left: 305px;
 }
 
@@ -146,8 +192,9 @@ h1{
   display: inline-block;
   font-size: 18px;
   position: relative;
-  top: 35px;
-  left: 30;
+  visibility: hidden;
+  top: 105px;
+  left: 200px;
 }
 
 .createClass{
@@ -405,6 +452,12 @@ h1{
   position: relative;
 	top: -200px;
 	left: center;
+}
+
+.rCheckPos{
+  position: relative;
+	top: -200px;
+	left: 35px;
 }
 
 .passwordPos{

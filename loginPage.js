@@ -1,4 +1,3 @@
-
 function displayFields(guest){
     if(guest){
         document.getElementById("loginUser").style.visibility = "hidden"
