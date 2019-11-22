@@ -34,7 +34,7 @@ function createUser(){
     if(alertMessage === ""){
          $.ajax({
             type: "POST",
-            data: {userName: email, userDisplayName: firstName, userPassword: password},
+            data: {userName: email, displayName: firstName, userPassword: password},
             dataType: "text",
             url: "http://localhost:8080/demo/user/add",
             crossDomain: true,

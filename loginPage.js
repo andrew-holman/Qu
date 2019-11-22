@@ -1,4 +1,3 @@
-
 function displayFields(guest){
     if(guest){
         document.getElementById("loginUser").style.visibility = "hidden"
@@ -62,14 +61,15 @@ function signInUser(){
                 else{
                     if(!data.enabled){
                         if(!confirm('Your email has not been verified, would you like us to resend you an email?')){
-                                var i = 0;
+                                var i = 1;
                                 confirmed = true
-                                while(i % 3 != 0 && confirmed){
-                                    var enteredCode = parseInt(prompt("Please enter the code you received:"))
+                                while(i % 4 != 0 && confirmed){
+                                    var enteredCode = prompt("Please enter the code you received:")
                                     if(verifyCode(enteredCode))main()
                                     if(!confirm("Incorrect code provided, would you like to try again?"))confirmed = false
+                                    else i++
                                 }
-                                if(i % 3 == 0){
+                                if(i % 4 == 0){
                                     alert("Incorrect code entered too many times, a new confirmation email has been sent")
                                     sendEmail(data.userName)
                                 }
