@@ -13,3 +13,7 @@ function signUp(){
 function passwordReset(){
     window.location.href = "passwordResetPage.html"
 }
+
+function grid(){
+    window.location.href = "grid.html"
+}

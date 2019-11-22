@@ -33,29 +33,30 @@ function join(){
   }
 
 function getUserID(){
-    $.ajax({
-        type: "POST",
-        data: {userName: userID},
-        dataType: "json",
-        url: "http://localhost:8080/demo/user/get/userName",
-        crossDomain: true,
-        success: function (data, status) {
-            console.log("Data " + JSON.stringify(data));
-            if(data.displayName == "User doesn't exist"){
-                console.log("Email not found, please try again");
+    // $.ajax({
+    //     type: "POST",
+    //     data: {userName: userID},
+    //     dataType: "json",
+    //     url: "http://localhost:8080/demo/user/get/userName",
+    //     crossDomain: true,
+    //     success: function (data, status) {
+    //         console.log("Data " + JSON.stringify(data));
+    //         if(data.displayName == "User doesn't exist"){
+    //             console.log("Email not found, please try again");
                 
-            }
-            else {
-                createClass(userID, data.displayName)
-                break
-            }
-        },
-        error: function (xhr,status,error) {
-            console.log(status);
-            console.log(error);
-            console.log(xhr);
-        },
-    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+    //         }
+    //         else {
+    //             createClass(userID, data.displayName)
+    //             break
+    //         }
+    //     },
+    //     error: function (xhr,status,error) {
+    //         console.log(status);
+    //         console.log(error);
+    //         console.log(xhr);
+    //     },
+    // }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+    grid();
 }
 
 function createClass(userID, displayName){

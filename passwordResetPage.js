@@ -36,6 +36,7 @@ function sendEmail(){
             crossDomain: true,
             success: function (data, status) {
                 console.log("Data " + JSON.stringify(data));
+                displayFields(true)
                 alert("Please check your email for a password reset code")
             },
             error: function (xhr,status,error) {

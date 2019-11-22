@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <script> var __basePath = ''; </script>
+<link href="style.css" type="text/css" rel="stylesheet" />
 <style media="only screen">
     html, body {
         height: 100%;
@@ -26,12 +27,12 @@
 <body>
 
 <div style="margin-bottom: 5px;">
-        <button onclick="updateSort()" style="margin-left: 15px">Sort</button>
-        <button onclick="updateFilter()">Filter</button>
-        <button onclick="onAddRow()">Add</button>
-        <button onclick="onRemoveSelected()">Remove Selected</button>
+        <button onclick="autoSizeAll()" id = "autoSize">Auto-Size All Fields</button>
+        <button onclick="onAddRow()" id = "addRow">Add</button>
+        <button onclick="onRemoveSelected()" id = "removeSelected">Remove Selected</button>
+        <button onclick="complete()" id = "complete">Complete</button>
     </div>
-<div style="height: calc(100% - 25px);">
+<div style="width: 60%;">
     <div id="myGrid" style="height: 100%;" class="ag-theme-balham"></div>
 </div>
     <script src="gridMain.js"></script>
