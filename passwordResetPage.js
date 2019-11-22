@@ -48,7 +48,7 @@ function sendEmail(){
     else alert(emailAlert)
 }
 
-function vPass(){
+function verifyPassword(){
     var email = document.getElementById("emailR").value
     var password = document.getElementById("passwordR").value
     var code = document.getElementById("passCode").value
@@ -68,6 +68,7 @@ function vPass(){
                 }
                 else{
                     alert("Failed to reset your password");
+                    console.log("Returned data was: " + data)
                 }
             },
             error: function (xhr,status,error) {

@@ -33,46 +33,26 @@ function join(){
   }
 
 function getUserID(){
-    $.ajax({
-        type: "POST",
-        data: {userName: userID},
-        dataType: "json",
-        url: "http://localhost:8080/demo/user/get/userName",
-        crossDomain: true,
-        success: function (data, status) {
-            console.log("Data " + JSON.stringify(data));
-            if(data.displayName == "User doesn't exist"){
-                console.log("Email not found, please try again");
-                
-            }
-            else {
-                createClass(userID, data.displayName)
-                break
-            }
-        },
-        error: function (xhr,status,error) {
-            console.log(status);
-            console.log(error);
-            console.log(xhr);
-        },
-    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+    var userName = document.getElementById("enterEmail").value;
+    createClass(userName, "Sample Class");
 }
 
 function createClass(userID, displayName){
     $.ajax({
         type: "POST",
         data: {creatorUserName: userID, displayName: displayName},
-        dataType: "json",
+        dataType: "text",
+        async: true,
         url: "http://localhost:8080/class/add",
         crossDomain: true,
         success: function (data, status) {
-            console.log("Data " + JSON.stringify(data));
-            if(data.displayName == "Failed to create a class"){
+            console.log("Data " + data);
+            if(data.displayName === "Failed to create a class"){
                 alert("Error creating class! Please try again");
                 
             }
             else {
-                joinClass(userID, data.classID)
+                joinClass(userID, JSON.parse(data).classId);
             }
         },
         error: function (xhr,status,error) {
@@ -88,15 +68,16 @@ function joinClass(email, classID){
     $.ajax({
         type: "POST",
         data: {userName: email, classId: classID},
-        dataType: "json",
+        dataType: "text",
+        async: true,
         url: "http://localhost:8080/demo/user/set/classId",
         crossDomain: true,
         success: function (data, status) {
             console.log("Data " + JSON.stringify(data));
-            if(data == "Id changed"){
-                //Successful
+            if(data === "Id changed"){
+                grid();
             }
-            else if(data == "No such user in database"){
+            else if(data === "No such user in database"){
                 window.alert("Error: Could not find username")
             }
             else{
@@ -112,12 +93,12 @@ function joinClass(email, classID){
 }
 
 function validateEmail(givenEmail) {
-    if(givenEmail == "") return "Email cannot be empty!"
+    if(givenEmail === "") return "Email cannot be empty!"
     var alphanumeric = /^[A-za-z0-9.]+$/i;
     atSymbolSplit = givenEmail.split('@');
-    if ((atSymbolSplit[0]).match(alphanumeric) && atSymbolSplit.length == 2) {
+    if ((atSymbolSplit[0]).match(alphanumeric) && atSymbolSplit.length === 2) {
         periodSplit = atSymbolSplit[1].split('.')
-        if ((periodSplit[0] + periodSplit[1]).match(alphanumeric) && periodSplit.length == 2) return "";
+        if ((periodSplit[0] + periodSplit[1]).match(alphanumeric) && periodSplit.length === 2) return "";
     }
     return "Invalid email, must be in the format abc@abc.abc"
 }
