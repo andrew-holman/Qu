@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod.*;
-import java.util.*;
 
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/class") // This means URL's start with /demo (after Application path)
@@ -54,7 +53,7 @@ public class ClassController {
         } catch(Exception err){
             classInstance.setDisplayName("Class doesn't exist");
             classInstance.setCreatorUserName("");
-            classRepository.save(classInstance);
+            classInstance.setClassId(-1);
         }
 
         return classInstance;
@@ -62,19 +61,47 @@ public class ClassController {
 
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path="/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewClass (@RequestParam String creatorUserName, @RequestParam String displayName) {
+    public @ResponseBody Class addNewClass (@RequestParam String creatorUserName, @RequestParam String displayName) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
+        Class n = new Class();
         try{
-            Class n = new Class();
             n.setDisplayName(displayName);
             n.setCreatorUserName(creatorUserName);
             classRepository.save(n);
         } catch(Exception e){
-            return "Failure";
+            n.setDisplayName("Failed to create class");
+            return n;
         }
 
-        return "Success";
+        return n;
+    }
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping(path="/delete/id") // Map ONLY POST Requests
+    public @ResponseBody String deleteClass (@RequestParam int classId) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Integer idInt = new Integer(classId);
+        try{
+            classRepository.deleteById(idInt);
+        } catch(Exception err){
+            return "No such class in database";
+        }
+        return "Class deleted";
+    }
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping(path="/delete/creatorUserName") // Map ONLY POST Requests
+    public @ResponseBody String deleteClass (@RequestParam String creatorUserName) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        try{
+            Class classInstance = classRepository.findByCreatorUserName(creatorUserName).get(0);
+            classRepository.deleteById(classInstance.getClassId());
+        } catch(Exception err){
+            return "No such class in database";
+        }
+        return "Class deleted";
     }
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path="/query/add") // Map ONLY POST Requests
