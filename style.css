@@ -19,6 +19,27 @@ h1{
 	color: #FFFFFF;
 }
 
+#emailR {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#passCode {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#passwordR {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
 #enterCode {
   border-radius: 25px;
   padding: 20px; 
@@ -33,11 +54,66 @@ h1{
   height: 20px;  
 }
 
+#guestName {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+.loginR{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -243px;
+  left: 650px;
+}
+
+
+
+.signUpR{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -243px;
+  left: 690px;
+}
+
 .enterCodePos{
 	position: relative;
 	top: 30px;
 	left: 287px;
 	visibility: hidden;
+}
+
+.REmailPos{
+	position: relative;
+	top: -200px;
+	left: 305px;
+}
+
+.passwordRPos{
+  position: relative;
+	top: -130px;
+  left: 305px;
+}
+
+.passCodePos{
+  position: relative;
+	top: -60px;
+  left: 305px;
 }
 
 .enterEmailPos{
@@ -51,6 +127,20 @@ h1{
 	position: relative;
 	top: -50px;
   left: center;
+}
+
+.vPass{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: 35px;
+  left: 30;
 }
 
 .createClass{
@@ -81,6 +171,21 @@ h1{
   left: 145px;
 }
 
+.createAClass{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  visibility: hidden;
+  position: relative;
+  top: -60px;
+  left: -45px;
+}
+
 .joinClass{
 	background-color: rgb(154, 155, 154);
   border: none;
@@ -93,7 +198,7 @@ h1{
   visibility: hidden;
   position: relative;
   top: 125px;
-  left: 15px;
+  left: 105px;
 }
 
 .login{
@@ -156,7 +261,22 @@ h1{
   font-size: 19px;
   position: relative;
   top: -50px;
-  left: -100px;
+  left: -20px;
+  visibility: hidden;
+}
+
+.loginGuest{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -150px;
+  left: -150px;
   visibility: hidden;
 }
 
@@ -170,8 +290,8 @@ h1{
   display: inline-block;
   font-size: 18px;
   position: relative;
-  top: -400px;
-  left: 100px;
+  top: -410px;
+  left: 220px;
 }
 
 .guestLogin{
@@ -184,11 +304,25 @@ h1{
   display: inline-block;
   font-size: 18px;
   position: relative;
-  top: -400px;
-  left: center;
+  top: -410px;
+  left: 40px;
 }
 
-.mainButton{
+.passRS{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -242px;
+  left: 585px;
+}
+
+.passR{
 	background-color: rgb(154, 155, 154);
   border: none;
   color: white;

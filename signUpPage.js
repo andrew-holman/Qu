@@ -31,21 +31,44 @@ function createUser(){
     alertMessage += passConfCheck ? "" : passConfTag + "\n"
     alertMessage += typeSelectedCheck ? "" : typeSelected
 
+    if(alertMessage === ""){
+         $.ajax({
+            type: "POST",
+            data: {userName: email, userDisplayName: firstName, userPassword: password},
+            dataType: "text",
+            url: "http://localhost:8080/demo/user/add",
+            crossDomain: true,
+            success: function (data, status) {
+                console.log("Data " + JSON.stringify(data));
+                if(data === "Success"){
+                    alert("Email conformation has been sent! Once confirmed, please login to continue to join/add class sessions.")
+                    sendEmail(email)
+                    clearEntries()
+                }
+                else{
+                    alert("Failed to sign up");
+                }
+            },
+            error: function (xhr,status,error) {
+                console.log(status);
+                console.log(error);
+                console.log(xhr);
+            },
+        }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+    }
+    else alert(alertMessage)
+}
 
+function sendEmail(email){
     $.ajax({
         type: "POST",
-        data: {userName: email, userDisplayName: firstName, userPassword: password},
+        data: {userName: email},
         dataType: "text",
-        url: "http://localhost:8080/demo/user/add",
+        url: "http://localhost:8080/demo/user/sendConfirmation",
         crossDomain: true,
         success: function (data, status) {
             console.log("Data " + JSON.stringify(data));
-            if(data === "Success"){
-                main();
-            }
-            else{
-                alert("Failed to sign up");
-            }
+            alert("Please check your inbox for an email to verify your account")
         },
         error: function (xhr,status,error) {
             console.log(status);
@@ -93,4 +116,14 @@ function isSelected(type){
         if(type[i].checked) return ""
     }
     return "You must select whether you are a Student or an Instructor"
+}
+
+function clearEntries(){
+    document.getElementById("firstName").value = ""
+    document.getElementById("lastName").value = ""
+    document.getElementById("email").value = ""
+    document.getElementById("password").value = ""
+    document.getElementById("confirmpassword").value = ""
+    document.getElementById("studentCheck").checked = false
+    document.getElementById("instructorCheck").checked = false
 }

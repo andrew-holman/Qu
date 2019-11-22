@@ -6,12 +6,17 @@ function showOptions(join){
         document.getElementById("EnterEmail").style.visibility = "visible"
         document.getElementById("enterEmail").style.visibility = "visible"
 
+        document.getElementById("createAClass").style.visibility = "hidden"
     }
     else{
         document.getElementById("EnterCode").style.visibility = "hidden"
         document.getElementById("enterCode").style.visibility = "hidden"
         document.getElementById("joinClass").style.visibility = "hidden"
         
+
+        document.getElementById("EnterEmail").style.visibility = "visible"
+        document.getElementById("enterEmail").style.visibility = "visible"
+        document.getElementById("createAClass").style.visibility = "visible"
         //getUserID()
         
     }

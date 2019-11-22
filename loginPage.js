@@ -9,10 +9,12 @@ function displayFields(guest){
         
         document.getElementById("guestName").style.visibility = "visible"
         document.getElementById("GuestName").style.visibility = "visible"
+        document.getElementById("loginGuest").style.visibility = "visible"
 }
     else{
         document.getElementById("guestName").style.visibility = "hidden"
         document.getElementById("GuestName").style.visibility = "hidden"
+        document.getElementById("loginGuest").style.visibility = "hidden"
 
         document.getElementById("loginUser").style.visibility = "visible"
         document.getElementById("email").style.visibility = "visible"
@@ -45,24 +47,61 @@ function signInUser(){
     alertMessage += emailCheck ? "" : emailTag +"\n"
     alertMessage += passwordCheck ? "" : passwordTag
 
-    console.log("My password: " + password);
+    if(alertMessage === ""){
+        $.ajax({
+            type: "POST",
+            data: {userName: email, userPassword: password},
+            dataType: "json",
+            url: "http://localhost:8080/demo/user/login",
+            crossDomain: true,
+            success: function (data, status) {
+                console.log("Data " + JSON.stringify(data));
+                if(data.userId === -1){
+                    alert("Incorrect Login Information");
+                }
+                else{
+                    if(!data.enabled){
+                        if(!confirm('Your email has not been verified, would you like us to resend you an email?')){
+                                var i = 0;
+                                confirmed = true
+                                while(i % 3 != 0 && confirmed){
+                                    var enteredCode = parseInt(prompt("Please enter the code you received:"))
+                                    if(verifyCode(enteredCode))main()
+                                    if(!confirm("Incorrect code provided, would you like to try again?"))confirmed = false
+                                }
+                                if(i % 3 == 0){
+                                    alert("Incorrect code entered too many times, a new confirmation email has been sent")
+                                    sendEmail(data.userName)
+                                }
+                        }
+                        else{
+                            sendEmail(data.userName)
+                        }
+                    }
+                    else{
+                        main()
+                    }
+                }
+            },
+            error: function (xhr,status,error) {
+                console.log(status);
+                console.log(error);
+                console.log(xhr);
+            },
+        }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+    }
+}
+
+function sendEmail(email){
     $.ajax({
         type: "POST",
-        data: {userName: email, userPassword: password},
-        dataType: "json",
-        url: "http://localhost:8080/demo/user/login",
+        data: {userName: email},
+        dataType: "text",
+        url: "http://localhost:8080/demo/user/sendConfirmation",
         crossDomain: true,
         success: function (data, status) {
             console.log("Data " + JSON.stringify(data));
-            if(data.userId === -2){
-                alert("You must verify this email");
-            }
-            else if(data.userId === -1){
-                alert("Incorrect Login Information");
-            }
-            else{
-                main();
-            }
+            alert("Please check your inbox for an email to verify your account")
         },
         error: function (xhr,status,error) {
             console.log(status);
@@ -70,19 +109,31 @@ function signInUser(){
             console.log(xhr);
         },
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+}
 
-   /*var x =$.getJSON("/user/login" + email + "/" + password, function(data){})
-        Using this function, we will receive
-        a JSON object from the server and the
-        object will contain a parameter called userID.
-        userID will be a number and if that
-        number is -1, then the front end will
-        know that there was an error logging
-        in. The front end can then display that
-        error by displaying the displayName from
-        the JSON object since that is where it will
-        be contained.
-   */
+function verifyCode(code){
+    $.ajax({
+        type: "POST",
+        data: {userName: email, code: code},
+        dataType: "text",
+        url: "http://localhost:8080/demo/user/checkConfirmation",
+        crossDomain: true,
+        success: function (data, status) {
+            console.log("Data " + JSON.stringify(data));
+            if(data === "Success"){
+                return true
+            }
+            else if(data === "Failure"){
+                return false
+            }
+            else alert(data)
+        },
+        error: function (xhr,status,error) {
+            console.log(status);
+            console.log(error);
+            console.log(xhr);
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 }
 
 function validateEmail(givenEmail) {
