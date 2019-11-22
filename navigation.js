@@ -9,3 +9,10 @@ function login(){
 function signUp(){
     window.location.href = "signUpPage.html"
 }
+
+function passwordReset(){
+    window.location.href = "passwordResetPage.html"
+}
+function grid(){
+    window.location.href = "grid.html"
+}

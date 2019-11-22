@@ -18,8 +18,8 @@
   <body>
     <div id = "main">
     <h1 id = "showName">Sign Up</h1>
-    <input onClick = "main()" class = "mainButton" type="button" id="mainButton" name="mainButton" value="Main Page"/>
     <input onClick = "login()" class = "login" type="button" id="login" name="login" value="Login"/>
+    <input onClick = "passwordReset()" class = "passRS" type = "button" id = "passRS" name = "passRS" value = "Password Reset"/>
     <p id="FirstName" class = "firstNamePos">
       <label for="firstName" class = "userPassColor">First Name</label>
       <input id="firstName" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('create').click()" />
@@ -43,14 +43,20 @@
   <p id = "Type" class = "selectTypePos">
     <label for = "selectType" class = "userPassColor">Are You a Student or an Instructor?</label>
     <label class = "container"> Student
-      <input type = "radio" name = "userType" value = "Student">
+      <input id = "studentCheck" type = "radio" name = "userType" value = "Student">
       <span class = "checkmark"></span>
     </label>
     <label class = "container"> Instructor
-        <input type = "radio" name = "userType" value = "Instructor">
+        <input id = "instructorCheck" type = "radio" name = "userType" value = "Instructor">
         <span class = "checkmark"></span>
       </label>
   </p>
   <input onClick = "createUser()" class = "create" type = "button" id = "create" name = "create" value = "Sign Up"/>
+      <p id="ConfirmCode" class = "confirmCodePos">
+        <label for="confirm" class = "userPassColor">Confirmation Code</label>
+        <input id="confirm" type="text"/>
+      </p>
+      <input onClick = "verifyButton()" class = "confirmCodeButton" type = "button" id = "confirmButton" name = "Confirm Code" value = "Confirm Code"/>
+    </div>
   </body>
 </html>

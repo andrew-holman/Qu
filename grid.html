@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script> var __basePath = ''; </script>
+<link href="style.css" type="text/css" rel="stylesheet" />
+<style media="only screen">
+    html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
+    }
+    html {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0;
+        overflow: auto;
+    }
+    body {
+        padding: 1rem;
+        overflow: auto;
+    }
+</style>
+    <script src="https://unpkg.com/@ag-grid-community/all-modules@22.0.0/dist/ag-grid-community.min.js"></script></head>
+<body>
+
+<div style="margin-bottom: 5px;">
+        <button onclick="autoSizeAll()" id = "autoSize">Auto-Size All Fields</button>
+        <button onclick="onAddRow()" id = "addRow">Add</button>
+        <button onclick="onRemoveSelected()" id = "removeSelected">Remove Selected</button>
+        <button onclick="complete()" id = "complete">Complete</button>
+    </div>
+<div style="width: 60%;">
+    <div id="myGrid" style="height: 100%;" class="ag-theme-balham"></div>
+</div>
+    <script src="gridMain.js"></script>
+</body>
+</html>
