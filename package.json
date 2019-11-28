@@ -5,7 +5,8 @@
   "dependencies": {
     "chai": "^4.2.0",
     "jasmine": "^3.5.0",
-    "mysql": "^2.17.1"
+    "mysql": "^2.17.1",
+    "stompjs": "^2.3.3"
   },
   "devDependencies": {
     "chakram": "^1.5.0"

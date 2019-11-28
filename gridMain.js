@@ -22,6 +22,19 @@ var gridOptions = {
 
 var newCount = 1;
 
+function createConnection(){
+    var webSocket = new WebSocket("wss://www.example.com/socketserver", "protocolOne");
+    webSocket.onopen = function (event) {
+        webSocket.send("Sample Text");
+    };
+    webSocket.onmessage = function (event){
+        console.log(event.data);
+    };
+    webSocket.onerror = function(event){
+        console.log(event.data);
+    }
+}
+
 function createNewRowData() {
     var newData = {
         name: "Josh " + newCount,
