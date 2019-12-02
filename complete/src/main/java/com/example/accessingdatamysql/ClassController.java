@@ -106,7 +106,7 @@ public class ClassController {
     }
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path="/query/add") // Map ONLY POST Requests
-    public @ResponseBody Query addNewQuery (@RequestParam int classId, @RequestParam String queryString, @RequestParam String queryType, @RequestParam String userName) {
+    public @ResponseBody Query addNewQuery (@RequestParam int classId, @RequestParam String queryString, @RequestParam String queryType, @RequestParam String userName, @RequestParam String displayName) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         Query query = new Query();
@@ -115,6 +115,7 @@ public class ClassController {
             query.setQueryString(queryString);
             query.setQueryType(queryType);
             query.setUserName(userName);
+            query.setDisplayName(displayName);
             query.setNextQueryId(classInstance.getFirstQueryId());
             queryRepository.save(query);
             classInstance.setFirstQueryId(query.getQueryId());

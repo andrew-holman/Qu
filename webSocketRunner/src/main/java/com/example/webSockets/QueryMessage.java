@@ -1,14 +1,15 @@
 package com.example.accessingdatamysql.webSockets;
 
-public class HelloMessage {
+public class QueryMessage {
 
     private String name;
+    private String type;
     private String message;
 
-    public HelloMessage() {
+    public QueryMessage() {
     }
 
-    public HelloMessage(String name) {
+    public QueryMessage(String name) {
         this.name = name;
     }
 
