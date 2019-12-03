@@ -47,9 +47,22 @@ function createNewRowData() {
 }
 
 function onAddRow() {
-    var newItem = createNewRowData();
-    var res = gridOptions.api.updateRowData({add: [newItem]});
-    
+    //var newItem = createNewRowData();
+    //var res = gridOptions.api.updateRowData({add: [newItem]});
+    $.ajax({
+        type: "POST",
+        data: {classId: 182, queryString: document.getElementById("queryMessage").value, queryType: document.getElementById("queryTypeText").value, userName: "andrew.holman321@gmail.com", displayName: "Andrew"},
+        dataType: "text",
+        url: "http://localhost:8080/class/query/add",
+        crossDomain: true,
+        success: function(){
+            console.log("Successful query post.");
+        },
+        error: function(){
+            console.log("Failed to post query.");
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+
 }
 
 function addItems() {

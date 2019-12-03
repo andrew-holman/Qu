@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 <script> var __basePath = ''; </script>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
 <link href="style.css" type="text/css" rel="stylesheet" />
 <style media="only screen">
     html, body {
@@ -35,6 +39,14 @@
 <div style="width: 60%;">
     <div id="myGrid" style="height: 100%;" class="ag-theme-balham"></div>
 </div>
+    <p id="queryType">
+        <label>Type</label>
+        <input id="queryTypeText" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('addRow').click()"/>
+    </p>
+    <p id="queryText">
+        <label>Message</label>
+        <input id="queryMessage" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('addRow').click()"/>
+    </p>
     <script src="gridMain.js"></script>
 </body>
 </html>
