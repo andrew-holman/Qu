@@ -3,8 +3,8 @@ function showOptions(join){
         document.getElementById("EnterCode").style.visibility = "visible"
         document.getElementById("enterCode").style.visibility = "visible"
         document.getElementById("joinClass").style.visibility = "visible"
-        document.getElementById("EnterEmail").style.visibility = "visible"
-        document.getElementById("enterEmail").style.visibility = "visible"
+        document.getElementById("EnterClass").style.visibility = "hidden"
+        document.getElementById("enterClass").style.visibility = "hidden"
 
         document.getElementById("createAClass").style.visibility = "hidden"
     }
@@ -14,30 +14,36 @@ function showOptions(join){
         document.getElementById("joinClass").style.visibility = "hidden"
         
 
-        document.getElementById("EnterEmail").style.visibility = "visible"
-        document.getElementById("enterEmail").style.visibility = "visible"
+        document.getElementById("EnterClass").style.visibility = "visible"
+        document.getElementById("enterClass").style.visibility = "visible"
         document.getElementById("createAClass").style.visibility = "visible"
         //getUserID()
         
     }
 }
 
+var userEmail = sessionStorage.getItem("email")
+var displayName = sessionStorage.getItem("displayName")
+var creator = false
+var className = ""
+
 function join(){
-    var email = document.getElementById('enterEmail').value
     var code = parseInt(document.getElementById('enterCode').value)
-    joinClass(email, code)
-  }
-  function joinOrCreate(){
+    joinClass(userEmail, code)
+}
+
+function joinOrCreate(){
     if(document.getElementById("enterCode").style.visibility == "hidden")getUserID()
-    else joinClass(document.getElementById("enterEmail").value , document.getElementById("enterCode").value)
-  }
+    else joinClass(userEmail, document.getElementById("enterCode").value)
+}
 
 function getUserID(){
-    var userName = document.getElementById("enterEmail").value;
-    createClass(userName, "Sample Class");
+    className = document.getElementById("enterClass").value;
+    createClass(userEmail, className);
 }
 
 function createClass(userID, displayName){
+    creator = true
     $.ajax({
         type: "POST",
         data: {creatorUserName: userID, displayName: displayName},
@@ -75,6 +81,11 @@ function joinClass(email, classID){
         success: function (data, status) {
             console.log("Data " + JSON.stringify(data));
             if(data === "Id changed"){
+                sessionStorage.setItem("Email", email)
+                sessionStorage.setItem("DisplayName", displayName)
+                sessionStorage.setItem("classID", classID)
+                sessionStorage.setItem("creator", creator)
+                sessionStorage.setItem("className", className)
                 grid();
             }
             else if(data === "No such user in database"){
