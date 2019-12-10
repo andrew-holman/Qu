@@ -70,9 +70,10 @@ function signInUser(){
                                         main();
                                     }
                                     else if(data === "Failure"){
-                                        if(confirm("That code did not match the one we sent you, would you use to resend the code")){
-                                            sendEmail(email);
-                                        }
+                                        //if(confirm("That code did not match the one we sent you, would you use to resend the code")){
+                                         //   sendEmail(email);
+                                        //}
+                                        alert("Incorrect Login information");
                                     }
                                     else alert(data)
                                 },

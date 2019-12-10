@@ -2,10 +2,11 @@ document.getElementById("showName").innerHTML = "Welcome to " + sessionStorage.g
 var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
-var isCreator = sessionStorage.getItem("creator")
+var isCreator = sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
-var webSocket
+var webSocket;
+
 
 document.addEventListener("DOMContentLoaded", function() {
     var eGridDiv = document.querySelector('#myGrid');
@@ -19,7 +20,7 @@ document.getElementById("queryText").style .visibility = isCreator ? "hidden" : 
 document.getElementById("queryType").style .visibility = isCreator ? "hidden" : "visible"
 document.getElementById("removeSelected").style .visibility = isCreator ? "visible" : "hidden"
 document.getElementById("complete").style .visibility = isCreator ? "visible" : "hidden"
-
+createConnection();
 
 var columnDefs = [
     {field: "Name", field: "name", rowDrag: isCreator},
@@ -28,9 +29,9 @@ var columnDefs = [
 ];
 
 var rowData = [
-    {name: "Andrew Holman", type: "Demo", description: "I would like to demo for Iteration 2", id: "aa"},
-    {name: "Patrick Wenzel", type: "Question", description: "For part 2 of the lab, how do I get started?", id: "bb"},
-    {name: "Luke", type: "Error", description: "I am getting a 400 error and I am not sure why", id: "cc"},
+   // {name: "Andrew Holman", type: "Demo", description: "I would like to demo for Iteration 2", id: "aa"},
+    //{name: "Patrick Wenzel", type: "Question", description: "For part 2 of the lab, how do I get started?", id: "bb"},
+    //{name: "Luke", type: "Error", description: "I am getting a 400 error and I am not sure why", id: "cc"},
 ];
 
 var gridOptions = {
@@ -45,31 +46,91 @@ var gridOptions = {
 };
 
 function createConnection(){
-    webSocket = new WebSocket("wss://www.example.com/socketserver", "protocolOne");
+    console.log("HELLO" + sessionStorage.getItem("creator"));
+    console.log(sessionStorage.getItem("Hello"));
+
+    webSocket = new WebSocket("ws://localhost:8080/socket");
+    webSocket.binaryType = "arraybuffer";
+    console.log(webSocket.OPEN);
+
     webSocket.onopen = function (event) {
-        webSocket.send("newConnection." + email);
+        webSocket.send("");
         //rowData[i].type + "." + rowData[i].name + "." + rowData[i].description + "." + rowData[i].id
     };
     webSocket.onmessage = function (event){
         console.log(event.data);
-        var messageDecode = event.data.split(".")
-        if(messageDecode[0] == "Update"){
-            gridOptions.api.updateRowData({remove: rowData});
-            for(var i = 1; i + 3 <= messageDecode.length ; i += 4){
-                onAddRow(messageDecode[i], messageDecode[i + 1], messageDecode[i + 2], true)
-            }
-            var stringToSend = buildStringToSend();
-            webSocket.send(stringToSend)
-        }
-        else if((messageDecode[0] == "newConnection") && isCreator){
-            var stringToSend = buildStringToSend();
-            webSocket.send(stringToSend)
-        }
+
+        $.ajax({
+            type: "POST",
+            data: {classId: classId},
+            dataType: "json",
+            url: "http://localhost:8080/class/query/view",
+            crossDomain: true,
+            success: function(data, status){
+                console.log(data);
+                console.log("Got query list.");
+                // for(let i = 0; i < data.length; i++){
+                //     let rowData = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
+                //     gridOptions.api.updateRowData({remove: rowData});
+                // }
+                for(let i = 0; i < data.length; i++){
+                    let rowData = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
+                    gridOptions.api.updateRowData({add: [rowData]});
+                }
+                for(let i = 0; i < data.length; i++){
+                    let rowData = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
+                    gridOptions.api.updateRowData({add: [rowData]});
+                }
+                //gridOptions.api.updateRowData(data);
+                updateRowDataClient()
+                console.log("Updated");
+            },
+            error: function(){
+                console.log("Failed to get query list.");
+            },
+        }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+
+        // var messageDecode = event.data.split(".")
+        // if(messageDecode[0] === "Update"){
+        //     gridOptions.api.updateRowData({remove: rowData});
+        //     for(var i = 1; i + 3 <= messageDecode.length ; i += 4){
+        //         onAddRow(messageDecode[i], messageDecode[i + 1], messageDecode[i + 2], true)
+        //     }
+        //     var stringToSend = buildStringToSend();
+        //     webSocket.send(stringToSend)
+        // }
+        // else if((messageDecode[0] == "newConnection") && isCreator){
+        //     var stringToSend = buildStringToSend();
+        //     webSocket.send(stringToSend)
+        // }
         
     };
     webSocket.onerror = function(event){
         console.log(event.data);
-    }
+    };
+    webSocket.onclose = function (event){
+        console.log ("Socket Closed: " + event.data);
+    };
+}
+
+function onClickAdd(){
+    let messageInput = document.getElementById("queryMessage").value;
+    let typeInput = document.getElementById("queryTypeText").value;
+    $.ajax({
+        type: "POST",
+        data: {classId: classId, queryString: messageInput, queryType: typeInput, userName: email, displayName: displayName},
+        dataType: "text",
+        url: "http://localhost:8080/class/query/add",
+        crossDomain: true,
+        success: function(){
+            webSocket.send("Function has been updated");
+            console.log("Successful query post.");
+        },
+        error: function(){
+            console.log("Failed to post query.");
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+
 }
 
 function buildStringToSend(){

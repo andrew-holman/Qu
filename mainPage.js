@@ -34,8 +34,9 @@ function join(){
 }
 
 function joinOrCreate(){
-    if(document.getElementById("enterCode").style.visibility == "hidden")getUserID()
-    else joinClass(userEmail, document.getElementById("enterCode").value)
+    //if(document.getElementById("enterCode").style.visibility == "hidden")getUserID()
+    //else joinClass(userEmail, document.getElementById("enterCode").value)
+    getUserID();
 }
 
 function getUserID(){
@@ -95,6 +96,7 @@ function joinClass(email, classID){
                     success: function (data, status) {
                         console.log("Data " + JSON.stringify(data));
                         if(data === "Id changed"){
+                            sessionStorage.setItem("Hello", "HI");
                             sessionStorage.setItem("Email", email)
                             sessionStorage.setItem("DisplayName", displayName)
                             sessionStorage.setItem("classID", classID)
