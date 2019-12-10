@@ -1,16 +1,25 @@
-var className = sessionStorage.getItem("className")
-document.getElementById("showName").innerHTML = "Welcome to " + className
+document.getElementById("showName").innerHTML = "Welcome to " + sessionStorage.getItem("className")
 var email = sessionStorage.getItem("Email")
-var displayName = "Patrick"//sessionStorage.getItem("DisplayName")
+var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
-var isCreator = true//sessionStorage.getItem("creator")
+var isCreator = sessionStorage.getItem("creator")
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket
 
-// document.getElementById("addRow").style .visibility = isCreator ? "hidden" : "visible"
-// document.getElementById("removeSelected").style .visibility = isCreator ? "visible" : "hidden"
-// document.getElementById("complete").style .visibility = isCreator ? "visible" : "hidden"
+document.addEventListener("DOMContentLoaded", function() {
+    var eGridDiv = document.querySelector('#myGrid');
+    new agGrid.Grid(eGridDiv, gridOptions);
+});
+
+document.getElementById("addRow").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryType").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryTypeText").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryText").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryType").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("removeSelected").style .visibility = isCreator ? "visible" : "hidden"
+document.getElementById("complete").style .visibility = isCreator ? "visible" : "hidden"
+
 
 var columnDefs = [
     {field: "Name", field: "name", rowDrag: isCreator},
@@ -45,17 +54,16 @@ function createConnection(){
         console.log(event.data);
         var messageDecode = event.data.split(".")
         if(messageDecode[0] == "Update"){
-            //TODO Delete all rows
             gridOptions.api.updateRowData({remove: rowData});
             for(var i = 1; i + 3 <= messageDecode.length ; i += 4){
                 onAddRow(messageDecode[i], messageDecode[i + 1], messageDecode[i + 2], true)
             }
             var stringToSend = buildStringToSend();
-           // webSocket.send(stringToSend)
+            webSocket.send(stringToSend)
         }
         else if((messageDecode[0] == "newConnection") && isCreator){
             var stringToSend = buildStringToSend();
-            //webSocket.send(stringToSend)
+            webSocket.send(stringToSend)
         }
         
     };
@@ -72,9 +80,9 @@ function buildStringToSend(){
     return stringToSend
 }
 
-function createNewRowData(type, description, id) {
+function createNewRowData(name, type, description, id) {
     var newData = {
-        name: displayName,
+        name: name,
         type: type,
         description: description,
         id: id,
@@ -84,7 +92,6 @@ function createNewRowData(type, description, id) {
 }
 
 function onAddRow(receivedType, receivedQuery, receivedName, received) {
-
     var questionType = received ? receivedType : document.getElementById("queryTypeText").value
     var question = received ? receivedQuery : document.getElementById("queryMessage").value
     var empty = (question === "") || (questionType === "")
@@ -99,8 +106,9 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
             crossDomain: true,
             success: function(data){
                 console.log("Successful query post.");
-                var newItem = createNewRowData(questionType, question, data.queryId)
+                var newItem = createNewRowData(nameToDisplay, questionType, question, data.queryId)
                 gridOptions.api.updateRowData({add: [newItem]});
+                clearEntries()
                 console.log(rowData)
             },
             error: function(){
@@ -112,7 +120,7 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
     }
     console.log(rowData)
     var stringToSend = buildStringToSend()
-    //webSocket.send(stringToSend)
+    webSocket.send(stringToSend)
 }
 
 function onRemoveSelected(completed) {
@@ -148,15 +156,10 @@ function onRemoveSelected(completed) {
             console.log(selectedData)
             var res = gridOptions.api.updateRowData({remove: selectedData});
         }
+        updateRowDataClient()
         var stringToSend = buildStringToSend()
         webSocket.send(stringToSend)
-        updateRowDataClient()
     }
-    
-}
-
-function complete(){
-    onRemoveSelected(true)
 }
 
 function autoSizeAll() {
@@ -167,27 +170,11 @@ function autoSizeAll() {
     gridOptions.columnApi.autoSizeColumns(allColumnIds);
 }
 
-// wait for the document to be loaded, otherwise
-// ag-Grid will not find the div in the document.
-document.addEventListener("DOMContentLoaded", function() {
-    var eGridDiv = document.querySelector('#myGrid');
-    new agGrid.Grid(eGridDiv, gridOptions);
-    // var httpRequest = new XMLHttpRequest();
-    // httpRequest.open('GET', 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/olympicWinners.json');
-    // httpRequest.send();
-    // httpRequest.onreadystatechange = function() {
-    //     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-    //         var httpResult = JSON.parse(httpRequest.responseText);
-    //         gridOptions.api.setRowData(httpResult);
-    //     }
-    // };
-});
-
 function onRowDragEnd(e) {
     console.log(rowData)
     updateRowDataClient()
     var string = buildStringToSend()
-    //webSocket.send(string)
+    webSocket.send(string)
     console.log(rowData)
 }
 
@@ -198,4 +185,9 @@ function updateRowDataClient(){
         temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
     }
     rowData = temp
+}
+
+function clearEntries(){
+    document.getElementById("queryTypeText").innerHTML = ""
+    document.getElementById("queryMessage").innerHTML = ""
 }
