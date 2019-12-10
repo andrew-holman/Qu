@@ -1,4 +1,5 @@
 document.getElementById("showName").innerHTML = "Welcome to " + sessionStorage.getItem("className")
+document.getElementById("h1").innerHTML = classId + ""
 var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
@@ -27,11 +28,7 @@ var columnDefs = [
     {field: "Description", field: "description", resizable: true}
 ];
 
-var rowData = [
-    {name: "Andrew Holman", type: "Demo", description: "I would like to demo for Iteration 2", id: "aa"},
-    {name: "Patrick Wenzel", type: "Question", description: "For part 2 of the lab, how do I get started?", id: "bb"},
-    {name: "Luke", type: "Error", description: "I am getting a 400 error and I am not sure why", id: "cc"},
-];
+var rowData = [];
 
 var gridOptions = {
     rowDragManaged: isCreator,
