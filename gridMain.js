@@ -1,16 +1,20 @@
 var className = sessionStorage.getItem("className")
 document.getElementById("showName").innerHTML = "Welcome to " + className
 var email = sessionStorage.getItem("Email")
-var displayName = sessionStorage.getItem("DisplayName")
+var displayName = "Patrick"//sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
-var isCreator = sessionStorage.getItem("creator")
+var isCreator = true//sessionStorage.getItem("creator")
 var className = sessionStorage.getItem("className")
-var completed = []
+var completedQueries = []
 var webSocket
+
+// document.getElementById("addRow").style .visibility = isCreator ? "hidden" : "visible"
+// document.getElementById("removeSelected").style .visibility = isCreator ? "visible" : "hidden"
+// document.getElementById("complete").style .visibility = isCreator ? "visible" : "hidden"
 
 var columnDefs = [
     {field: "Name", field: "name", rowDrag: isCreator},
-    {field: "Type", field: "type", filter: false},
+    {field: "Type", field: "type"},
     {field: "Description", field: "description", resizable: true}
 ];
 
@@ -27,7 +31,8 @@ var gridOptions = {
     rowSelection: 'multiple',
     rowData: rowData,
     domLayout: 'autoHeight',
-    pagination: false
+    pagination: false,
+    onRowDragEnd: onRowDragEnd,
 };
 
 function createConnection(){
@@ -38,20 +43,19 @@ function createConnection(){
     };
     webSocket.onmessage = function (event){
         console.log(event.data);
-        //TODO Message Checking
         var messageDecode = event.data.split(".")
         if(messageDecode[0] == "Update"){
             //TODO Delete all rows
-            var res = gridOptions.api.updateRowData({remove: rowData});
+            gridOptions.api.updateRowData({remove: rowData});
             for(var i = 1; i + 3 <= messageDecode.length ; i += 4){
                 onAddRow(messageDecode[i], messageDecode[i + 1], messageDecode[i + 2], true)
             }
             var stringToSend = buildStringToSend();
-            webSocket.send(stringToSend)
+           // webSocket.send(stringToSend)
         }
         else if((messageDecode[0] == "newConnection") && isCreator){
             var stringToSend = buildStringToSend();
-            webSocket.send(stringToSend)
+            //webSocket.send(stringToSend)
         }
         
     };
@@ -95,9 +99,9 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
             crossDomain: true,
             success: function(data){
                 console.log("Successful query post.");
-                var newItem = createNewRowData(questionType, question, data.queryId);
-                rowData.push(newItem)
-                var res = gridOptions.api.updateRowData({add: [newItem]});
+                var newItem = createNewRowData(questionType, question, data.queryId)
+                gridOptions.api.updateRowData({add: [newItem]});
+                console.log(rowData)
             },
             error: function(){
                 console.log("Failed to post query.");
@@ -108,24 +112,13 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
     }
     console.log(rowData)
     var stringToSend = buildStringToSend()
-    webSocket.send(stringToSend)
+    //webSocket.send(stringToSend)
 }
 
 function onRemoveSelected(completed) {
     var selectedData = gridOptions.api.getSelectedRows();
-    if(completed){
-        for(var i = 0; i < selectedData.length; i++) {
-            completed.push(selectedData[i])
-        }
-        console.log(completed)
-        var res = gridOptions.api.updateRowData({remove: selectedData});
-    }
-    else{
-        console.log(selectedData)
-        var res = gridOptions.api.updateRowData({remove: selectedData});
-    }
-    var stringToSend = buildStringToSend()
-    webSocket.send(stringToSend)
+    var successfulDeletion = false
+    
     for(var i = 0; i < selectedData.length; i++){
         $.ajax({
             type: "POST",
@@ -134,13 +127,32 @@ function onRemoveSelected(completed) {
             url: "http://localhost:8080/class/query/delete",
             crossDomain: true,
             success: function(){
+                successfulDeletion = true
                 console.log("Successful query removal.");
             },
             error: function(){
+                successfulDeletion = false
                 console.log("Failed to delete query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
     }
+    if(successfulDeletion){
+        if(completed){
+            for(var i = 0; i < selectedData.length; i++) {
+                completedQueries.push(selectedData[i])
+            }
+            console.log(completedQueries)
+            var res = gridOptions.api.updateRowData({remove: selectedData});
+        }
+        else{
+            console.log(selectedData)
+            var res = gridOptions.api.updateRowData({remove: selectedData});
+        }
+        var stringToSend = buildStringToSend()
+        webSocket.send(stringToSend)
+        updateRowDataClient()
+    }
+    
 }
 
 function complete(){
@@ -170,3 +182,20 @@ document.addEventListener("DOMContentLoaded", function() {
     //     }
     // };
 });
+
+function onRowDragEnd(e) {
+    console.log(rowData)
+    updateRowDataClient()
+    var string = buildStringToSend()
+    //webSocket.send(string)
+    console.log(rowData)
+}
+
+function updateRowDataClient(){
+    var temp = []
+    for(var i = 0; i < rowData.length; i++){
+        var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
+        temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
+    }
+    rowData = temp
+}
