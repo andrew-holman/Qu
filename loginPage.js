@@ -85,6 +85,8 @@ function signInUser(){
                             sendEmail(data.userName)
                         }
                     } else {
+                        sessionStorage.setItem("email", email)
+                        sessionStorage.setItem("displayName", data.displayName)
                         main()
                     }
                 }

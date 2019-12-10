@@ -100,7 +100,7 @@ h1{
   height: 20px;  
 }
 
-#enterEmail {
+#enterClass {
   border-radius: 25px;
   padding: 20px; 
   width: 400px;
@@ -146,7 +146,7 @@ h1{
 
 .enterCodePos{
 	position: relative;
-	top: 30px;
+	top: -120px;
 	left: 287px;
 	visibility: hidden;
 }
@@ -169,7 +169,7 @@ h1{
   left: 305px;
 }
 
-.enterEmailPos{
+.enterClassPos{
 	position: relative;
 	top: -40px;
 	left: 287px;
@@ -236,7 +236,7 @@ h1{
   font-size: 18px;
   visibility: hidden;
   position: relative;
-  top: -60px;
+  top: -30px;
   left: -45px;
 }
 
@@ -251,7 +251,7 @@ h1{
   font-size: 18px;
   visibility: hidden;
   position: relative;
-  top: 125px;
+  top: -30px;
   left: 105px;
 }
 

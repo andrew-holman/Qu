@@ -1,84 +1,165 @@
+document.getElementById("showName").innerHTML = "Welcome to " + sessionStorage.getItem("className")
+var email = sessionStorage.getItem("Email")
+var displayName = sessionStorage.getItem("DisplayName")
+var classId = sessionStorage.getItem("classID")
+var isCreator = sessionStorage.getItem("creator")
+var className = sessionStorage.getItem("className")
+var completedQueries = []
+var webSocket
+
+document.addEventListener("DOMContentLoaded", function() {
+    var eGridDiv = document.querySelector('#myGrid');
+    new agGrid.Grid(eGridDiv, gridOptions);
+});
+
+document.getElementById("addRow").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryType").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryTypeText").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryText").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryType").style .visibility = isCreator ? "hidden" : "visible"
+document.getElementById("removeSelected").style .visibility = isCreator ? "visible" : "hidden"
+document.getElementById("complete").style .visibility = isCreator ? "visible" : "hidden"
+
+
 var columnDefs = [
-    {field: "Name", field: "name", rowDrag: true},
-    {field: "Type", field: "type", filter: true},
-    {field: "Description", field: "description", resizable: true, editable: true}
+    {field: "Name", field: "name", rowDrag: isCreator},
+    {field: "Type", field: "type"},
+    {field: "Description", field: "description", resizable: true}
 ];
 
 var rowData = [
-    {id: 'aa', name: "Andrew Holman", type: "Demo", description: "I would like to demo for Iteration 2"},
-    {id: 'bb', name: "Patrick Wenzel", type: "Question", description: "For part 2 of the lab, how do I get started?"},
-    {id: 'cc', name: "Luke", type: "Error", description: "I am getting a 400 error and I am not sure why"},
+    {name: "Andrew Holman", type: "Demo", description: "I would like to demo for Iteration 2", id: "aa"},
+    {name: "Patrick Wenzel", type: "Question", description: "For part 2 of the lab, how do I get started?", id: "bb"},
+    {name: "Luke", type: "Error", description: "I am getting a 400 error and I am not sure why", id: "cc"},
 ];
 
 var gridOptions = {
-    rowDragManaged: true,
+    rowDragManaged: isCreator,
     columnDefs: columnDefs,
     animateRows: true,
     rowSelection: 'multiple',
     rowData: rowData,
     domLayout: 'autoHeight',
-    pagination: false
+    pagination: false,
+    onRowDragEnd: onRowDragEnd,
 };
 
-var newCount = 1;
-
 function createConnection(){
-    var webSocket = new WebSocket("wss://www.example.com/socketserver", "protocolOne");
+    webSocket = new WebSocket("wss://www.example.com/socketserver", "protocolOne");
     webSocket.onopen = function (event) {
-        webSocket.send("Sample Text");
+        webSocket.send("newConnection." + email);
+        //rowData[i].type + "." + rowData[i].name + "." + rowData[i].description + "." + rowData[i].id
     };
     webSocket.onmessage = function (event){
         console.log(event.data);
+        var messageDecode = event.data.split(".")
+        if(messageDecode[0] == "Update"){
+            gridOptions.api.updateRowData({remove: rowData});
+            for(var i = 1; i + 3 <= messageDecode.length ; i += 4){
+                onAddRow(messageDecode[i], messageDecode[i + 1], messageDecode[i + 2], true)
+            }
+            var stringToSend = buildStringToSend();
+            webSocket.send(stringToSend)
+        }
+        else if((messageDecode[0] == "newConnection") && isCreator){
+            var stringToSend = buildStringToSend();
+            webSocket.send(stringToSend)
+        }
+        
     };
     webSocket.onerror = function(event){
         console.log(event.data);
     }
 }
 
-function createNewRowData() {
+function buildStringToSend(){
+    var stringToSend = "Update."
+        for(var i = 0; i < rowData.length; i++){
+            stringToSend += rowData[i].type + "." + rowData[i].name + "." + rowData[i].description + "." + rowData[i].id
+        }
+    return stringToSend
+}
+
+function createNewRowData(name, type, description, id) {
     var newData = {
-        name: "Josh " + newCount,
-        type: "Demo",
-        description: "I would like to demo my code",
-        
+        name: name,
+        type: type,
+        description: description,
+        id: id,
     };
-    newCount++;
+    rowData.push(newData)
     return newData;
 }
 
-function onAddRow() {
-    //var newItem = createNewRowData();
-    //var res = gridOptions.api.updateRowData({add: [newItem]});
-    $.ajax({
-        type: "POST",
-        data: {classId: 182, queryString: document.getElementById("queryMessage").value, queryType: document.getElementById("queryTypeText").value, userName: "andrew.holman321@gmail.com", displayName: "Andrew"},
-        dataType: "text",
-        url: "http://localhost:8080/class/query/add",
-        crossDomain: true,
-        success: function(){
-            console.log("Successful query post.");
-        },
-        error: function(){
-            console.log("Failed to post query.");
-        },
-    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-
+function onAddRow(receivedType, receivedQuery, receivedName, received) {
+    var questionType = received ? receivedType : document.getElementById("queryTypeText").value
+    var question = received ? receivedQuery : document.getElementById("queryMessage").value
+    var empty = (question === "") || (questionType === "")
+    var nameToDisplay = received ? receivedName : displayName
+    if(empty) alert("Question type not specified and/or question not entered")
+    else{
+        $.ajax({
+            type: "POST",
+            data: {classId: classId, queryString: question, queryType: questionType, userName: email, displayName: nameToDisplay},
+            dataType: "text",
+            url: "http://localhost:8080/class/query/add",
+            crossDomain: true,
+            success: function(data){
+                console.log("Successful query post.");
+                var newItem = createNewRowData(nameToDisplay, questionType, question, data.queryId)
+                gridOptions.api.updateRowData({add: [newItem]});
+                clearEntries()
+                console.log(rowData)
+            },
+            error: function(){
+                console.log("Failed to post query.");
+            },
+        }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+       
+        autoSizeAll()
+    }
+    console.log(rowData)
+    var stringToSend = buildStringToSend()
+    webSocket.send(stringToSend)
 }
 
-function addItems() {
-    var newItems = [createNewRowData(), createNewRowData(), createNewRowData()];
-    var res = gridOptions.api.updateRowData({add: newItems});
-    
-}
-
-function onRemoveSelected() {
+function onRemoveSelected(completed) {
     var selectedData = gridOptions.api.getSelectedRows();
-    var res = gridOptions.api.updateRowData({remove: selectedData});
+    var successfulDeletion = false
     
-}
-
-function complete(){
-    onRemoveSelected()
+    for(var i = 0; i < selectedData.length; i++){
+        $.ajax({
+            type: "POST",
+            data: {classId: classId, queryId: selectedData[i].id},
+            dataType: "text",
+            url: "http://localhost:8080/class/query/delete",
+            crossDomain: true,
+            success: function(){
+                successfulDeletion = true
+                console.log("Successful query removal.");
+            },
+            error: function(){
+                successfulDeletion = false
+                console.log("Failed to delete query.");
+            },
+        }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+    }
+    if(successfulDeletion){
+        if(completed){
+            for(var i = 0; i < selectedData.length; i++) {
+                completedQueries.push(selectedData[i])
+            }
+            console.log(completedQueries)
+            var res = gridOptions.api.updateRowData({remove: selectedData});
+        }
+        else{
+            console.log(selectedData)
+            var res = gridOptions.api.updateRowData({remove: selectedData});
+        }
+        updateRowDataClient()
+        var stringToSend = buildStringToSend()
+        webSocket.send(stringToSend)
+    }
 }
 
 function autoSizeAll() {
@@ -89,20 +170,24 @@ function autoSizeAll() {
     gridOptions.columnApi.autoSizeColumns(allColumnIds);
 }
 
-// wait for the document to be loaded, otherwise
-// ag-Grid will not find the div in the document.
-document.addEventListener("DOMContentLoaded", function() {
-    var eGridDiv = document.querySelector('#myGrid');
-    new agGrid.Grid(eGridDiv, gridOptions);
-    
-    
-    // var httpRequest = new XMLHttpRequest();
-    // httpRequest.open('GET', 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/olympicWinners.json');
-    // httpRequest.send();
-    // httpRequest.onreadystatechange = function() {
-    //     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-    //         var httpResult = JSON.parse(httpRequest.responseText);
-    //         gridOptions.api.setRowData(httpResult);
-    //     }
-    // };
-});
+function onRowDragEnd(e) {
+    console.log(rowData)
+    updateRowDataClient()
+    var string = buildStringToSend()
+    webSocket.send(string)
+    console.log(rowData)
+}
+
+function updateRowDataClient(){
+    var temp = []
+    for(var i = 0; i < rowData.length; i++){
+        var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
+        temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
+    }
+    rowData = temp
+}
+
+function clearEntries(){
+    document.getElementById("queryTypeText").innerHTML = ""
+    document.getElementById("queryMessage").innerHTML = ""
+}
