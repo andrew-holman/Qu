@@ -1,5 +1,6 @@
 function showOptions(join){
     if(join){
+        console.log(sessionStorage.getItem("user"));
         document.getElementById("EnterCode").style.visibility = "visible"
         document.getElementById("enterCode").style.visibility = "visible"
         document.getElementById("joinClass").style.visibility = "visible"
@@ -64,24 +65,42 @@ function createClass(userID, displayName){
 }
 
 function joinClass(email, classID){
-    console.log(email + " " + classID)
+    console.log(email + " " + classID);
     $.ajax({
         type: "POST",
-        data: {userName: email, classId: classID},
-        dataType: "text",
+        data: {classId: classID},
+        dataType: "json",
         async: true,
-        url: "http://localhost:8080/demo/user/set/classId",
+        url: "http://localhost:8080/class/get/id",
         crossDomain: true,
         success: function (data, status) {
             console.log("Data " + JSON.stringify(data));
-            if(data === "Id changed"){
-                grid();
-            }
-            else if(data === "No such user in database"){
-                window.alert("Error: Could not find username")
+            if(data.classId === -1 || data.classId === null){
+                window.alert("Error: Could not find class session with code " + classID);
             }
             else{
-                window.alert("Error: Could not find class session with code " + classID)
+                $.ajax({
+                    type: "POST",
+                    data: {userName: email, classId: classID},
+                    dataType: "text",
+                    async: true,
+                    url: "http://localhost:8080/demo/user/set/classId",
+                    crossDomain: true,
+                    success: function (data, status) {
+                        console.log("Data " + JSON.stringify(data));
+                        if(data === "Id changed"){
+                            grid();
+                        }
+                        else if(data === "No such user in database"){
+                            window.alert("Error: Could not find username")
+                        }
+                    },
+                    error: function (xhr,status,error) {
+                        console.log(status);
+                        console.log(error);
+                        console.log(xhr);
+                    },
+                }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
             }
         },
         error: function (xhr,status,error) {
@@ -90,6 +109,7 @@ function joinClass(email, classID){
             console.log(xhr);
         },
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+
 }
 
 function validateEmail(givenEmail) {

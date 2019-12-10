@@ -35,8 +35,7 @@ public class ClassController {
             classInstance = classRepository.findById(classId).get();
         } catch(Exception err){
             classInstance.setDisplayName("Class doesn't exist");
-            classInstance.setCreatorUserName("");
-            classRepository.save(classInstance);
+            classInstance.setClassId(-1);
         }
 
         return classInstance;

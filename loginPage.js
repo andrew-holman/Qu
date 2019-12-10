@@ -66,6 +66,7 @@ function signInUser(){
                                 function (data, status) {
                                     console.log("Data " + JSON.stringify(data));
                                     if(data === "Success"){
+                                        sessionStorage.setItem("user", "Hello world");
                                         main();
                                     }
                                     else if(data === "Failure"){
