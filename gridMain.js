@@ -2,7 +2,7 @@ var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
 console.log("CLass ID: " + classId);
-var isCreator = sessionStorage.getItem("creator") === "TRUE";
+var isCreator = true//sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket;
