@@ -200,7 +200,7 @@ public class ClassController {
                 classRepository.save(classInstance);
                 queryRepository.save(targetQuery);
                 queryRepository.save(query);
-                return "Query Moved";
+                return "Query Moved to " + newIndex;
             }
             currentIndex++;
             while(query.getNextQueryId() != null){
@@ -209,9 +209,17 @@ public class ClassController {
                     query.setNextQueryId(queryId);
                     queryRepository.save(targetQuery);
                     queryRepository.save(query);
-                    return "Query Moved";
+                    return "Query Moved to " + newIndex;
                 }
+                currentIndex++;
                 query = queryRepository.findById(query.getNextQueryId()).get();
+            }
+            if(currentIndex == newIndex){
+                query.setNextQueryId(queryId);
+                targetQuery.setNextQueryId(null);
+                queryRepository.save(targetQuery);
+                queryRepository.save(query);
+                return "Query Moved to " + newIndex;
             }
         } catch(Exception e){
             return "Failed to re-add Query";

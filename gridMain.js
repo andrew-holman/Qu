@@ -8,6 +8,8 @@ var className = sessionStorage.getItem("className")
 console.log("Class Display: " + className);
 var completedQueries = []
 var webSocket;
+var moveQueryId;
+var hasBeenMoved = false;
 var showClassID = isCreator ? classId : ""
 document.getElementById("showName").innerHTML = "Welcome to " + className;
  document.getElementById("showId").style.visibility = isCreator ? "visible" : "hidden";
@@ -45,6 +47,7 @@ var gridOptions = {
     domLayout: 'autoHeight',
     pagination: false,
     onRowDragMove: onRowDragMove,
+    onRowDragEnd: onRowDragEnd,
     getRowNodeId: getRowNodeId,
     onGridReady: function onGridReady() {
 
@@ -278,7 +281,31 @@ function updateNodeIndex(queryID, newIndex){
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 }
 
+function onRowDragEnd(event) {
+    console.log(rowData);
+    var newIndexVal = rowData.length - 1- event.overIndex;
+    console.log("Row ended moving: " + event.overIndex + " Row data: " + rowData[event.overIndex].queryId + " Actual position: " + newIndexVal);
+    $.ajax({
+        type: "POST",
+        data: {classId: classId, queryId: moveQueryId, newIndex: newIndexVal},
+        dataType: "text",
+        url: "http://localhost:8080/class/query/move",
+        crossDomain: true,
+        success: function(data){
+            console.log(data);
+            hasBeenMoved = false;
+            webSocket.send("Moved");
+        },
+        error: function(){
+            console.log("Failed to move query.");
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+}
 function onRowDragMove(event) {
+    if(!hasBeenMoved){
+        moveQueryId = rowData[event.overIndex].queryId;
+        hasBeenMoved = true;
+    }
     var movingNode = event.node;
     var overNode = event.overNode;
 
@@ -295,11 +322,11 @@ function onRowDragMove(event) {
         var newStore = rowData.slice();
         moveInArray(newStore, fromIndex, toIndex);
 
-        rowData = newStore;
-        gridOptions.api.setRowData(newStore);
-        updateNodeIndex(newStore.queryId, toIndex)
-        gridOptions.api.clearFocusedCell();
-        webSocket.send("Moved")
+        //rowData = newStore;
+        //gridOptions.api.setRowData(newStore);
+        // updateNodeIndex(newStore.queryId, toIndex)
+        // gridOptions.api.clearFocusedCell();
+        // webSocket.send("Moved")
     }
 
     function moveInArray(arr, fromIndex, toIndex) {
