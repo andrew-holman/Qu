@@ -30,13 +30,14 @@
 </style>
     <script src="https://unpkg.com/@ag-grid-community/all-modules@22.0.0/dist/ag-grid-community.min.js"></script></head>
 <body>
+        <p id = "showId" style = "visibility: hidden" class = userPassColor></p>
         <h2 id = "showName" class = "showNamePos"></h2>
 <div style="width: 45%; top: -40px; left: 430px; position: relative;">
     <div id="myGrid" style="height: 100%;" class="ag-theme-balham"></div>
 </div>
 <div>
     <button onClick="onAddRow('','','',false)" id = "addRow" class = "addRow">Add</button>
-    <button onClick="onRemoveSelected(false)" id = "removeSelected" class = "removeSelected">Remove Selected</button>
+    <button onClick="onRemoveSelectedPre(true)" id = "removeSelected" class = "removeSelected">Remove Selected</button>
     <button onClick="endClass()" id = "end" class = "end">End Class</button>
     <p id="queryText" class = "queryTextPos">
         <label for = "queryMessage" class = "enterQColor">Enter Your Question</label>

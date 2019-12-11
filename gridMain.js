@@ -184,6 +184,7 @@ function onRemoveSelectedPre(completed){
 }
 
 function onRemoveSelected(completed, selectedData) {
+    completedQueries.push(selectedData[0]);
     console.log("Selected Data: " + selectedData[0].queryId);
         $.ajax({
             type: "POST",
