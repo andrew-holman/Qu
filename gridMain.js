@@ -7,6 +7,11 @@ var isCreator = sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket;
+let movingData
+let movingNode
+let toIndex
+let idc = 0
+let updateIndex = 0
 var showClassID = isCreator ? classId : ""
 document.getElementById("showName").innerHTML = "Welcome to " + className + "<br />" + showClassID;
 
@@ -23,7 +28,7 @@ document.getElementById("queryText").style.visibility = isCreator ? "hidden" : "
 document.getElementById("queryMessage").style.visibility = isCreator ? "hidden" : "visible"
 document.getElementById("removeSelected").style.visibility = isCreator ? "visible" : "hidden"
 document.getElementById("complete").style.visibility = isCreator ? "visible" : "hidden"
-//createConnection();
+document.getElementById("end").style.visibility = isCreator ? "visible" : "hidden"
 
 var columnDefs = [
     {field: "Name", field: "name", rowDrag: isCreator},
@@ -42,30 +47,32 @@ var gridOptions = {
     domLayout: 'autoHeight',
     pagination: false,
     onRowDragMove: onRowDragMove,
+    onRowDragEnd: onRowDragEnd,
     getRowNodeId: getRowNodeId,
     onGridReady: function onGridReady() {
 
         createConnection()
-        rowData.forEach( function(data, index) {
-            data.id = index;
+        rowData.forEach( function(data, index) {    
+            console.log(data + "\n" + data.id + "\n" + index + "hello")
+            data.queryId = index;
         });
+        gridOptions.api.setRowData(rowData);
     }
 };
 
 function getRowNodeId(data) {
-    return data.id
+    return data.queryId
 }
 
 function createConnection(){
-    console.log("HELLO" + sessionStorage.getItem("creator"));
-    console.log(sessionStorage.getItem("Hello"));
+    console.log(sessionStorage.getItem("creator"));
 
     webSocket = new WebSocket("ws://localhost:8080/socket");
     webSocket.binaryType = "arraybuffer";
     console.log(webSocket.OPEN);
 
     webSocket.onopen = function (event) {
-        webSocket.send("");
+        // webSocket.send("");
         $.ajax({
             type: "POST",
             data: {classId: classId},
@@ -82,41 +89,47 @@ function createConnection(){
                 //gridOptions.api.updateRowData(data);
                 //updateRowDataClient();
                 console.log("Updated");
+                autoSizeAll()
             },
             error: function(){
                 console.log("Failed to get query list.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 
-        //rowData[i].type + "." + rowData[i].name + "." + rowData[i].description + "." + rowData[i].id
     };
     webSocket.onmessage = function (event){
         console.log(event.data);
-
-        $.ajax({
-            type: "POST",
-            data: {classId: classId},
-            dataType: "json",
-            url: "http://localhost:8080/class/query/view",
-            crossDomain: true,
-            success: function(data, status){
-                console.log(data);
-
+        if(event.data === "Closing"){
+            webSocket.close()
+            if(!isCreator){
                 gridOptions.api.setRowData([]);
-                console.log("Row Data: " + rowData)
-                for(let i = 0; i < data.length; i++){
-                    let rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
-                    gridOptions.api.updateRowData({add: [rowInfo]});
-                }
-                //gridOptions.api.updateRowData(data);
-                //updateRowDataClient();
-                console.log("Updated");
-            },
-            error: function(){
-                console.log("Failed to get query list.");
-            },
-        }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-        
+                document.getElementById("showName").innerHTML = className + " has ended";
+            }
+        }
+        else{
+            $.ajax({
+                type: "POST",
+                data: {classId: classId},
+                dataType: "json",
+                url: "http://localhost:8080/class/query/view",
+                crossDomain: true,
+                success: function(data, status){
+                    console.log(data);
+    
+                    gridOptions.api.setRowData([]);
+                    console.log("Row Data: " + rowData)
+                    for(let i = 0; i < data.length; i++){
+                        let rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
+                        gridOptions.api.updateRowData({add: [rowInfo]});
+                    }
+                    console.log("Updated");
+                    autoSizeAll()
+                },
+                error: function(){
+                    console.log("Failed to get query list.");
+                },
+            }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));    
+        }
     };
     webSocket.onerror = function(event){
         console.log(event.data);
@@ -126,12 +139,13 @@ function createConnection(){
     };
 }
 
-function createNewRowData(name, type, description, id) {
+function createNewRowData(name, type, description, queryId, id) {
     var newData = {
         name: name,
         type: type,
         description: description,
-        queryId: id,
+        queryId: queryId,
+        id: id,
     };
     rowData.push(newData)
     return newData;
@@ -155,19 +169,22 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
             success: function(data){
                 console.log("Successful query post.");
                 var newItem = createNewRowData(nameToDisplay, questionType, question, data.queryId)
+                rowInfo.id = rowData.length
                 gridOptions.api.updateRowData({add: [newItem]});
                 clearEntries()
                 webSocket.send("Added")
                 autoSizeAll()
-               // console.log(rowData)
             },
             error: function(){
                 console.log("Failed to post query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-       
-        autoSizeAll()
     }
+    var newItem = createNewRowData("Patrick", questionType, question, idc)
+    console.log(newItem.queryId)
+    idc++
+    gridOptions.api.updateRowData({add: [newItem]});
+    autoSizeAll()
 }
 
 function onRemoveSelected(completed) {
@@ -191,7 +208,7 @@ function onRemoveSelected(completed) {
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
     }
-    if(successfulDeletion){
+    if(!successfulDeletion){
         
         if(completed){
             for(var i = 0; i < selectedData.length; i++) {
@@ -217,53 +234,20 @@ function autoSizeAll() {
     gridOptions.columnApi.autoSizeColumns(allColumnIds);
 }
 
-// function onRowDragEnd(e) {
-//     console.log(rowData)
-//     updateRowDataClient()
-//     webSocket.send("Updating users")
-//     console.log(rowData)
-// }
-
-// function updateRowDataClient(){
-//    // console.log(rowData)
-//     let place
-
-//     var temp = []
-//     let moved = false
-//     for(var i = 0; i < rowData.length - 1; i++){
-//         var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
-//         if(rowData[i + 1] == rowNode){
-//             place = i
-//             break
-//         }
-//     }
-//     for(var i = 0; i < rowData.length; i++){
-//         try{
-//             if((rowData[i] == gridOptions.api.getDisplayedRowAtIndex(place)) && !moved){
-//                 moved = true   
-//                 updateNodeIndex(rowData[i].id, i)
-//             }
-//             temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
-//         }catch(e){
-//             rowData = []
-//         }   
-//     }
-//     rowData = temp
-// }
-
 function clearEntries(){
     document.getElementById("queryMessage").value = ""
 }
 
-function updateNodeIndex(queryID, newIndex){
+function onRowDragEnd(e) {
     $.ajax({
         type: "POST",
-        data: {classId: classId, queryId: queryID, newIndex: newIndex},
+        data: {classId: classId, queryId: e.movingNode.queryId, newIndex: e.toIndex},
         dataType: "text",
-        url: "http://localhost:8080/class/query/delete",
+        url: "http://localhost:8080/class/query/move",
         crossDomain: true,
         success: function(){
             successfulDeletion = true
+            webSocket.send("Moved")
             console.log("Successful query removal.");
         },
         error: function(){
@@ -280,7 +264,6 @@ function onRowDragMove(event) {
     var rowNeedsToMove = movingNode !== overNode;
 
     if (rowNeedsToMove) {
-        // the list of rows we have is data, not row nodes, so extract the data
         var movingData = movingNode.data;
         var overData = overNode.data;
 
@@ -292,9 +275,8 @@ function onRowDragMove(event) {
 
         rowData = newStore;
         gridOptions.api.setRowData(newStore);
-        updateNodeIndex(newStore.queryId, toIndex)
+
         gridOptions.api.clearFocusedCell();
-        webSocket.send("Moved")
     }
 
     function moveInArray(arr, fromIndex, toIndex) {
@@ -302,4 +284,27 @@ function onRowDragMove(event) {
         arr.splice(fromIndex, 1);
         arr.splice(toIndex, 0, element);
     }
+}
+
+function endClass(){
+    $.ajax({
+        type: "POST",
+        data: {classId: classId},
+        dataType: "text",
+        url: "http://localhost:8080/class/delete/id",
+        crossDomain: true,
+        success: function(){
+            webSocket.send("Closing")
+            webSocket.close()
+            gridOptions.api.setRowData([]);
+        for(let i = 0; i < completedQueries.length; i++){
+            gridOptions.api.updateRowData({add: [completedQueries[i]]});
+        }
+        document.getElementById("showName").innerHTML = "Your completed list";
+            console.log("Successful class removal.");
+        },
+        error: function(){
+            console.log("Failed to class query.");
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 }
