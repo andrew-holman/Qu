@@ -99,6 +99,51 @@ describe("General User Functionality", function(){
         return chakram.wait();
     });
 });
+describe("General Query Functionality", function() {
+    it("should get the queries", function () {
+        var response = chakram.post("http://localhost:8080/class/query/view?classId=211");
+        expect(response).to.have.status(200);
+        expect(response).to.comprise.of.json([]);
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+    it("should add a query", function () {
+        var response = chakram.post("http://localhost:8080/class/query/add?classId=211&queryString=Demo Query String number 2&queryType=test&userName=cholman&displayName=Andrew");
+        expect(response).to.have.status(200);
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+    it("should add a second query", function () {
+        var response = chakram.post("http://localhost:8080/class/query/add?classId=211&queryString=Demo Query String number 2&queryType=test&userName=cholman&displayName=Andrew");
+        expect(response).to.have.status(200);
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+    it("should get the queries", function () {
+        var response = chakram.post("http://localhost:8080/class/query/view?classId=211");
+        expect(response).to.have.status(200);
+        expect(response).not.to.comprise.of.json({
+            "queryId": -1
+        });
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+    it("should delete all the queries", function () {
+        var response = chakram.post("http://localhost:8080/class/query/delete/all?classId=211");
+        expect(response).to.have.status(200);
+        expect(response).to.comprise.of.json("Queries deleted");
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+    it("should get no queries", function () {
+        var response = chakram.post("http://localhost:8080/class/query/view?classId=211");
+        expect(response).to.have.status(200);
+        expect(response).to.comprise.of.json([]);
+        expect(response).not.to.be.encoded.with.gzip;
+        return chakram.wait();
+    });
+});
+
 describe("General Class Functionality", function() {
     it("should add the class", function () {
         var response = chakram.post("http://localhost:8080/class/add?creatorUserName=cholman&displayName=TestClass1");
