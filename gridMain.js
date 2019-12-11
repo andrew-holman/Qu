@@ -1,4 +1,3 @@
-
 var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
@@ -27,7 +26,6 @@ document.getElementById("selectType").style.visibility = isCreator ? "hidden" : 
 document.getElementById("queryText").style.visibility = isCreator ? "hidden" : "visible"
 document.getElementById("queryMessage").style.visibility = isCreator ? "hidden" : "visible"
 document.getElementById("removeSelected").style.visibility = isCreator ? "visible" : "hidden"
-document.getElementById("complete").style.visibility = isCreator ? "visible" : "hidden"
 document.getElementById("end").style.visibility = isCreator ? "visible" : "hidden"
 
 var columnDefs = [
@@ -55,7 +53,6 @@ var gridOptions = {
         rowData.forEach( function(data, index) {
             data.id = index;
         });
-       // gridOptions.api.setRowData(rowData);
     }
 };
 
@@ -86,10 +83,8 @@ function createConnection(){
                     var rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
                     gridOptions.api.updateRowData({add: [rowInfo]});
                 }
-                //gridOptions.api.updateRowData(data);
-                //updateRowDataClient();
                 console.log("Updated");
-                //autoSizeAll()
+
             },
             error: function(){
                 console.log("Failed to get query list.");
@@ -124,9 +119,8 @@ function createConnection(){
                         gridOptions.api.updateRowData({add: [rowInfo]});
                         rowData.push();
                     }
-                    //gridOptions.api.updateRowData(data);
-                    //updateRowDataClient();
                     console.log("Updated");
+
                 },
                 error: function () {
                     console.log("Failed to get query list.");
@@ -174,15 +168,15 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
                 gridOptions.api.updateRowData({add: [newItem]});
                 clearEntries()
                 webSocket.send("Added")
-                //autoSizeAll()
             },
             error: function(){
                 console.log("Failed to post query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-       
+
         //autoSizeAll()
     }
+
 }
 function onRemoveSelectedPre(completed){
     var selectedData = gridOptions.api.getSelectedRows();
@@ -219,13 +213,6 @@ function onRemoveSelected(completed, selectedData) {
 
 }
 
-function autoSizeAll() {
-    var allColumnIds = [];
-    gridOptions.columnApi.getAllColumns().forEach(function(column) {
-        allColumnIds.push(column.colId);
-    });
-    gridOptions.columnApi.autoSizeColumns(allColumnIds);
-}
 
 // function onRowDragEnd(e) {
 //     console.log(rowData)
