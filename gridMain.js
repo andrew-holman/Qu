@@ -150,6 +150,8 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
                 var newItem = createNewRowData(nameToDisplay, questionType, question, data.queryId)
                 gridOptions.api.updateRowData({add: [newItem]});
                 clearEntries()
+                webSocket.send("Added")
+                autoSizeAll()
                // console.log(rowData)
             },
             error: function(){
@@ -159,9 +161,6 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
        
         autoSizeAll()
     }
-    var newItem = createNewRowData("P", questionType, question, 122)
-    gridOptions.api.updateRowData({add: [newItem]});
-    clearEntries()
 }
 
 function onRemoveSelected(completed) {
@@ -186,6 +185,7 @@ function onRemoveSelected(completed) {
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
     }
     if(successfulDeletion){
+        
         if(completed){
             for(var i = 0; i < selectedData.length; i++) {
                 completedQueries.push(selectedData[i])
@@ -197,13 +197,9 @@ function onRemoveSelected(completed) {
             console.log(selectedData)
             gridOptions.api.updateRowData({remove: selectedData});
         }
+        webSocket.send("Removed")
+        autoSizeAll()
     }
-    console.log(rowData)
-    gridOptions.api.updateRowData({remove: selectedData});
-    console.log(rowData)
-    updateRowDataClient()
-    console.log(rowData)
-    console.log(rowData.length)
 }
 
 function autoSizeAll() {
@@ -223,9 +219,10 @@ function onRowDragEnd(e) {
 
 function updateRowDataClient(){
    // console.log(rowData)
+    let place
+
     var temp = []
     let moved = false
-    let place = 0
     for(var i = 0; i < rowData.length - 1; i++){
         var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
         if(rowData[i + 1] == rowNode){
@@ -235,7 +232,7 @@ function updateRowDataClient(){
     }
     for(var i = 0; i < rowData.length; i++){
         try{
-            if((rowData[i] == gridOptions.api.getDisplayedRowAtIndex(palce)) && !moved){
+            if((rowData[i] == gridOptions.api.getDisplayedRowAtIndex(place)) && !moved){
                 moved = true   
                 updateNodeIndex(rowData[i].id, i)
             }
