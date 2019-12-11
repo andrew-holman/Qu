@@ -3,7 +3,7 @@ var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
 console.log("CLass ID: " + classId);
-var isCreator = sessionStorage.getItem("creator") === "TRUE";
+var isCreator = false//sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket;
@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", function() {
     new agGrid.Grid(eGridDiv, gridOptions);
 });
 
-document.getElementById("addRow").style .visibility = isCreator ? "hidden" : "visible"
-document.getElementById("queryType").style .visibility = isCreator ? "hidden" : "visible"
-document.getElementById("queryTypeSelect").style .visibility = isCreator ? "hidden" : "visible"
-document.getElementById("queryText").style .visibility = isCreator ? "hidden" : "visible"
-document.getElementById("queryMessage").style .visibility = isCreator ? "hidden" : "visible"
-document.getElementById("removeSelected").style .visibility = true/*isCreator*/ ? "visible" : "hidden"
-document.getElementById("complete").style .visibility = isCreator ? "visible" : "hidden"
+document.getElementById("addRow").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryType").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("selectType").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryText").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryMessage").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("removeSelected").style.visibility = isCreator ? "visible" : "hidden"
+document.getElementById("complete").style.visibility = isCreator ? "visible" : "hidden"
 createConnection();
 
 var columnDefs = [
@@ -62,7 +62,7 @@ function createConnection(){
             success: function(data, status){
                 console.log(data);
                 console.log("Got query list.");
-                for(let i = 0; i < data.length; i++){
+                for(let i = data.length-1; i >= 0; i--){
                     var rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
                     gridOptions.api.updateRowData({add: [rowInfo]});
                 }
@@ -113,26 +113,6 @@ function createConnection(){
     };
 }
 
-function onClickAdd(){
-    let messageInput = document.getElementById("queryMessage").value;
-    let typeInput = document.getElementById("queryTypeText").value;
-    $.ajax({
-        type: "POST",
-        data: {classId: classId, queryString: messageInput, queryType: typeInput, userName: email, displayName: displayName},
-        dataType: "text",
-        url: "http://localhost:8080/class/query/add",
-        crossDomain: true,
-        success: function(){
-            webSocket.send("Function has been updated");
-            console.log("Successful query post.");
-        },
-        error: function(){
-            console.log("Failed to post query.");
-        },
-    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-
-}
-
 function createNewRowData(name, type, description, id) {
     var newData = {
         name: name,
@@ -145,9 +125,11 @@ function createNewRowData(name, type, description, id) {
 }
 
 function onAddRow(receivedType, receivedQuery, receivedName, received) {
-    var questionType = received ? receivedType : document.getElementById("queryTypeText").value
+    let typeInput = document.getElementById("selectType").value
+    var questionType = received ? receivedType : typeInput
+
     var question = received ? receivedQuery : document.getElementById("queryMessage").value
-    var empty = (question === "") || (questionType === "")
+    var empty = (question === "") || (questionType == "--")
     var nameToDisplay = received ? receivedName : displayName
     if(empty) alert("Question type not specified and/or question not entered")
     else{
