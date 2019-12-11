@@ -35,8 +35,7 @@ public class ClassController {
             classInstance = classRepository.findById(classId).get();
         } catch(Exception err){
             classInstance.setDisplayName("Class doesn't exist");
-            classInstance.setCreatorUserName("");
-            classRepository.save(classInstance);
+            classInstance.setClassId(-1);
         }
 
         return classInstance;
@@ -106,7 +105,7 @@ public class ClassController {
     }
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path="/query/add") // Map ONLY POST Requests
-    public @ResponseBody Query addNewQuery (@RequestParam int classId, @RequestParam String queryString, @RequestParam String queryType, @RequestParam String userName) {
+    public @ResponseBody Query addNewQuery (@RequestParam int classId, @RequestParam String queryString, @RequestParam String queryType, @RequestParam String userName, @RequestParam String displayName) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         Query query = new Query();
@@ -115,6 +114,7 @@ public class ClassController {
             query.setQueryString(queryString);
             query.setQueryType(queryType);
             query.setUserName(userName);
+            query.setDisplayName(displayName);
             query.setNextQueryId(classInstance.getFirstQueryId());
             queryRepository.save(query);
             classInstance.setFirstQueryId(query.getQueryId());
@@ -124,6 +124,107 @@ public class ClassController {
         }
 
         return query;
+    }
+
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping(path="/query/delete") // Map ONLY POST Requests
+    public @ResponseBody String deleteQuery (@RequestParam int classId, @RequestParam int queryId) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Class classInstance = new Class();
+        try{
+            classInstance = classRepository.findById(classId).get();
+            Query query = queryRepository.findById(classInstance.getFirstQueryId()).get();
+            Query nextQuery = queryRepository.findById(query.getNextQueryId()).get();
+            if(query.getQueryId() == queryId){
+                classInstance.setFirstQueryId(nextQuery.getQueryId());
+                classRepository.save(classInstance);
+                queryRepository.deleteById(queryId);
+                return "Query Deleted";
+            }
+            while(nextQuery != null){
+                if(nextQuery.getQueryId() == queryId){
+                    query.setNextQueryId(nextQuery.getNextQueryId());
+                    queryRepository.deleteById(queryId);
+                    return "Query Deleted";
+                }
+                query = nextQuery;
+                nextQuery = queryRepository.findById(nextQuery.getNextQueryId()).get();
+            }
+        } catch(Exception e){
+            return "Failed to deleted Query";
+        }
+
+        return "Given ID not contained in given class";
+    }
+
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping(path="/query/move") // Map ONLY POST Requests
+    public @ResponseBody String moveQuery (@RequestParam int classId, @RequestParam int queryId, @RequestParam int newIndex) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Class classInstance = new Class();
+        ArrayList<Query> queryList = new ArrayList<Query>();
+        //Deletes the query from the list.
+        try{
+            boolean notFirstId = true;
+            classInstance = classRepository.findById(classId).get();
+            Query query = queryRepository.findById(classInstance.getFirstQueryId()).get();
+            Query targetQuery = queryRepository.findById(queryId).get();
+            if(query.getQueryId() == queryId){
+                classInstance.setFirstQueryId(query.getNextQueryId());
+                classRepository.save(classInstance);
+                System.out.println("Query Deleted");
+                notFirstId = false;
+            }
+            while(query.getNextQueryId() != null && notFirstId){
+                if(query.getNextQueryId() == queryId){
+                    query.setNextQueryId(targetQuery.getNextQueryId());
+                    System.out.println("Query Deleted");
+                    break;
+                }
+                query = queryRepository.findById(query.getNextQueryId()).get();
+            }
+        } catch(Exception e){
+            return "Failed to deleted Query";
+        }
+        //Adds query back to list
+        try{
+            Query query = queryRepository.findById(classInstance.getFirstQueryId()).get();
+            Query targetQuery = queryRepository.findById(queryId).get();
+            int currentIndex = 0;
+
+            if(currentIndex == newIndex){
+                classInstance.setFirstQueryId(targetQuery.getQueryId());
+                targetQuery.setNextQueryId(query.getQueryId());
+                classRepository.save(classInstance);
+                queryRepository.save(targetQuery);
+                queryRepository.save(query);
+                return "Query Moved to " + newIndex;
+            }
+            currentIndex++;
+            while(query.getNextQueryId() != null){
+                if(currentIndex == newIndex){
+                    targetQuery.setNextQueryId(query.getNextQueryId());
+                    query.setNextQueryId(queryId);
+                    queryRepository.save(targetQuery);
+                    queryRepository.save(query);
+                    return "Query Moved to " + newIndex;
+                }
+                currentIndex++;
+                query = queryRepository.findById(query.getNextQueryId()).get();
+            }
+            if(currentIndex == newIndex){
+                query.setNextQueryId(queryId);
+                targetQuery.setNextQueryId(null);
+                queryRepository.save(targetQuery);
+                queryRepository.save(query);
+                return "Query Moved to " + newIndex;
+            }
+        } catch(Exception e){
+            return "Failed to re-add Query";
+        }
+        return "Index is outside of the bounds";
     }
 
     @CrossOrigin(origins = "http://localhost:63342")
@@ -145,6 +246,23 @@ public class ClassController {
         }
 
         return null;
+    }
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping(path="/query/delete/all") // Map ONLY POST Requests
+    public @ResponseBody String deleteQuery (@RequestParam int classId) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Class classInstance = new Class();
+        try{
+            classInstance = classRepository.findById(classId).get();
+            classInstance.setFirstQueryId(null);
+            classRepository.save(classInstance);
+            return "Queries deleted";
+        } catch(Exception e){
+            return "Failed to deleted all queries";
+        }
+
+
     }
 
 }

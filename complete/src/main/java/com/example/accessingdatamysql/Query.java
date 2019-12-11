@@ -10,6 +10,7 @@ public class Query {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer queryId;
     private String userName;
+    private String displayName;
 
     private String queryString;
     private String queryType;
@@ -46,6 +47,8 @@ public class Query {
     public void setQueryType(String queryType){
         this.queryType = queryType;
     }
+    public String getDisplayName(){return displayName;}
+    public void setDisplayName(String displayName){this.displayName = displayName;}
 
 
 }

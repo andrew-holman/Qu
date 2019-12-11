@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<title id = "title"></title>
 <script> var __basePath = ''; </script>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
 <link href="style.css" type="text/css" rel="stylesheet" />
 <style media="only screen">
     html, body {
@@ -13,7 +18,7 @@
     }
     html {
         position: absolute;
-        top: 0;
+        top: -30;
         left: 0;
         padding: 0;
         overflow: auto;
@@ -25,15 +30,28 @@
 </style>
     <script src="https://unpkg.com/@ag-grid-community/all-modules@22.0.0/dist/ag-grid-community.min.js"></script></head>
 <body>
-
-<div style="margin-bottom: 5px;">
-        <button onclick="autoSizeAll()" id = "autoSize">Auto-Size All Fields</button>
-        <button onclick="onAddRow()" id = "addRow">Add</button>
-        <button onclick="onRemoveSelected()" id = "removeSelected">Remove Selected</button>
-        <button onclick="complete()" id = "complete">Complete</button>
-    </div>
-<div style="width: 60%;">
+        <p id = "showId" style = "visibility: hidden" class = userPassColor></p>
+        <h2 id = "showName" class = "showNamePos"></h2>
+<div style="width: 45%; top: -40px; left: 430px; position: relative;">
     <div id="myGrid" style="height: 100%;" class="ag-theme-balham"></div>
+</div>
+<div>
+    <button onClick="onAddRow('','','',false)" id = "addRow" class = "addRow">Add</button>
+    <button onClick="onRemoveSelectedPre(true)" id = "removeSelected" class = "removeSelected">Remove Selected</button>
+    <button onClick="endClass()" id = "end" class = "end">End Class</button>
+    <p id="queryText" class = "queryTextPos">
+        <label for = "queryMessage" class = "enterQColor">Enter Your Question</label>
+        <input id="queryMessage" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('addRow').click()"/>
+    </p>
+    <p id="queryType" class = "queryTypePos">
+        <label for = "selectType" class = "enterQColor">Choose Question, Demo, or Error</label>
+        <select id = "selectType">
+            <option value = "--" selected = "selected">--</option>
+            <option value = "Demo">Demo</option>
+            <option value = "Error">Error</option>
+            <option value = "Question">Question</option>
+        </select>
+    </p>
 </div>
     <script src="gridMain.js"></script>
 </body>

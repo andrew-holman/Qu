@@ -30,7 +30,12 @@ public class UserController {
     public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String displayName, @RequestParam String userPassword) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
+        try{
+            User user = userRepository.findByUserName(userName).get(0);
+            return "User Already Exists";
+        } catch(Exception e){
 
+        }
         try{
             User n = new User();
             n.setDisplayName(displayName);

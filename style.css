@@ -19,182 +19,117 @@ h1{
 	color: #FFFFFF;
 }
 
-.emailSend{
-	background-color: rgb(154, 155, 154);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  position: relative;
-  visibility: hidden;
-  top: -230px;
-  left: -123px;
+h2{
+	position: fixed;
+	top: 100px;
+	left: center;
+	font-family: "Lucida Console";
+	font-size: 50pt;
+	color: #FFFFFF;
+}     
+
+.userPassColor{
+	font-family: "Times New Roman";
+	font-size: 25pt;
+	color: #FFFFFF;
 }
 
-.rTrue{
-	background-color: rgb(154, 155, 154);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  position: relative;
-  top: -410px;
-  left: -40px;
-}
-
-.rFalse{
-	background-color: rgb(154, 155, 154);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  position: relative;
-  top: -410px;
-  left: 150px;
-}
-
-#emailR {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-  visibility: hidden;
-}
-
-#confirm {
-    border-radius: 25px;
-    padding: 20px;
-    width: 400px;
-    height: 20px;
-}
-
-#passCode {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;
-  visibility: hidden;  
-}
-
-#passwordR {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-  visibility: hidden;
-}
-
-#enterCode {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-}
-
-#enterEmail {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-}
-
-#guestName {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-}
-
-.loginR{
-	background-color: rgb(154, 155, 154);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 19px;
-  position: relative;
-  top: -243px;
-  left: 650px;
-}
-
-
-
-.signUpR{
-	background-color: rgb(154, 155, 154);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 19px;
-  position: relative;
-  top: -243px;
-  left: 690px;
-}
-
-.enterCodePos{
-	position: relative;
-	top: 30px;
-	left: 287px;
-	visibility: hidden;
-}
-
-.REmailPos{
-	position: relative;
-	top: -130px;
-	left: 305px;
-}
-
-.passwordRPos{
-  position: relative;
-	top: -60px;
-  left: 305px;
-}
-
-.passCodePos{
-  position: relative;
-	top: 10px;
-  left: 305px;
-}
-
-.enterEmailPos{
+/*----------------------------Grid Page-------------------------------------*/
+.showNamePos{
 	position: relative;
 	top: -40px;
-	left: 287px;
-	visibility: hidden;
+	left: 0px;
 }
 
+.showIdPos{
+	font-family: "Times New Roman";
+	font-size: 25pt;
+  color: #FFFFFF;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+
+#queryMessage {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 300px;
+  height: 2.5px;  
+}
+
+.addRow{
+  background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 5px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position: relative;
+  top: 170px;
+  left: 160px;
+}
+
+.end{
+  background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 5px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position: relative;
+  top: -80px;
+  left: 343px;
+}
+
+.removeSelected{
+  background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 5px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position: relative;
+  top: -125px;
+  left: 480px;
+}
+
+.queryTextPos{
+	position: relative;
+	top: 0px;
+	left: 0px;
+}
+
+.queryTypePos{
+	position: relative;
+	top: 0px;
+	left: 0px;
+}
+
+.enterQColor{
+	font-family: "Times New Roman";
+	font-size: 20pt;
+	color: #FFFFFF;
+}
+/*--------------------------------------------------------------------------*/
+
+/*----------------------------Main Page-------------------------------------*/
 .createJoinPos{
 	position: relative;
 	top: -50px;
   left: center;
 }
 
-.vPass{
-	background-color: rgb(154, 155, 154);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  position: relative;
-  visibility: hidden;
-  top: 105px;
-  left: 200px;
+.enterClassPos{
+	position: relative;
+	top: -40px;
+	left: 287px;
+	visibility: hidden;
 }
 
 .createClass{
@@ -225,6 +160,20 @@ h1{
   left: 145px;
 }
 
+#enterClass {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#enterCode {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
 .createAClass{
 	background-color: rgb(154, 155, 154);
   border: none;
@@ -236,7 +185,7 @@ h1{
   font-size: 18px;
   visibility: hidden;
   position: relative;
-  top: -60px;
+  top: -30px;
   left: -45px;
 }
 
@@ -251,11 +200,13 @@ h1{
   font-size: 18px;
   visibility: hidden;
   position: relative;
-  top: 125px;
+  top: -30px;
   left: 105px;
 }
+/*--------------------------------------------------------------------------*/
 
-.login{
+/*----------------------------Login Page------------------------------------*/
+.passR{
 	background-color: rgb(154, 155, 154);
   border: none;
   color: white;
@@ -266,11 +217,11 @@ h1{
   font-size: 19px;
   position: relative;
   top: -242px;
-  left: 560px;
+  left: 535px;
 }
 
 .signUp{
-	background-color: rgb(154, 155, 154);
+  background-color: rgb(154, 155, 154);
   border: none;
   color: white;
   padding: 15px 32px;
@@ -283,11 +234,10 @@ h1{
   left: 575px;
 }
 
-.passwordLoginPos{
+.guestPos{
   position: relative;
-	top: -50px;
-  left: 278px;
-  visibility: hidden;
+	top: -200px;
+	left: center;
 }
 
 .loginEmailPos{
@@ -296,25 +246,26 @@ h1{
   left: 278px;
   visibility: hidden;
 }
-.confirmCodePos{
-    position: relative;
-    top: 150px;
-    left: 15px;
-    visibility: hidden;
+
+.passwordLoginPos{
+  position: relative;
+	top: -50px;
+  left: 278px;
+  visibility: hidden;
 }
-.confirmCodeButton{
-    background-color: rgb(154, 155, 154);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 19px;
-    position: relative;
-    top: 200px;
-    left: 15px;
-    visibility: hidden;
+
+#email {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+}
+
+#password {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
 }
 
 .guestNamePos{
@@ -322,6 +273,13 @@ h1{
 	top: -270px;
   left: 278px;
   visibility: hidden;
+}
+
+#guestName {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
 }
 
 .loginUser{
@@ -381,6 +339,195 @@ h1{
   top: -410px;
   left: 40px;
 }
+/*--------------------------------------------------------------------------*/
+
+/*------------------------Password Reset Page-------------------------------*/
+.loginR{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -243px;
+  left: 650px;
+}
+
+.REmailPos{
+	position: relative;
+	top: -130px;
+	left: 305px;
+}
+
+.passwordRPos{
+  position: relative;
+	top: -60px;
+  left: 305px;
+}
+
+.signUpR{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -243px;
+  left: 690px;
+}
+
+.passCodePos{
+  position: relative;
+	top: 10px;
+  left: 305px;
+}
+
+.rCheckPos{
+  position: relative;
+	top: -200px;
+	left: 35px;
+}
+
+.emailSend{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  visibility: hidden;
+  top: -230px;
+  left: -123px;
+}
+
+.rTrue{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -410px;
+  left: -40px;
+}
+
+.rFalse{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  top: -410px;
+  left: 150px;
+}
+
+.vPass{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  visibility: hidden;
+  top: 105px;
+  left: 200px;
+}
+
+#passCode {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;
+  visibility: hidden;  
+}
+
+#emailR {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+  visibility: hidden;
+}
+
+#passwordR {
+  border-radius: 25px;
+  padding: 20px; 
+  width: 400px;
+  height: 20px;  
+  visibility: hidden;
+}
+/*--------------------------------------------------------------------------*/
+
+/*----------------------------Sign Up Page----------------------------------*/
+
+#confirm {
+    border-radius: 25px;
+    padding: 20px;
+    width: 400px;
+    height: 20px;
+}
+
+.enterCodePos{
+	position: relative;
+	top: -120px;
+	left: 287px;
+	visibility: hidden;
+}
+
+.login{
+	background-color: rgb(154, 155, 154);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 19px;
+  position: relative;
+  top: -242px;
+  left: 560px;
+}
+
+.confirmCodePos{
+    position: relative;
+    top: 150px;
+    left: 15px;
+    visibility: hidden;
+}
+
+.confirmCodeButton{
+    background-color: rgb(154, 155, 154);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 19px;
+    position: relative;
+    top: 200px;
+    left: 15px;
+    visibility: hidden;
+}
 
 .passRS{
 	background-color: rgb(154, 155, 154);
@@ -396,20 +543,6 @@ h1{
   left: 585px;
 }
 
-.passR{
-	background-color: rgb(154, 155, 154);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 19px;
-  position: relative;
-  top: -242px;
-  left: 535px;
-}
-
 .create{
 	background-color: rgb(154, 155, 154);
   border: none;
@@ -422,12 +555,6 @@ h1{
   position: relative;
   top: 160px;
   left: 15px;
-}
-
-.userPassColor{
-	font-family: "Times New Roman";
-	font-size: 25pt;
-	color: #FFFFFF;
 }
 
 .firstNamePos{
@@ -446,18 +573,6 @@ h1{
   position: relative;
 	top: -150px;
 	left: 278px;
-}
-
-.guestPos{
-  position: relative;
-	top: -200px;
-	left: center;
-}
-
-.rCheckPos{
-  position: relative;
-	top: -200px;
-	left: 35px;
 }
 
 .passwordPos{
@@ -485,20 +600,6 @@ h1{
   height: 20px;  
 }
 
-#password {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-}
-
-#email {
-  border-radius: 25px;
-  padding: 20px; 
-  width: 400px;
-  height: 20px;  
-}
-
 #confirmpassword {
   border-radius: 25px;
   padding: 20px; 
@@ -506,19 +607,15 @@ h1{
   height: 20px;  
 }
 
-
 #firstName {
   border-radius: 25px;
   padding: 20px; 
   width: 400px;
   height: 20px;  
 }
+/*--------------------------------------------------------------------------*/
 
-h2{
-	position: relative;
-	top: 60px;
-	left: center;
-}
+/*----------------------------Bullet Points---------------------------------*/
 
 .container {
   display: block;
@@ -578,3 +675,4 @@ h2{
 	border-radius: 50%;
 	background: white;
 }
+/*--------------------------------------------------------------------------*/

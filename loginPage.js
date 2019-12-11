@@ -66,14 +66,16 @@ function signInUser(){
                                 function (data, status) {
                                     console.log("Data " + JSON.stringify(data));
                                     if(data === "Success"){
+                                        sessionStorage.setItem("user", "Hello world");
                                         main();
                                     }
                                     else if(data === "Failure"){
-                                        if(confirm("That code did not match the one we sent you, would you use to resend the code")){
-                                            sendEmail(email);
-                                        }
+                                        //if(confirm("That code did not match the one we sent you, would you use to resend the code")){
+                                         //   sendEmail(email);
+                                        //}
+                                        alert("Incorrect Login information");
                                     }
-                                    else alert(data)
+                                    else  alert("Incorrect Login information");
                                 },
                                 function (xhr,status,error) {
                                 console.log(status);
@@ -84,6 +86,8 @@ function signInUser(){
                             sendEmail(data.userName)
                         }
                     } else {
+                        sessionStorage.setItem("email", email)
+                        sessionStorage.setItem("displayName", data.displayName)
                         main()
                     }
                 }
@@ -94,6 +98,8 @@ function signInUser(){
                 console.log(xhr);
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+    } else{
+        alert(alertMessage);
     }
 }
 

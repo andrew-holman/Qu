@@ -156,7 +156,7 @@ function verifyButton(){
         function (data, status) {
             console.log("Data " + JSON.stringify(data));
             if(data === "Success"){
-                main();
+                login();
             }
             else if(data === "Failure"){
                 if(confirm("That code did not match the one we sent you, would you use to resend the code")){
