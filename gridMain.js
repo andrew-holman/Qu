@@ -3,7 +3,7 @@ var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
 console.log("CLass ID: " + classId);
-var isCreator = false//sessionStorage.getItem("creator") === "TRUE";
+var isCreator = sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket;
@@ -192,9 +192,11 @@ function onRemoveSelected(completed) {
             gridOptions.api.updateRowData({remove: selectedData});
         }
     }
+    console.log(rowData)
     gridOptions.api.updateRowData({remove: selectedData});
+    console.log(rowData)
     updateRowDataClient()
-    console.log(rowData + "HEllo")
+    console.log(rowData)
     console.log(rowData.length)
 }
 
@@ -229,6 +231,5 @@ function updateRowDataClient(){
 }
 
 function clearEntries(){
-    document.getElementById("queryTypeText").value = ""
     document.getElementById("queryMessage").value = ""
 }
