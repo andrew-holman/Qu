@@ -294,6 +294,7 @@ function onRowDragMove(event) {
         gridOptions.api.setRowData(newStore);
         updateNodeIndex(newStore.queryId, toIndex)
         gridOptions.api.clearFocusedCell();
+        webSocket.send("Moved")
     }
 
     function moveInArray(arr, fromIndex, toIndex) {
