@@ -26,7 +26,7 @@ document.getElementById("queryText").style.visibility = isCreator ? "hidden" : "
 document.getElementById("queryMessage").style.visibility = isCreator ? "hidden" : "visible"
 document.getElementById("removeSelected").style.visibility = isCreator ? "visible" : "hidden"
 document.getElementById("complete").style.visibility = isCreator ? "visible" : "hidden"
-createConnection();
+//createConnection();
 
 var columnDefs = [
     {field: "Name", field: "name", rowDrag: isCreator},
@@ -37,15 +37,27 @@ var columnDefs = [
 var rowData = [];
 
 var gridOptions = {
-    rowDragManaged: isCreator,
+    deltaRowDataMode: isCreator,
     columnDefs: columnDefs,
     animateRows: true,
     rowSelection: 'multiple',
     rowData: rowData,
     domLayout: 'autoHeight',
     pagination: false,
-    onRowDragEnd: onRowDragEnd,
+    onRowDragMove: onRowDragMove,
+    getRowNodeId: getRowNodeId,
+    onGridReady: function onGridReady() {
+
+        createConnection()
+        rowData.forEach( function(data, index) {
+            data.id = index;
+        });
+    }
 };
+
+function getRowNodeId(data) {
+    return data.id
+}
 
 function createConnection(){
     console.log(isCreator);
@@ -71,7 +83,7 @@ function createConnection(){
                     gridOptions.api.updateRowData({add: [rowInfo]});
                 }
                 //gridOptions.api.updateRowData(data);
-                updateRowDataClient();
+                //updateRowDataClient();
                 console.log("Updated");
             },
             error: function(){
@@ -102,7 +114,7 @@ function createConnection(){
                     rowData.push();
                 }
                 //gridOptions.api.updateRowData(data);
-                updateRowDataClient();
+                //updateRowDataClient();
                 console.log("Updated");
             },
             error: function(){
@@ -124,7 +136,7 @@ function createNewRowData(name, type, description, id) {
         name: name,
         type: type,
         description: description,
-        id: id,
+        queryId: id,
     };
     rowData.push(newData)
     return newData;
@@ -170,7 +182,7 @@ function onRemoveSelected(completed) {
     for(var i = 0; i < selectedData.length; i++){
         $.ajax({
             type: "POST",
-            data: {classId: classId, queryId: selectedData[i].id},
+            data: {classId: classId, queryId: selectedData[i].queryId},
             dataType: "text",
             url: "http://localhost:8080/class/query/delete",
             crossDomain: true,
@@ -210,40 +222,39 @@ function autoSizeAll() {
     gridOptions.columnApi.autoSizeColumns(allColumnIds);
 }
 
-function onRowDragEnd(e) {
-    console.log(rowData)
-    updateRowDataClient()
-    webSocket.send("Updating users")
-    console.log(rowData)
-}
+// function onRowDragEnd(e) {
+//     console.log(rowData)
+//     updateRowDataClient()
+//     webSocket.send("Updating users")
+//     console.log(rowData)
+// }
 
-function updateRowDataClient(){
-   // console.log(rowData)
-    let place
+// function updateRowDataClient(){
+//    // console.log(rowData)
+//     let place
 
-    var temp = []
-    let moved = false
-    for(var i = 0; i < rowData.length - 1; i++){
-        var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
-        temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id});
-        // if(rowData[i + 1] == rowNode){
-        //     place = i
-        //     break
-        // }
-    }
-    // for(var i = 0; i < rowData.length; i++){
-    //     try{
-    //         if((rowData[i] === gridOptions.api.getDisplayedRowAtIndex(place)) && !moved){
-    //             moved = true
-    //             updateNodeIndex(rowData[i].id, i)
-    //         }
-    //         temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
-    //     }catch(e){
-    //         rowData = []
-    //     }
-    // }
-    rowData = temp
-}
+//     var temp = []
+//     let moved = false
+//     for(var i = 0; i < rowData.length - 1; i++){
+//         var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
+//         if(rowData[i + 1] == rowNode){
+//             place = i
+//             break
+//         }
+//     }
+//     for(var i = 0; i < rowData.length; i++){
+//         try{
+//             if((rowData[i] == gridOptions.api.getDisplayedRowAtIndex(place)) && !moved){
+//                 moved = true
+//                 updateNodeIndex(rowData[i].id, i)
+//             }
+//             temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
+//         }catch(e){
+//             rowData = []
+//         }
+//     }
+//     rowData = temp
+// }
 
 function clearEntries(){
     document.getElementById("queryMessage").value = ""
@@ -265,4 +276,35 @@ function updateNodeIndex(queryID, newIndex){
             console.log("Failed to move query.");
         },
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+}
+
+function onRowDragMove(event) {
+    var movingNode = event.node;
+    var overNode = event.overNode;
+
+    var rowNeedsToMove = movingNode !== overNode;
+
+    if (rowNeedsToMove) {
+        // the list of rows we have is data, not row nodes, so extract the data
+        var movingData = movingNode.data;
+        var overData = overNode.data;
+
+        var fromIndex = rowData.indexOf(movingData);
+        var toIndex = rowData.indexOf(overData);
+
+        var newStore = rowData.slice();
+        moveInArray(newStore, fromIndex, toIndex);
+
+        rowData = newStore;
+        gridOptions.api.setRowData(newStore);
+        updateNodeIndex(newStore.queryId, toIndex)
+        gridOptions.api.clearFocusedCell();
+        webSocket.send("Moved")
+    }
+
+    function moveInArray(arr, fromIndex, toIndex) {
+        var element = arr[fromIndex];
+        arr.splice(fromIndex, 1);
+        arr.splice(toIndex, 0, element);
+    }
 }
