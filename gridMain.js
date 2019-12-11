@@ -219,18 +219,47 @@ function onRowDragEnd(e) {
 function updateRowDataClient(){
    // console.log(rowData)
     var temp = []
+    let moved = false
+    let place = 0
+    for(var i = 0; i < rowData.length - 1; i++){
+        var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
+        if(rowData[i + 1] == rowNode){
+            place = i
+            break
+        }
+    }
     for(var i = 0; i < rowData.length; i++){
         try{
-            var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
+            if((rowData[i] == gridOptions.api.getDisplayedRowAtIndex(palce)) && !moved){
+                moved = true   
+                updateNodeIndex(rowData[i].id, i)
+            }
             temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
         }catch(e){
             rowData = []
-        }
-        
+        }   
     }
     rowData = temp
 }
 
 function clearEntries(){
     document.getElementById("queryMessage").value = ""
+}
+
+function updateNodeIndex(queryID, newIndex){
+    $.ajax({
+        type: "POST",
+        data: {classId: classId, queryId: queryID, newIndex: newIndex},
+        dataType: "text",
+        url: "http://localhost:8080/class/query/delete",
+        crossDomain: true,
+        success: function(){
+            successfulDeletion = true
+            console.log("Successful query removal.");
+        },
+        error: function(){
+            successfulDeletion = false
+            console.log("Failed to delete query.");
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 }
