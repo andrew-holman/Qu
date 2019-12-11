@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title id = "title">Class Grid</title>
+<title id = "title"></title>
 <script> var __basePath = ''; </script>
     <script
-            src="https://code.jquery.com/jquery-3.4.1.js"
-            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-            crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
 <link href="style.css" type="text/css" rel="stylesheet" />
 <style media="only screen">
     html, body {
@@ -31,24 +31,28 @@
     <script src="https://unpkg.com/@ag-grid-community/all-modules@22.0.0/dist/ag-grid-community.min.js"></script></head>
 <body>
 <h1 id = "showName"></h1>
-<h2 id = "h2"></h2>
-<div style="margin-bottom: 5px;">
-        <button onClick="autoSizeAll()" id = "autoSize">Auto-Size All Fields</button>
-        <button onClick="onAddRow('', '', '', false)" id = "addRow">Add</button>
-        <button onClick="onRemoveSelected(false)" id = "removeSelected">Remove Selected</button>
-        <button onClick="onRemoveSelected(true)" id = "complete">Complete</button>
-    </div>
+        <button onClick="autoSizeAll()" id = "autoSize" class = "autoSize">Auto-Size All Fields</button>
+        <button onClick="onClickAdd()" id = "addRow" class = "addRow">Add</button>
+        <button onClick="onRemoveSelected(false)" id = "removeSelected" class = "removeSelected">Remove Selected</button>
+        <button onClick="onRemoveSelected(true)" id = "complete" class = "complete">Complete</button>
 <div style="width: 85%; left: 500px;">
     <div id="myGrid" style="height: 100%;" class="ag-theme-balham"></div>
 </div>
-    <p id="queryType" class = "queryTypePos">
-        <label for = "queryTypeText" class = "userPassColor">Enter Question, Demo, or Error</label>
-        <input id="queryTypeText" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('addRow').click()"/>
-    </p>
-    <p id="queryText">
-            <label for = "queryTypeText" class = "userPassColor">Enter Your Question</label>
+<div>
+    <p id="queryText" class = "queryTextPos"> 
+        <label for = "queryTypeText" class = "enterQColor">Enter Your Question</label>
         <input id="queryMessage" type="text" onkeydown = "if (event.keyCode == 13) document.getElementById('addRow').click()"/>
     </p>
+    <p id="queryType" class = "queryTypePos">
+        <label for = "queryTypeSelect" class = "enterQColor">Choose Question, Demo, or Error</label>
+        <select>
+            <option value = "--">--</option>
+            <option value = "Demo">Demo</option>
+            <option value = "Error">Error</option>
+            <option value = "Question">Question</option>
+        </select>
+    </p>
+</div>
     <script src="gridMain.js"></script>
 </body>
 </html>
