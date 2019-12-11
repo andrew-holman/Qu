@@ -7,7 +7,8 @@ var isCreator = sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket;
-document.getElementById("showName").innerHTML = "Welcome to " + className + "<br />" + classId;
+var showClassID = isCreator ? classId : ""
+document.getElementById("showName").innerHTML = "Welcome to " + className + "<br />" + showClassID;
 
 
 document.addEventListener("DOMContentLoaded", function() {
