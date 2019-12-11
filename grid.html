@@ -30,12 +30,12 @@
 </style>
     <script src="https://unpkg.com/@ag-grid-community/all-modules@22.0.0/dist/ag-grid-community.min.js"></script></head>
 <body>
-
-<div style="width: 60%; top: 240px; left: 250px; position: relative;">
+        <h1 id = "showName" class = "showNamePos"></h1>
+<div style="width: 60%; top: -80px; left: 250px; position: relative;">
     <div id="myGrid" style="height: 100%;" class="ag-theme-balham"></div>
 </div>
 <div>
-    <h1 id = "showName" class = "showNamePos"></h1>
+    
     <button onClick="autoSizeAll()" id = "autoSize" class = "autoSize">Auto-Size All Fields</button>
     <button onClick="onAddRow('','','',false)" id = "addRow" class = "addRow">Add</button>
     <button onClick="onRemoveSelected(false)" id = "removeSelected" class = "removeSelected">Remove Selected</button>
