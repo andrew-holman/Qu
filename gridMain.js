@@ -1,12 +1,14 @@
 document.getElementById("showName").innerHTML = "Welcome to " + sessionStorage.getItem("className")
-document.getElementById("h1").innerHTML = classId + ""
 var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
+console.log("CLass ID: " + classId);
 var isCreator = sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket;
+document.getElementById("showId").innerHTML = classId + "";
+document.getElementById("showName").innerHTML = className + "";
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -52,6 +54,28 @@ function createConnection(){
 
     webSocket.onopen = function (event) {
         webSocket.send("");
+        $.ajax({
+            type: "POST",
+            data: {classId: classId},
+            dataType: "json",
+            url: "http://localhost:8080/class/query/view",
+            crossDomain: true,
+            success: function(data, status){
+                console.log(data);
+                console.log("Got query list.");
+                for(let i = 0; i < data.length; i++){
+                    var rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
+                    gridOptions.api.updateRowData({add: [rowInfo]});
+                }
+                //gridOptions.api.updateRowData(data);
+                updateRowDataClient();
+                console.log("Updated");
+            },
+            error: function(){
+                console.log("Failed to get query list.");
+            },
+        }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+
         //rowData[i].type + "." + rowData[i].name + "." + rowData[i].description + "." + rowData[i].id
     };
     webSocket.onmessage = function (event){
@@ -65,41 +89,21 @@ function createConnection(){
             crossDomain: true,
             success: function(data, status){
                 console.log(data);
-                console.log("Got query list.");
-                // for(let i = 0; i < data.length; i++){
-                //     let rowData = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
-                //     gridOptions.api.updateRowData({remove: rowData});
-                // }
+
+                gridOptions.api.setRowData([]);
+                console.log("Row Data: " + rowData)
                 for(let i = 0; i < data.length; i++){
-                    let rowData = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
-                    gridOptions.api.updateRowData({add: [rowData]});
-                }
-                for(let i = 0; i < data.length; i++){
-                    let rowData = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
-                    gridOptions.api.updateRowData({add: [rowData]});
+                    let rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
+                    gridOptions.api.updateRowData({add: [rowInfo]});
                 }
                 //gridOptions.api.updateRowData(data);
-                updateRowDataClient()
+                updateRowDataClient();
                 console.log("Updated");
             },
             error: function(){
                 console.log("Failed to get query list.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-
-        // var messageDecode = event.data.split(".")
-        // if(messageDecode[0] === "Update"){
-        //     gridOptions.api.updateRowData({remove: rowData});
-        //     for(var i = 1; i + 3 <= messageDecode.length ; i += 4){
-        //         onAddRow(messageDecode[i], messageDecode[i + 1], messageDecode[i + 2], true)
-        //     }
-        //     var stringToSend = buildStringToSend();
-        //     webSocket.send(stringToSend)
-        // }
-        // else if((messageDecode[0] == "newConnection") && isCreator){
-        //     var stringToSend = buildStringToSend();
-        //     webSocket.send(stringToSend)
-        // }
         
     };
     webSocket.onerror = function(event){

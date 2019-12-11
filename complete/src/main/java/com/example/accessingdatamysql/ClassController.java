@@ -239,5 +239,22 @@ public class ClassController {
 
         return null;
     }
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping(path="/query/delete/all") // Map ONLY POST Requests
+    public @ResponseBody String deleteQuery (@RequestParam int classId) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Class classInstance = new Class();
+        try{
+            classInstance = classRepository.findById(classId).get();
+            classInstance.setFirstQueryId(null);
+            classRepository.save(classInstance);
+            return "Queries deleted";
+        } catch(Exception e){
+            return "Failed to deleted all queries";
+        }
+
+
+    }
 
 }
