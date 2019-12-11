@@ -9,7 +9,9 @@ console.log("Class Display: " + className);
 var completedQueries = []
 var webSocket;
 var showClassID = isCreator ? classId : ""
-document.getElementById("showName").innerHTML = "Welcome to " + className + "<br />" + showClassID;
+document.getElementById("showName").innerHTML = "Welcome to " + className;
+document.getElementById("showId").style.visibility = isCreator ? "visible" : "hidden";
+document.getElementById("showId").innerHTML = "Join Code: " + classId;
 
 
 document.addEventListener("DOMContentLoaded", function() {
