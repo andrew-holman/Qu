@@ -54,7 +54,6 @@ var gridOptions = {
             console.log(data + "\n" + data.id + "\n" + index + "hello")
             data.queryId = index;
         });
-        gridOptions.api.setRowData(rowData);
     }
 };
 
@@ -70,7 +69,7 @@ function createConnection(){
     console.log(webSocket.OPEN);
 
     webSocket.onopen = function (event) {
-        // webSocket.send("");
+         webSocket.send("");
         $.ajax({
             type: "POST",
             data: {classId: classId},
@@ -84,8 +83,6 @@ function createConnection(){
                     var rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
                     gridOptions.api.updateRowData({add: [rowInfo]});
                 }
-                //gridOptions.api.updateRowData(data);
-                //updateRowDataClient();
                 console.log("Updated");
                 autoSizeAll()
             },
@@ -137,13 +134,12 @@ function createConnection(){
     };
 }
 
-function createNewRowData(name, type, description, queryId, id) {
+function createNewRowData(name, type, description, queryId) {
     var newData = {
         name: name,
         type: type,
         description: description,
         queryId: queryId,
-        id: id,
     };
     rowData.push(newData)
     return newData;
@@ -167,7 +163,6 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
             success: function(data){
                 console.log("Successful query post.");
                 var newItem = createNewRowData(nameToDisplay, questionType, question, data.queryId)
-                rowInfo.id = rowData.length
                 gridOptions.api.updateRowData({add: [newItem]});
                 clearEntries()
                 webSocket.send("Added")
