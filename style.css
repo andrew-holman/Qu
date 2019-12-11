@@ -11,7 +11,7 @@ body{
 	padding: 10px;
 }
 h1{
-	position: fixed;
+	position: relative;
 	top: -100px;
 	left: center;
 	font-family: "Lucida Console";
@@ -21,7 +21,7 @@ h1{
 
 h2{
 	position: fixed;
-	top: 0px;
+	top: 100px;
 	left: center;
 	font-family: "Lucida Console";
 	font-size: 80pt;
@@ -123,7 +123,7 @@ h2{
 
 .enterQColor{
 	font-family: "Times New Roman";
-	font-size: 30pt;
+	font-size: 20pt;
 	color: #FFFFFF;
 }
 /*--------------------------------------------------------------------------*/

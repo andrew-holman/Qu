@@ -3,15 +3,15 @@ var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
 console.log("CLass ID: " + classId);
-var isCreator = sessionStorage.getItem("creator") === "TRUE";
+var isCreator = sessionStorage.getItem("creator") === "true";
 var className = sessionStorage.getItem("className")
 console.log("Class Display: " + className);
 var completedQueries = []
 var webSocket;
 var showClassID = isCreator ? classId : ""
 document.getElementById("showName").innerHTML = "Welcome to " + className;
-document.getElementById("showId").style.visibility = isCreator ? "visible" : "hidden";
-document.getElementById("showId").innerHTML = "Join Code: " + classId;
+ document.getElementById("showId").style.visibility = isCreator ? "visible" : "hidden";
+ document.getElementById("showId").innerHTML = "Join Code: " + classId;
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -48,7 +48,7 @@ var gridOptions = {
 };
 
 function createConnection(){
-    console.log("HELLO" + sessionStorage.getItem("creator"));
+    console.log(isCreator);
     console.log(sessionStorage.getItem("Hello"));
 
     webSocket = new WebSocket("ws://localhost:8080/socket");
@@ -94,10 +94,12 @@ function createConnection(){
                 console.log(data);
 
                 gridOptions.api.setRowData([]);
+                rowData = [];
                 console.log("Row Data: " + rowData)
                 for(let i = 0; i < data.length; i++){
                     let rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
                     gridOptions.api.updateRowData({add: [rowInfo]});
+                    rowData.push();
                 }
                 //gridOptions.api.updateRowData(data);
                 updateRowDataClient();
