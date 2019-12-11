@@ -2,7 +2,7 @@ var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
 console.log("CLass ID: " + classId);
-var isCreator = true//sessionStorage.getItem("creator") === "TRUE";
+var isCreator = sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket;
@@ -10,7 +10,8 @@ let movingData
 let movingNode
 let toIndex
 var showClassID = isCreator ? classId : ""
-document.getElementById("showName").innerHTML = "Welcome to " + className + "<br />" + showClassID;
+document.getElementById("showName").innerHTML = "Welcome to " + className
+document.getElementById("showId").innerHTML = isCreator ? "Join Code: " + showClassID : ""
 
 
 document.addEventListener("DOMContentLoaded", function() {
