@@ -86,6 +86,8 @@ function joinClass(email, classID){
                 window.alert("Error: Could not find class session with code " + classID);
             }
             else{
+                let classDisplayName = data.displayName;
+                creator = data.creatorUserName === email;
                 $.ajax({
                     type: "POST",
                     data: {userName: email, classId: classID},
@@ -101,7 +103,7 @@ function joinClass(email, classID){
                             sessionStorage.setItem("DisplayName", displayName)
                             sessionStorage.setItem("classID", classID)
                             sessionStorage.setItem("creator", creator)
-                            sessionStorage.setItem("className", className)
+                            sessionStorage.setItem("className", classDisplayName)
                             grid();
                         }
                         else if(data === "No such user in database"){

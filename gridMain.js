@@ -5,6 +5,7 @@ var classId = sessionStorage.getItem("classID")
 console.log("CLass ID: " + classId);
 var isCreator = sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
+console.log("Class Display: " + className);
 var completedQueries = []
 var webSocket;
 var showClassID = isCreator ? classId : ""
