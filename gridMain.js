@@ -1,4 +1,3 @@
-
 var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
@@ -25,7 +24,6 @@ document.getElementById("selectType").style.visibility = isCreator ? "hidden" : 
 document.getElementById("queryText").style.visibility = isCreator ? "hidden" : "visible"
 document.getElementById("queryMessage").style.visibility = isCreator ? "hidden" : "visible"
 document.getElementById("removeSelected").style.visibility = isCreator ? "visible" : "hidden"
-document.getElementById("complete").style.visibility = isCreator ? "visible" : "hidden"
 document.getElementById("end").style.visibility = isCreator ? "visible" : "hidden"
 
 var columnDefs = [
@@ -69,7 +67,7 @@ function createConnection(){
     console.log(webSocket.OPEN);
 
     webSocket.onopen = function (event) {
-         webSocket.send("");
+        webSocket.send("");
         $.ajax({
             type: "POST",
             data: {classId: classId},
@@ -84,7 +82,7 @@ function createConnection(){
                     gridOptions.api.updateRowData({add: [rowInfo]});
                 }
                 console.log("Updated");
-                autoSizeAll()
+                 
             },
             error: function(){
                 console.log("Failed to get query list.");
@@ -118,7 +116,7 @@ function createConnection(){
                         gridOptions.api.updateRowData({add: [rowInfo]});
                     }
                     console.log("Updated");
-                    autoSizeAll()
+                     
                 },
                 error: function(){
                     console.log("Failed to get query list.");
@@ -166,14 +164,13 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
                 gridOptions.api.updateRowData({add: [newItem]});
                 clearEntries()
                 webSocket.send("Added")
-                autoSizeAll()
             },
             error: function(){
                 console.log("Failed to post query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
     }
-    autoSizeAll()
+     
 }
 
 function onRemoveSelected(completed) {
@@ -211,16 +208,7 @@ function onRemoveSelected(completed) {
             gridOptions.api.updateRowData({remove: selectedData});
         }
         webSocket.send("Removed")
-        autoSizeAll()
     }
-}
-
-function autoSizeAll() {
-    var allColumnIds = [];
-    gridOptions.columnApi.getAllColumns().forEach(function(column) {
-        allColumnIds.push(column.colId);
-    });
-    gridOptions.columnApi.autoSizeColumns(allColumnIds);
 }
 
 function clearEntries(){
