@@ -96,7 +96,7 @@ function createConnection(){
                 gridOptions.api.setRowData([]);
                 rowData = [];
                 console.log("Row Data: " + rowData)
-                for(let i = 0; i < data.length; i++){
+                for(let i = data.length -1; i >= 0; i--){
                     let rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
                     gridOptions.api.updateRowData({add: [rowInfo]});
                     rowData.push();
@@ -112,10 +112,10 @@ function createConnection(){
         
     };
     webSocket.onerror = function(event){
-        console.log(event.data);
+        console.log("Event Error: " + event.data);
     };
     webSocket.onclose = function (event){
-        console.log ("Socket Closed: " + event.data);
+        console.log ("Socket Closed: " + event);
     };
 }
 
@@ -225,22 +225,23 @@ function updateRowDataClient(){
     let moved = false
     for(var i = 0; i < rowData.length - 1; i++){
         var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
-        if(rowData[i + 1] == rowNode){
-            place = i
-            break
-        }
+        temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id});
+        // if(rowData[i + 1] == rowNode){
+        //     place = i
+        //     break
+        // }
     }
-    for(var i = 0; i < rowData.length; i++){
-        try{
-            if((rowData[i] == gridOptions.api.getDisplayedRowAtIndex(place)) && !moved){
-                moved = true   
-                updateNodeIndex(rowData[i].id, i)
-            }
-            temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
-        }catch(e){
-            rowData = []
-        }   
-    }
+    // for(var i = 0; i < rowData.length; i++){
+    //     try{
+    //         if((rowData[i] === gridOptions.api.getDisplayedRowAtIndex(place)) && !moved){
+    //             moved = true
+    //             updateNodeIndex(rowData[i].id, i)
+    //         }
+    //         temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
+    //     }catch(e){
+    //         rowData = []
+    //     }
+    // }
     rowData = temp
 }
 
@@ -257,11 +258,11 @@ function updateNodeIndex(queryID, newIndex){
         crossDomain: true,
         success: function(){
             successfulDeletion = true
-            console.log("Successful query removal.");
+            console.log("Successful query moved");
         },
         error: function(){
             successfulDeletion = false
-            console.log("Failed to delete query.");
+            console.log("Failed to move query.");
         },
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 }
