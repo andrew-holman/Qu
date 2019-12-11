@@ -3,7 +3,7 @@ var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
 console.log("CLass ID: " + classId);
-var isCreator = true//sessionStorage.getItem("creator") === "TRUE";
+var isCreator = sessionStorage.getItem("creator") === "TRUE";
 var className = sessionStorage.getItem("className")
 var completedQueries = []
 var webSocket;
@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", function() {
     new agGrid.Grid(eGridDiv, gridOptions);
 });
 
-document.getElementById("addRow").style.visibility = !isCreator ? "hidden" : "visible"
-document.getElementById("queryType").style.visibility = !isCreator ? "hidden" : "visible"
-document.getElementById("selectType").style.visibility = !isCreator ? "hidden" : "visible"
-document.getElementById("queryText").style.visibility = !isCreator ? "hidden" : "visible"
-document.getElementById("queryMessage").style.visibility = !isCreator ? "hidden" : "visible"
+document.getElementById("addRow").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryType").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("selectType").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryText").style.visibility = isCreator ? "hidden" : "visible"
+document.getElementById("queryMessage").style.visibility = isCreator ? "hidden" : "visible"
 document.getElementById("removeSelected").style.visibility = isCreator ? "visible" : "hidden"
 document.getElementById("complete").style.visibility = isCreator ? "visible" : "hidden"
 createConnection();
