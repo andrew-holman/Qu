@@ -10,8 +10,6 @@ var webSocket;
 let movingData
 let movingNode
 let toIndex
-let idc = 0
-let updateIndex = 0
 var showClassID = isCreator ? classId : ""
 document.getElementById("showName").innerHTML = "Welcome to " + className + "<br />" + showClassID;
 
