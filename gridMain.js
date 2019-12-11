@@ -64,7 +64,7 @@ function getRowNodeId(data) {
     return data.queryId
 }
 
-function createConnection(){
+function createConnection(){ 
     console.log(sessionStorage.getItem("creator"));
 
     webSocket = new WebSocket("ws://localhost:8080/socket");
@@ -180,10 +180,6 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
     }
-    var newItem = createNewRowData("Patrick", questionType, question, idc)
-    console.log(newItem.queryId)
-    idc++
-    gridOptions.api.updateRowData({add: [newItem]});
     autoSizeAll()
 }
 
@@ -208,7 +204,7 @@ function onRemoveSelected(completed) {
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
     }
-    if(!successfulDeletion){
+    if(successfulDeletion){
         
         if(completed){
             for(var i = 0; i < selectedData.length; i++) {
