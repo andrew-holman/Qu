@@ -34,7 +34,7 @@ var columnDefs = [
     {field: "Description", field: "description", resizable: true}
 ];
 
-var rowData = [];
+var rowData = [{name: "Patrick", type: "p", description: "p", id: 21}];
 
 var gridOptions = {
     deltaRowDataMode: isCreator,
@@ -173,7 +173,7 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
                 console.log("Failed to post query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-
+zz
         //autoSizeAll()
     }
 
