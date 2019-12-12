@@ -3,10 +3,12 @@ In order to run this program, please follow these instructions:
 
 1. Install gradle if you do not already have it:
 	-https://gradle.org/install/
+	-Add to the path variables
 
 2. Start Server:
-	-In your terminal, type "gradlew bootrun"
-	-Then, run the loginPage.html file through the server
+	-In your terminal, navigate to the /qu/complete/ directory
+            -Type "gradlew bootrun"
+	-Then, open the loginPage.html
 
 3. Client Side:
 	-Click the "Sign Up" button in the top right corner and fill out the form to make an account.
