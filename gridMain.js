@@ -147,10 +147,10 @@ function createNewRowData(name, type, description, queryId) {
 function onAddRow(receivedType, receivedQuery, receivedName, received) {
     let typeInput = document.getElementById("selectType").value
     var questionType = received ? receivedType : typeInput
-
     var question = received ? receivedQuery : document.getElementById("queryMessage").value
     var empty = (question === "") || (questionType == "--")
     var nameToDisplay = received ? receivedName : displayName
+
     if(empty) alert("Question type not specified and/or question not entered")
     else{
         $.ajax({
@@ -170,8 +170,7 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
                 console.log("Failed to post query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-    }
-     
+    } 
 }
 
 function onRemoveSelected(completed) {

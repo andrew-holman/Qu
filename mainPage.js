@@ -24,7 +24,8 @@ function showOptions(join){
 }
 
 var userEmail = sessionStorage.getItem("email")
-var displayName = sessionStorage.getItem("displayName")
+var displayName = "Patrick"//sessionStorage.getItem("displayName")
+document.getElementById("showUsernameDisplay").innerHTML = displayName
 var creator = false
 var className = ""
 
