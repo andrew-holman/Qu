@@ -75,7 +75,7 @@ function signInUser(){
                                         //}
                                         alert("Incorrect Login information");
                                     }
-                                    else alert(data)
+                                    else  alert("Incorrect Login information");
                                 },
                                 function (xhr,status,error) {
                                 console.log(status);
@@ -98,6 +98,8 @@ function signInUser(){
                 console.log(xhr);
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+    } else{
+        alert(alertMessage);
     }
 }
 

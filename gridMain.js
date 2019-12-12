@@ -2,16 +2,17 @@ var email = sessionStorage.getItem("Email")
 var displayName = sessionStorage.getItem("DisplayName")
 var classId = sessionStorage.getItem("classID")
 console.log("CLass ID: " + classId);
-var isCreator = sessionStorage.getItem("creator") === "TRUE";
+var isCreator = sessionStorage.getItem("creator") === "true";
 var className = sessionStorage.getItem("className")
+console.log("Class Display: " + className);
 var completedQueries = []
 var webSocket;
-let movingData
-let movingNode
-let toIndex
+var moveQueryId;
+var hasBeenMoved = false;
 var showClassID = isCreator ? classId : ""
-document.getElementById("showName").innerHTML = "Welcome to " + className
-document.getElementById("showId").innerHTML = isCreator ? "Join Code: " + showClassID : ""
+document.getElementById("showName").innerHTML = "Welcome to " + className;
+ document.getElementById("showId").style.visibility = isCreator ? "visible" : "hidden";
+ document.getElementById("showId").innerHTML = "Join Code: " + classId;
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -49,9 +50,8 @@ var gridOptions = {
     onGridReady: function onGridReady() {
 
         createConnection()
-        rowData.forEach( function(data, index) {    
-            console.log(data + "\n" + data.id + "\n" + index + "hello")
-            data.queryId = index;
+        rowData.forEach( function(data, index) {
+            data.id = index;
         });
     }
 };
@@ -60,8 +60,9 @@ function getRowNodeId(data) {
     return data.queryId
 }
 
-function createConnection(){ 
-    console.log(sessionStorage.getItem("creator"));
+function createConnection(){
+    console.log(isCreator);
+    console.log(sessionStorage.getItem("Hello"));
 
     webSocket = new WebSocket("ws://localhost:8080/socket");
     webSocket.binaryType = "arraybuffer";
@@ -83,7 +84,7 @@ function createConnection(){
                     gridOptions.api.updateRowData({add: [rowInfo]});
                 }
                 console.log("Updated");
-                 
+
             },
             error: function(){
                 console.log("Failed to get query list.");
@@ -100,36 +101,38 @@ function createConnection(){
                 document.getElementById("showName").innerHTML = className + " has ended";
             }
         }
-        else{
+        else {
             $.ajax({
                 type: "POST",
                 data: {classId: classId},
                 dataType: "json",
                 url: "http://localhost:8080/class/query/view",
                 crossDomain: true,
-                success: function(data, status){
+                success: function (data, status) {
                     console.log(data);
-    
+
                     gridOptions.api.setRowData([]);
+                    rowData = [];
                     console.log("Row Data: " + rowData)
-                    for(let i = 0; i < data.length; i++){
+                    for (let i = data.length - 1; i >= 0; i--) {
                         let rowInfo = createNewRowData(data[i].displayName, data[i].queryType, data[i].queryString, data[i].queryId);
                         gridOptions.api.updateRowData({add: [rowInfo]});
+                        rowData.push();
                     }
                     console.log("Updated");
-                     
+
                 },
-                error: function(){
+                error: function () {
                     console.log("Failed to get query list.");
                 },
-            }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));    
+            }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
         }
     };
     webSocket.onerror = function(event){
-        console.log(event.data);
+        console.log("Event Error: " + event.data);
     };
     webSocket.onclose = function (event){
-        console.log ("Socket Closed: " + event.data);
+        console.log ("Socket Closed: " + event);
     };
 }
 
@@ -170,71 +173,94 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
                 console.log("Failed to post query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-    } 
+
+        //autoSizeAll()
+    }
+
+}
+function onRemoveSelectedPre(completed){
+    var selectedData = gridOptions.api.getSelectedRows();
+    onRemoveSelected(completed, selectedData);
 }
 
-function onRemoveSelected(completed) {
-    var selectedData = gridOptions.api.getSelectedRows();
-    var successfulDeletion = false
-    
-    for(var i = 0; i < selectedData.length; i++){
+function onRemoveSelected(completed, selectedData) {
+    completedQueries.push(selectedData[0]);
+    console.log("Selected Data: " + selectedData[0].queryId);
         $.ajax({
             type: "POST",
-            data: {classId: classId, queryId: selectedData[i].queryId},
+            data: {classId: classId, queryId: selectedData[0].queryId},
             dataType: "text",
             url: "http://localhost:8080/class/query/delete",
             crossDomain: true,
             success: function(){
-                successfulDeletion = true
-                console.log("Successful query removal.");
+                var smallArray = [];
+                for(let i=0; i<selectedData.length-1; i++){
+                    smallArray[i] = selectedData[i+1];
+                }
+                console.log(smallArray);
+                if(smallArray.length !== 0)
+                    onRemoveSelected(completed, smallArray);
+                else {
+                    console.log("Deleting completed");
+                    webSocket.send("Removed");
+                }
+                //autoSizeAll()
             },
             error: function(){
                 successfulDeletion = false
                 console.log("Failed to delete query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-    }
-    if(successfulDeletion){
-        
-        if(completed){
-            for(var i = 0; i < selectedData.length; i++) {
-                completedQueries.push(selectedData[i])
-            }
-            console.log(completedQueries)
-            gridOptions.api.updateRowData({remove: selectedData});
-        }
-        else{
-            console.log(selectedData)
-            gridOptions.api.updateRowData({remove: selectedData});
-        }
-        webSocket.send("Removed")
-    }
+
 }
 
 function clearEntries(){
     document.getElementById("queryMessage").value = ""
 }
 
-function onRowDragEnd(e) {
+function updateNodeIndex(queryID, newIndex){
     $.ajax({
         type: "POST",
-        data: {classId: classId, queryId: e.movingNode.queryId, newIndex: e.toIndex},
+        data: {classId: classId, queryId: queryID, newIndex: newIndex},
         dataType: "text",
-        url: "http://localhost:8080/class/query/move",
+        url: "http://localhost:8080/class/query/delete",
         crossDomain: true,
         success: function(){
             successfulDeletion = true
-            webSocket.send("Moved")
-            console.log("Successful query removal.");
+            console.log("Successful query moved");
         },
         error: function(){
             successfulDeletion = false
-            console.log("Failed to delete query.");
+            console.log("Failed to move query.");
         },
     }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 }
 
+function onRowDragEnd(event) {
+    console.log(rowData);
+    var newIndexVal = rowData.length - 1- event.overIndex;
+    console.log("Row ended moving: " + event.overIndex + " Row data: " + rowData[event.overIndex].queryId + " Actual position: " + newIndexVal);
+    $.ajax({
+        type: "POST",
+        data: {classId: classId, queryId: moveQueryId, newIndex: newIndexVal},
+        dataType: "text",
+        url: "http://localhost:8080/class/query/move",
+        crossDomain: true,
+        success: function(data){
+            console.log(data);
+            hasBeenMoved = false;
+            webSocket.send("Moved");
+        },
+        error: function(){
+            console.log("Failed to move query.");
+        },
+    }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
+}
 function onRowDragMove(event) {
+    if(!hasBeenMoved){
+        moveQueryId = rowData[event.overIndex].queryId;
+        hasBeenMoved = true;
+    }
     var movingNode = event.node;
     var overNode = event.overNode;
 
@@ -249,11 +275,6 @@ function onRowDragMove(event) {
 
         var newStore = rowData.slice();
         moveInArray(newStore, fromIndex, toIndex);
-
-        rowData = newStore;
-        gridOptions.api.setRowData(newStore);
-
-        gridOptions.api.clearFocusedCell();
     }
 
     function moveInArray(arr, fromIndex, toIndex) {
