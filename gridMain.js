@@ -34,7 +34,7 @@ var columnDefs = [
     {field: "Description", field: "description", resizable: true}
 ];
 
-var rowData = [];
+var rowData = [{name: "Patrick", type: "p", description: "p", id: 21}];
 
 var gridOptions = {
     deltaRowDataMode: isCreator,
@@ -150,10 +150,10 @@ function createNewRowData(name, type, description, queryId) {
 function onAddRow(receivedType, receivedQuery, receivedName, received) {
     let typeInput = document.getElementById("selectType").value
     var questionType = received ? receivedType : typeInput
-
     var question = received ? receivedQuery : document.getElementById("queryMessage").value
     var empty = (question === "") || (questionType == "--")
     var nameToDisplay = received ? receivedName : displayName
+
     if(empty) alert("Question type not specified and/or question not entered")
     else{
         $.ajax({
@@ -173,7 +173,7 @@ function onAddRow(receivedType, receivedQuery, receivedName, received) {
                 console.log("Failed to post query.");
             },
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
-
+zz
         //autoSizeAll()
     }
 
@@ -213,41 +213,6 @@ function onRemoveSelected(completed, selectedData) {
         }).then(r => console.log("Finished")).fail(r => console.log("Fail")).then(r => console.log("Message: " + r));
 
 }
-
-
-// function onRowDragEnd(e) {
-//     console.log(rowData)
-//     updateRowDataClient()
-//     webSocket.send("Updating users")
-//     console.log(rowData)
-// }
-
-// function updateRowDataClient(){
-//    // console.log(rowData)
-//     let place
-
-//     var temp = []
-//     let moved = false
-//     for(var i = 0; i < rowData.length - 1; i++){
-//         var rowNode = gridOptions.api.getDisplayedRowAtIndex(i)
-//         if(rowData[i + 1] == rowNode){
-//             place = i
-//             break
-//         }
-//     }
-//     for(var i = 0; i < rowData.length; i++){
-//         try{
-//             if((rowData[i] == gridOptions.api.getDisplayedRowAtIndex(place)) && !moved){
-//                 moved = true
-//                 updateNodeIndex(rowData[i].id, i)
-//             }
-//             temp.push({name: rowNode.data.name, type: rowNode.data.type, description: rowNode.data.description, id: rowNode.data.id})
-//         }catch(e){
-//             rowData = []
-//         }
-//     }
-//     rowData = temp
-// }
 
 function clearEntries(){
     document.getElementById("queryMessage").value = ""
@@ -310,16 +275,6 @@ function onRowDragMove(event) {
 
         var newStore = rowData.slice();
         moveInArray(newStore, fromIndex, toIndex);
-
-        //rowData = newStore;
-        //gridOptions.api.setRowData(newStore);
-        // updateNodeIndex(newStore.queryId, toIndex)
-        // gridOptions.api.clearFocusedCell();
-        // webSocket.send("Moved")
-        // rowData = newStore;
-        // gridOptions.api.setRowData(newStore);
-        //
-        // gridOptions.api.clearFocusedCell();
     }
 
     function moveInArray(arr, fromIndex, toIndex) {
