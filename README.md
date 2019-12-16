@@ -21,13 +21,13 @@ In order to run this program, please follow these instructions:
 		-Click "Join" and type in the code of the class you would like to joining
 		-Note, the class must already be created in order to join it
 	-Use the grid:
-		-As an Instructor:
-			-As an instructor, you can see the queries from the students in your class coming in
-			-Use the box icon next to the name of a row to move queries
-				-Note, at least two queries must be in the grid to notice any changes
-			-Click on a row and hit "Remove Selected" to remove a query(ies) from the grid
-				-You can remove multiple queries by selecting one row and then performing "Shift + Click" on another row
-			-If you would like to end the class, hit "End Class"
-		As a Student:
-			-As a student, you can see the queries from other students as well as add to the grid
-			-To add to the grid, type your query in the text box, select your type of query, and click "Add"
+	-As an Instructor:
+		-As an instructor, you can see the queries from the students in your class coming in
+		-Use the box icon next to the name of a row to move queries
+		-Note, at least two queries must be in the grid to notice any changes
+		-Click on a row and hit "Remove Selected" to remove a query(ies) from the grid
+		-You can remove multiple queries by selecting one row and then performing "Shift + Click" on another row
+		-If you would like to end the class, hit "End Class"
+	-As a Student:
+		-As a student, you can see the queries from other students as well as add to the grid
+		-To add to the grid, type your query in the text box, select your type of query, and click "Add"
